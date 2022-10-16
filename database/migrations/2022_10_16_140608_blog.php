@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('blog', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('phone')->nullable();
-            $table->string('avatar')->nullable();
-            $table->enum('role', ['admin', 'user','modder'])->default('user');
+            $table->string('name');
+            $table->text('blog');
+            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
+            $table->foreignId('comment_set_id')->constrained('comment_set');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('blog');
     }
 };
