@@ -8,6 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Blog;
+use App\Models\Comment;
+use App\Models\TrainingPlan;
+use App\Models\TestHistory;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -22,6 +27,8 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    protected $table = "user";
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +48,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function blogs() {
+        $this->hasMany(Blog::class,'user_id');
+    }
+
+    public function comments() {
+        $this->hasMany(Comment::class,'user_id');
+    }
+
+    public function plans() {
+        $this->hasMany(TrainingPlan::class,'user_id');
+    }
+
+    public function testHistories() {
+        $this->hasMany(TestHistory::class,'user_id');
+    }
 }
