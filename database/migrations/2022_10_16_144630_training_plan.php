@@ -22,9 +22,9 @@ return new class extends Migration
             $table->integer('goal_score');
             $table->integer('score_between_test');
             $table->integer('time_between_test');
-            $table->timestamp('date_start');
-            $table->timestamp('date_end_goal');
-            $table->timestamp('date_end');
+            $table->date('date_start');
+            $table->date('date_end_goal');
+            $table->date('date_end');
         });
     }
 
