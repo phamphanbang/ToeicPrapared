@@ -64,4 +64,8 @@ class User extends Authenticatable
     public function testHistories() {
         $this->hasMany(TestHistory::class,'user_id');
     }
+
+    public function scopeGetAllUsers($query){
+        return $query->paginate(5);
+    }
 }
