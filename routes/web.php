@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Auth::routes(['login' => false, 'register' => false]);
 Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
     Route::resource('user',UserController::class);
     Route::post('user/search',[UserController::class,'search'])->name('user.search');
+
+    Route::resource('blog',BlogController::class);
 });
 Route::get('admin/login',[AdminLoginController::class,'index'])->name('admin.index');
 Route::get('admin/logout',[AdminLoginController::class,'logout'])->name('admin.logout');

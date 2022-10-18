@@ -26,4 +26,8 @@ class Blog extends Model
     public function commentSet() {
         $this->belongsTo(CommentSet::class,'comment_set_id');
     }
+
+    public function scopeGetAllBlogs($query){
+        return $query->paginate(5);
+    }
 }

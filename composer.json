@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
+        "tinymce/tinymce": "^6.2",
         "twbs/bootstrap-icons": "^1.9"
     },
     "require-dev": {
