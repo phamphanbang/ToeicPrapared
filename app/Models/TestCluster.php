@@ -23,10 +23,10 @@ class TestCluster extends Model
     ];
 
     public function testPart() {
-        $this->belongsTo(TestPart::class,'part_id');
+        return $this->belongsTo(TestPart::class,'part_id');
     }
 
     public function testQuestion() {
-        $this->hasMany(TestQuestion::class,'cluster_id');
+        return $this->hasMany(TestQuestion::class,'cluster_id');
     }
 }

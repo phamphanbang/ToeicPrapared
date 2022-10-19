@@ -24,22 +24,22 @@ class Test extends Model
     ];
 
     public function trainingTests() {
-        $this->hasMany(TrainingTest::class,'test_id');
+        return $this->hasMany(TrainingTest::class,'test_id');
     }
 
     public function testHistories() {
-        $this->hasMany(TestHistory::class,'test_id');
+        return $this->hasMany(TestHistory::class,'test_id');
     }
 
     public function testParts() {
-        $this->hasMany(TestPart::class,'test_id');
+        return $this->hasMany(TestPart::class,'test_id');
     }
 
     public function testTemplate() {
-        $this->belongsTo(TestTemplate::class,'test_type_id');
+        return $this->belongsTo(TestTemplate::class,'test_type_id');
     }
 
     public function commentSet() {
-        $this->belongsTo(CommentSet::class,'comment_set_id');
+        return $this->belongsTo(CommentSet::class,'comment_set_id');
     }
 }

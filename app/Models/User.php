@@ -50,19 +50,19 @@ class User extends Authenticatable
     ];
 
     public function blogs() {
-        $this->hasMany(Blog::class,'user_id');
+        return $this->hasMany(Blog::class,'user_id');
     }
 
     public function comments() {
-        $this->hasMany(Comment::class,'user_id');
+        return $this->hasMany(Comment::class,'user_id');
     }
 
     public function plans() {
-        $this->hasMany(TrainingPlan::class,'user_id');
+        return $this->hasMany(TrainingPlan::class,'user_id');
     }
 
     public function testHistories() {
-        $this->hasMany(TestHistory::class,'user_id');
+        return $this->hasMany(TestHistory::class,'user_id');
     }
 
     public function scopeGetAllUsers($query){

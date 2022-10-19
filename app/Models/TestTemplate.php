@@ -24,10 +24,10 @@ class TestTemplate extends Model
     ];
 
     public function tests() {
-        $this->hasMany(Test::class,'test_type_id');
+        return $this->hasMany(Test::class,'test_type_id');
     }
 
     public function partTemplates() {
-        $this->hasMany(PartTemplate::class,'test_id');
+        return $this->hasMany(PartTemplate::class,'test_id');
     }
 }

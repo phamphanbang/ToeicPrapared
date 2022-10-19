@@ -28,14 +28,14 @@ class TestQuestion extends Model
     ];
 
     public function testPart() {
-        $this->belongsTo(TestPart::class,'part_id');
+        return $this->belongsTo(TestPart::class,'part_id');
     }
 
     public function testCluster() {
-        $this->belongsTo(TestCluster::class,'cluster_id');
+        return $this->belongsTo(TestCluster::class,'cluster_id');
     }
 
     public function testHistoryAnswer() {
-        $this->hasMany(TestHistoryAnswer::class,'question_id');
+        return $this->hasMany(TestHistoryAnswer::class,'question_id');
     }
 }

@@ -19,7 +19,7 @@ class ClusterTemplate extends Model
     ];
 
     public function partTemplate() {
-        $this->belongsTo(PartTemplate::class,'part_id');
+        return  $this->belongsTo(PartTemplate::class,'part_id');
     }
 
 }

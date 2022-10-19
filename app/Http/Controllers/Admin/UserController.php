@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
     public function index() {
         $data["users"] = User::getAllUsers();
+        Session::put('task_url',request()->fullUrl());
         return view('admin.user.list')->with('data',$data);
     }
 
@@ -26,7 +28,10 @@ class UserController extends Controller
         $data["user"]->email = $request->email;
         $data["user"]->password = Hash::make($request->password);
         $data["user"]->save();
-        return redirect('admin/user/'.$data["user"]->id.'/edit')->with('data',$data)->with('registerSuccess','User created successfully');
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('registerSuccess','User created successfully');
+        }
+        return redirect()->route('admin.user.index')->with('registerSuccess','User created successfully');
     }
 
     public function edit($id) {
@@ -42,7 +47,10 @@ class UserController extends Controller
         $data["user"]->name = $request->name;
         $data["user"]->email = $request->email;
         $data["user"]->save();
-        return redirect(route('admin.user.edit',$data["user"]->id))->with('data',$data)->with('profileChangeSuccess','Profile changed successfully');
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('profileChangeSuccess','Profile changed successfully');
+        }
+        return redirect()->route('admin.user.index')->with('profileChangeSuccess','Profile changed successfully');
     }
 
     public function destroy($id) {

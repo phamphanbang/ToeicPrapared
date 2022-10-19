@@ -23,14 +23,14 @@ class TestPart extends Model
     ];
 
     public function test() {
-        $this->belongsTo(Test::class,'test_id');
+        return $this->belongsTo(Test::class,'test_id');
     }
 
     public function testCluster() {
-        $this->hasMany(TestCluster::class,'part_id');
+        return $this->hasMany(TestCluster::class,'part_id');
     }
 
     public function testQuestions() {
-        $this->hasMany(TestQuestion::class,'part_id');
+        return $this->hasMany(TestQuestion::class,'part_id');
     }
 }

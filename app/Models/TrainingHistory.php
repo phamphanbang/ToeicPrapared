@@ -22,10 +22,10 @@ class TrainingHistory extends Model
     ];
 
     public function trainingPlan() {
-        $this->belongsTo(TrainingPlan::class,'plan_id');
+        return $this->belongsTo(TrainingPlan::class,'plan_id');
     }
 
     public function trainingTest() {
-        $this->hasMany(TrainingTest::class,'training_history_id');
+        return $this->hasMany(TrainingTest::class,'training_history_id');
     }
 }

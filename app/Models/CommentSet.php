@@ -14,17 +14,18 @@ class CommentSet extends Model
     use HasFactory;
 
     protected $table = "comment_set";
+    public $timestamps = false;
 
     protected $fillable = [
         'type',
     ];
 
     public function blog() {
-        $this->hasOne(Blog::class,'comment_set_id');
+        return $this->hasOne(Blog::class,'comment_set_id');
     }
 
     public function test() {
-        $this->hasOne(Test::class,'comment_set_id');
+        return  $this->hasOne(Test::class,'comment_set_id');
     }
 
     public function comments() {

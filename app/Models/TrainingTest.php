@@ -20,14 +20,14 @@ class TrainingTest extends Model
     ];
 
     public function trainingHistory() {
-        $this->belongsTo(TrainingHistory::class,'training_history_id');
+        return $this->belongsTo(TrainingHistory::class,'training_history_id');
     }
 
     public function test() {
-        $this->belongsTo(Test::class,'test_id');
+        return $this->belongsTo(Test::class,'test_id');
     }
 
     public function testHistory() {
-        $this->belongsTo(TestHistory::class,'test_history_id');
+        return $this->belongsTo(TestHistory::class,'test_history_id');
     }
 }

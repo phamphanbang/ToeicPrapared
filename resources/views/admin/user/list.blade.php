@@ -4,17 +4,31 @@
 
 <div class="container m-0 p-0">
     <div class="row">
-        @if(session()->has('deleteUserSuccessfully'))
-        <div class="alert alert-success ms-5 my-3 d-flex" role="alert">
-            {{ session()->get('deleteUserSuccessfully') }}
-            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="admin-top-message">
+            @if(session()->has('deleteUserSuccessfully'))
+            <div class="alert alert-success ms-5 my-3 d-flex w-fit-content" role="alert">
+                {{ session()->get('deleteUserSuccessfully') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if(session()->has('profileChangeSuccess'))
+            <div class="alert alert-success ms-5 mt-3 mb-0 d-flex w-fit-content" role="alert">
+                {{ session()->get('profileChangeSuccess') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if(session()->has('registerSuccess'))
+            <div class="alert alert-success ms-5 mt-3 mb-0 d-flex w-fit-content " role="alert">
+                {{ session()->get('registerSuccess') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
         </div>
-        @endif
         <div class="col-lg-12 grid-margin stretch-card px-5 pt-4 w-100">
             <div class="card shadow">
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">User</h4>
-                    <div class="d-flex flex-row py-2 justify-content-between">
+                    <div class="d-flex flex-row py-2 justify-content-between flex-nowrap">
                         <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.user.search')}}">
                             @csrf
                             <label for="search">Search</label>
@@ -61,21 +75,21 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary px-1 py-0" href="{{route('admin.user.edit',$user->id)}}">
+                                        <a class="btn btn-primary px-1 py-0 mx-1" href="{{route('admin.user.edit',$user->id)}}">
                                             <label class="badge badge-info">
                                                 <i class="bi bi-pencil-square pe-2"></i>
                                                 Edit
                                             </label>
                                         </a>
                                         @if ($user->role == 'admin')
-                                        <a class="confirm btn btn-danger px-1 py-0 disabled " item-id="user_id" item-type="user">
+                                        <a class="confirm btn btn-danger px-1 py-0 mx-1 disabled " item-id="user_id" item-type="user">
                                             <label class="badge badge-danger">
                                                 <i class="bi bi-trash pe-2"></i>
                                                 Delete
                                             </label>
                                         </a>
                                         @else
-                                        <div class="btn btn-danger px-1 py-0">
+                                        <div class="btn btn-danger px-1 py-0 mx-1">
                                             <label for="{{ 'submit-delete-'.$user->id }}" class="badge badge-danger">
                                                 <i class="bi bi-trash pe-2"></i>
                                                 Delete

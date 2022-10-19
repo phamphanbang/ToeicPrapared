@@ -4,20 +4,20 @@
 
 <div class="container m-0 p-0">
     <div class="row">
-        @if(session()->has('registerSuccess'))
+        <!-- @if(session()->has('registerSuccess'))
         <div class="alert alert-success ms-5 mt-3 mb-0 w-auto d-flex " role="alert">
-        {{ session()->get('registerSuccess') }}
-        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ session()->get('registerSuccess') }}
+            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
         @if(session()->has('profileChangeSuccess'))
         <div class="alert alert-success ms-5 mt-3 mb-0 w-auto d-flex" role="alert">
-        {{ session()->get('profileChangeSuccess') }}
-        <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ session()->get('profileChangeSuccess') }}
+            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        @endif
+        @endif -->
         <div class="col-lg-12 grid-margin stretch-card px-5 pt-4 w-100">
-            <div class="card w-50">
+            <div class="card w-50 shadow">
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">Edit User {{$data["user"]->name }}</h4>
                     <div class="d-flex justify-content-center mt-3">
@@ -53,7 +53,10 @@
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-success float-end">Edit</button>
+                            <button type="submit" class="btn btn-success float-end">
+                                <i class="bi bi-pencil-square pe-2"></i>
+                                Edit
+                            </button>
                         </form>
                     </div>
                 </div>

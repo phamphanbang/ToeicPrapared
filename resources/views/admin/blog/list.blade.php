@@ -41,6 +41,7 @@
                                     <th class="">Id</th>
                                     <th class="">Name</th>
                                     <th class="">Author</th>
+                                    <th class="">Create at</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -49,8 +50,15 @@
                                 <tr>
                                     <td class="">{{ $blog->id }}</td>
                                     <td class="">{{ $blog->name }}</td>
-                                    <td class="">{{ $blog->user()->name }}</td>
+                                    <td class="">{{ $blog->user->name }}</td>
+                                    <td class="">{{ $blog->created_at }}</td>
                                     <td class="text-center">
+                                        <a class="btn btn-info px-1 py-0" href="{{route('admin.blog.show',$blog->id)}}">
+                                            <label class="badge badge-info">
+                                            <i class="bi bi-eye pe-2"></i>
+                                                Show
+                                            </label>
+                                        </a>
                                         <a class="btn btn-primary px-1 py-0" href="{{route('admin.blog.edit',$blog->id)}}">
                                             <label class="badge badge-info">
                                                 <i class="bi bi-pencil-square pe-2"></i>
@@ -63,7 +71,7 @@
                                                 Delete
                                             </label>
                                         </div>
-                                        <input type="submit" class="d-none" form="{{ 'delete-'.$user->id }}" id="{{ 'submit-delete-'.$blog->id }}" />
+                                        <input type="submit" class="d-none" form="{{ 'delete-'.$blog->id }}" id="{{ 'submit-delete-'.$blog->id }}" />
                                         <form action="{{ route('admin.blog.destroy',$blog->id) }}" method="post" id="{{ 'delete-'.$blog->id }}" class="d-none">
                                             @csrf
                                             @method('DELETE')

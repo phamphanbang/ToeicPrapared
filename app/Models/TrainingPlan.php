@@ -27,10 +27,10 @@ class TrainingPlan extends Model
     ];
 
     public function user() {
-        $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function trainingHistory() {
-        $this->hasMany(TrainingHistory::class,'plan_id');
+        return $this->hasMany(TrainingHistory::class,'plan_id');
     }
 }

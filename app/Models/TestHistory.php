@@ -22,18 +22,18 @@ class TestHistory extends Model
     ];
 
     public function user() {
-        $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function test() {
-        $this->belongsTo(Test::class,'test_id');
+        return $this->belongsTo(Test::class,'test_id');
     }
 
     public function trainingTest() {
-        $this->hasMany(TrainingTest::class,'test_history_id');
+        return $this->hasMany(TrainingTest::class,'test_history_id');
     }
 
     public function testHistoryAnswer() {
-        $this->hasMany(TestHistoryAnswer::class,'hsitory_id');
+        return $this->hasMany(TestHistoryAnswer::class,'hsitory_id');
     }
 }

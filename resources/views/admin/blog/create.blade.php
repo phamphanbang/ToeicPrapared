@@ -4,12 +4,24 @@
 
 <div class="container m-0 p-0">
     <div class="row w-100">
+        @error('name')
+        <div class="alert alert-danger ms-5 mt-3 mb-0 w-auto d-flex float-alert" role="alert">
+            {{ $message }}
+            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @enderror
+        @error('blog')
+        <div class="alert alert-danger ms-5 mt-3 mb-0 w-auto d-flex float-alert" role="alert">
+            {{ $message }}
+            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @enderror
         <div class="col-lg-12 grid-margin stretch-card ps-5 pt-4 w-100 ">
             <div class="card w-100 shadow">
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">Create New Blog</h4>
                     <div class="d-flex justify-content-center mt-3">
-                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.user.store')}}">
+                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.blog.store')}}">
                             @csrf
                             <div class=" mb-4">
                                 <label for="name" class="form-label">Title</label>
@@ -19,7 +31,10 @@
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <textarea class="tinymce-editor" name="body"></textarea>
+                                <textarea class="tinymce-editor" name="blog"></textarea>
+                                @error('blog')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-success float-end">Create</button>
                         </form>

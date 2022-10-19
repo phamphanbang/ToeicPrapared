@@ -19,10 +19,10 @@ class Comment extends Model
     ];
 
     public function commentSet() {
-        $this->belongsTo(CommentSet::class,'comment_set_id');
+        return $this->belongsTo(CommentSet::class,'comment_set_id');
     }
 
     public function user() {
-        $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class,'user_id');
     }
 }

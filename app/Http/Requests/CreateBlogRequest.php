@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateUserRequest extends FormRequest
+class CreateBlogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        if(Auth::check()) {
+        if(Auth::user()->role == 'admin' || Auth::user()->role == 'modder') {
             return true;
         }
         else return false;
@@ -23,24 +23,21 @@ class UpdateUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {
         return [
-            'name' => ['required','string', 'max:255'],
-            'email' => ['required','string', 'email', 'max:255', 'unique:user,email,'.$this->old_email.',email'],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'name' => ['required','string','unique:blog' ,'max:255'],
+            'blog' => ['required','string']
         ];
     }
 
     public function messages()
     {
         return [
+            'required' => 'The :attribute field is required.',
             'unique' => 'The :attribute is already existed',
-            'min' => [
-            'string' => 'The :attribute cannot below 8 character'
-            ]
         ];
     }
 }
