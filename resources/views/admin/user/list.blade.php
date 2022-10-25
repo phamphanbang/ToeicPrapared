@@ -32,12 +32,12 @@
                         <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.user.search')}}">
                             @csrf
                             <label for="search">Search</label>
-                            <input type="text" name="search" id="search" class="form-control d-inline-block ms-2">
+                            <input type="text" name="search" id="search" class="form-control d-inline-block ms-2" value="{{request('search')?request('search'):'' }}">
                             <label for="search-by" class="mx-2 text-nowrap">Search by</label>
                             <select name="by" id="search-by" class="form-select">
-                                <option value="id">Id</option>
-                                <option value="name">Name</option>
-                                <option value="email">Email</option>
+                                <option {!! request('by')=="id"?'selected':'' !!} value="id">Id</option>
+                                <option {!! request('by')=="name"?'selected':'' !!} value="name">Name</option>
+                                <option {!! request('by')=="email"?'selected':'' !!} value="email">Email</option>
                             </select>
                             <button type="submit" class="btn btn-primary ms-4 d-flex">
                                 <i class="bi bi-search pe-2"></i>

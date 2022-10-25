@@ -30,4 +30,8 @@ class TestTemplate extends Model
     public function partTemplates() {
         return $this->hasMany(PartTemplate::class,'test_id');
     }
+
+    public function scopeGetAllTemplates($query){
+        return $query->paginate(5);
+    }
 }

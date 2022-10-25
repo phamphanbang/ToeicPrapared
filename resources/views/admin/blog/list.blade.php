@@ -4,26 +4,40 @@
 
 <div class="container m-0 p-0">
     <div class="row">
-        <!-- @if(session()->has('deleteUserSuccessfully'))
-        <div class="alert alert-success ms-5 my-3 d-flex" role="alert">
-            {{ session()->get('deleteUserSuccessfully') }}
-            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="admin-top-message">
+            @if(session()->has('deleteBlogSuccessfully'))
+            <div class="alert alert-success ms-5 my-3 d-flex w-fit-content" role="alert">
+                {{ session()->get('deleteBlogSuccessfully') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if(session()->has('blogChangeSuccess'))
+            <div class="alert alert-success ms-5 mt-3 mb-0 d-flex w-fit-content" role="alert">
+                {{ session()->get('blogChangeSuccess') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if(session()->has('blogCreateSuccess'))
+            <div class="alert alert-success ms-5 mt-3 mb-0 d-flex w-fit-content " role="alert">
+                {{ session()->get('blogCreateSuccess') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
         </div>
-        @endif -->
         <div class="col-lg-12 grid-margin stretch-card px-5 pt-4 w-100">
             <div class="card shadow">
                 <div class="card-body">
-                    <h4 class="card-title display-inline-block">User</h4>
+                    <h4 class="card-title display-inline-block">Blog</h4>
                     <div class="d-flex flex-row py-2 justify-content-between">
-                        <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.user.search')}}">
+                        <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.blog.search')}}">
                             @csrf
                             <label for="search">Search</label>
-                            <input type="text" name="search" id="search" class="form-control d-inline-block ms-2">
+                            <input type="text" name="search" id="search" class="form-control d-inline-block ms-2" value="{{request('search')?request('search'):'' }}">
                             <label for="search-by" class="mx-2 text-nowrap">Search by</label>
                             <select name="by" id="search-by" class="form-select">
-                                <option value="id">Blog's Id</option>
-                                <option value="name">Blog's Name</option>
-                                <option value="author">Author's Name</option>
+                                <option {!! request('by')=="id"?'selected':'' !!} value="id">Blog's Id</option>
+                                <option {!! request('by')=="name"?'selected':'' !!} value="name">Blog's Name</option>
+                                <option {!! request('by')=="author"?'selected':'' !!} value="author">Author's Name</option>
                             </select>
                             <button type="submit" class="btn btn-primary ms-4 d-flex">
                                 <i class="bi bi-search pe-2"></i>

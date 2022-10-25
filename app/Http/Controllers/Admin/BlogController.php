@@ -10,11 +10,15 @@ use App\Models\User;
 use App\Http\Requests\CreateBlogRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateBlogRequest;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\Builder;
 
 class BlogController extends Controller
 {
     public function index(){
         $data["blogs"] = Blog::getAllBlogs();
+        Session::put('task_url',request()->fullUrl());
         return view('admin.blog.list')->with('data',$data);
     }
 
@@ -32,7 +36,10 @@ class BlogController extends Controller
         $data["blog"]->comment_set_id = $comment_set->id;
         $data["blog"]->user_id = $request->user()->id;
         $data["blog"]->save();
-        return redirect('admin/blog/'.$data["blog"]->id.'/edit')->with('data',$data)->with('blogCreateSuccess','Blog created successfully');
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('blogCreateSuccess','Blog created successfully');
+        }
+        return redirect()->route('admin.blog.index')->with('blogCreateSuccess','Blog created successfully');
     }
 
     public function show($id){
@@ -53,7 +60,34 @@ class BlogController extends Controller
         return redirect(route('admin.blog.edit',$data["blog"]->id))->with('data',$data)->with('blogChangeSuccess','Blog changed successfully');
     }
 
-    public function delete(){
-        
+    public function destroy($id){
+        $blog = Blog::find($id);
+        $blog->delete();
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('deleteBlogSuccessfully','Blog deleted successfully');
+        }
+        return redirect()->route('admin.blog.index')->with('deleteBlogSuccessfully','Blog deleted successfully');
+    }
+
+    public function search(Request $request) {
+        if($request->by == "author") {
+            // $users = User::where('name like','%'.$request->search.'%');
+            // $blogs = [];
+            // foreach($users as $user) {
+            //     $blogs += $user->blogs;
+            // }
+            // $collection = new Collection();
+            // foreach($blogs as $blog) {
+            //     $collection->push($blog);
+            // }
+            // $data["blogs"] = $collection->paginate(5);
+            $data["blogs"] = Blog::whereHas('user', function (Builder $query ) use($request) {
+                $query->where('name', 'like', $request->search);
+            })->paginate(5);
+        }
+        else {
+            $data["blogs"] = Blog::where($request->by,'like','%'.$request->search.'%')->paginate(5);
+        }
+        return view('admin.blog.list')->with('data',$data);
     }
 }

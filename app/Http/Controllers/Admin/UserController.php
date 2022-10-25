@@ -56,8 +56,10 @@ class UserController extends Controller
     public function destroy($id) {
         $user = User::find($id);
         $user->delete();
-        $data["users"] = User::getAllUsers();
-        return redirect(route('admin.user.index'))->with('data',$data)->with('deleteUserSuccessfully','User deleted successfully');
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('deleteUserSuccessfully','User deleted successfully');
+        }
+        return redirect()->route('admin.user.index')->with('deleteUserSuccessfully','User deleted successfully');
     }
 
     public function search(Request $request) {
