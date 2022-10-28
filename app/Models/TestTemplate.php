@@ -13,6 +13,7 @@ class TestTemplate extends Model
     use HasFactory;
 
     protected $table = "test_template";
+    public $timestamps = false;
 
     protected $fillable = [
         'name',

@@ -5,20 +5,64 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\TestTemplate;
+use App\Http\Requests\CreateTemplateRequest;
+use App\Models\ClusterTemplate;
+use App\Models\PartTemplate;
+use Illuminate\Support\Facades\Session;
 
 class TestTemplateController extends Controller
 {
     public function index() {
         $data["templates"] = TestTemplate::getAllTemplates();
+        Session::put('task_url',request()->fullUrl());
         return view('admin.template.list')->with('data',$data);
     }
 
-    public function show() {
-        
+    public function show($id) {
+        $data["template"] = TestTemplate::find($id);
+        return view('admin.template.show')->with('data',$data);
     }
 
-    public function store() {
-        
+    public function create() {
+        return view('admin.template.create');
+    }
+
+    public function store(CreateTemplateRequest $request) {
+        $template = new TestTemplate;
+        $template->name = $request->name;
+        $template->description = $request->description;
+        $template->num_of_part = $request->num_of_part;
+        $template->num_of_question = $request->num_of_question;
+        $template->duration = $request->duration;
+        $template->have_score_range = $request->have_score_range == "yes" ? true : false;
+        $template->save();
+        foreach($request["parts"] as $data) {
+            $part = new PartTemplate;
+            $part->name = $data["name"];
+            $part->order_in_test = $data["order_in_test"];
+            $part->description = $data["description"];
+            $part->num_of_question = $data["num_of_question"];
+            $part->test_id = $template->id;
+            if(array_key_exists("cluster",$data)) {
+                $part->have_cluster = true;
+                $part->save();
+                foreach($data["cluster"] as $clusterData) {
+                    $cluster = new ClusterTemplate;
+                    $cluster->num_in_part = $clusterData["num_in_part"];
+                    $cluster->num_of_question = $clusterData["num_of_question"];
+                    $cluster->part_id = $part->id;
+                    $cluster->save();
+                };
+            }
+            else {
+                $part->have_cluster = false;
+                $part->save();
+            }
+        }
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('templateCreateSuccess','Template created successfully');
+        }
+        return redirect()->route('admin.template.index')->with('templateCreateSuccess','Template created successfully');
     }
 
     public function edit() {
@@ -29,7 +73,12 @@ class TestTemplateController extends Controller
         
     }
 
-    public function destroy() {
-        
+    public function destroy($id) {
+        $template = TestTemplate::find($id);
+        $template->delete();
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('deleteTemplateSuccessfully','Template deleted successfully');
+        }
+        return redirect()->route('admin.blog.index')->with('deleteTemplateSuccessfully','Template deleted successfully');
     }
 }

@@ -13,6 +13,7 @@ class PartTemplate extends Model
     use HasFactory;
 
     protected $table = "part_template";
+    public $timestamps = false;
 
     protected $fillable = [
         'name',
@@ -23,10 +24,10 @@ class PartTemplate extends Model
     ];
 
     public function testTemplate() {
-        $this->belongsTo(TestTemplate::class,'test_id');
+        return $this->belongsTo(TestTemplate::class,'test_id');
     }
 
     public function clusterTemplate() {
-        $this->hasMany(ClusterTemplate::class,'part_id');
+        return $this->hasMany(ClusterTemplate::class,'part_id');
     }
 }

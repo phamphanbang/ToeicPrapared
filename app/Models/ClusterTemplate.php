@@ -12,6 +12,7 @@ class ClusterTemplate extends Model
     use HasFactory;
 
     protected $table = "cluster_template";
+    public $timestamps = false;
 
     protected $fillable = [
         'num_in_part',

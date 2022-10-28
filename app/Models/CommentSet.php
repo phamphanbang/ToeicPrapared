@@ -25,10 +25,10 @@ class CommentSet extends Model
     }
 
     public function test() {
-        return  $this->hasOne(Test::class,'comment_set_id');
+        return $this->hasOne(Test::class,'comment_set_id');
     }
 
     public function comments() {
-        $this->hasMany(Comment::class,'comment_set_id');
+        return $this->hasMany(Comment::class,'comment_set_id');
     }
 }

@@ -10,7 +10,7 @@
                 Blog
                 </a>
                 <a href="{{ route('admin.template.index')}}" class="list-group-item list-group-item-action rounded-0 {{ Request::is('admin/template*') ? 'active' : '' }}">
-                <i class="bi bi-book pe-2"></i>
+                <i class="bi bi-journal-code pe-2"></i>
                 Test's Template
                 </a>
                 <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>

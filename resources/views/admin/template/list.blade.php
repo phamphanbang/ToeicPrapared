@@ -24,7 +24,7 @@
                                 Search
                             </button>
                         </form>
-                        <a href="{{route('admin.blog.create')}}" class="btn btn-success ">
+                        <a href="{{route('admin.template.create')}}" class="btn btn-success ">
                             <i class="bi bi-plus pe-2"></i>Create new test template</a>
                     </div>
 
@@ -34,9 +34,8 @@
                                 <tr>
                                     <th class="">Id</th>
                                     <th class="">Name</th>
-                                    <th class="">Question</th>
-                                    <th class="">Part</th>
-                                    <th class="">Created at</th>
+                                    <th class="">Total Question</th>
+                                    <th class="">Total Parts</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -47,7 +46,6 @@
                                     <td class="">{{ $template->name }}</td>
                                     <td class="">{{ $template->num_of_question }}</td>
                                     <td class="">{{ $template->num_of_part }}</td>
-                                    <td class="">{{ $template->created_at }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-info px-1 py-0" href="{{route('admin.template.show',$template->id)}}">
                                             <label class="badge badge-info">
