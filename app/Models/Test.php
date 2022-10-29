@@ -42,4 +42,8 @@ class Test extends Model
     public function commentSet() {
         return $this->belongsTo(CommentSet::class,'comment_set_id');
     }
+
+    public function scopeGetAllTests($query){
+        return $query->paginate(5);
+    }
 }

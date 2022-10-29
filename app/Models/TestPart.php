@@ -14,6 +14,7 @@ class TestPart extends Model
     use HasFactory;
 
     protected $table = "test_part";
+    
 
     protected $fillable = [
         'order_in_test',

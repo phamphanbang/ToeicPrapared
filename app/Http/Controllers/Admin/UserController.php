@@ -46,6 +46,7 @@ class UserController extends Controller
         }
         $data["user"]->name = $request->name;
         $data["user"]->email = $request->email;
+        $data["user"]->role = $request->role;
         $data["user"]->save();
         if(session('task_url')){
             return redirect(session('task_url'))->with('profileChangeSuccess','Profile changed successfully');

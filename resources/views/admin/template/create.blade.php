@@ -19,34 +19,45 @@
         <div class="col-lg-12 grid-margin stretch-card ps-5 pt-4 w-100 ">
             <div class="card w-100 shadow">
                 <div class="card-body">
+                    <div class="mb-3 d-flex flex-row align-items-center">
+                        <a class="btn btn-primary" href="{{url()->previous()}}" role="button">
+                            <i class="bi bi-arrow-left pe-2"></i>
+                            Back
+                        </a>
+                    </div>
                     <div class="d-flex flex-row justify-content-between">
                         <h4 class="card-title display-inline-block">Create New Test's Template</h4>
-                       
+
                     </div>
 
-                    <form class="display-inline-block float-right w-75 template-form" method="POST" action="{{route('admin.template.store')}}" id="create_template">
+                    <form class="display-inline-block float-right w-75 " id="template-form" method="POST" action="{{route('admin.template.store')}}">
                         @csrf
-                        <div class=" mb-4">
+                        <div class="form-group mb-4">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <div class=" mb-4">
+                        <div class="form-group mb-4">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" rows="3" id="description" name="description" ></textarea>
+                            <textarea class="form-control" rows="3" id="description" name="description" required></textarea>
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <div class=" mb-4">
+                        <div class="form-group mb-4">
                             <label for="num_of_part" class="form-label">Total parts</label>
-                            <input type="number" class="form-control" id="num_of_part" name="num_of_part" >
+                            <input type="number" class="form-control" id="num_of_part" name="num_of_part" required>
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <div class=" mb-4">
+                        <div class="form-group mb-4">
                             <label for="num_of_question" class="form-label">Total questions</label>
-                            <input type="number" class="form-control" id="num_of_question" name="num_of_question">
+                            <input type="number" class="form-control" id="num_of_question" name="num_of_question" required>
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <div class=" mb-4">
+                        <div class="form-group mb-4">
                             <label for="duration" class="form-label">Duration</label>
-                            <input type="text" class="form-control" id="duration" name="duration">
+                            <input type="text" class="form-control" id="duration" name="duration" required>
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <div class=" mb-4">
+                        <div class="form-group mb-4">
                             <label for="have_score_range" class="form-label">Have score range</label>
                             <select name="have_score_range" id="have_score_range" class="form-select">
                                 <option value="yes">Yes</option>
@@ -79,7 +90,7 @@
                             <button type="button" class="btn btn-primary mt-2 ms-auto" id="add-cluster" count="0">Add Cluster</button>
                         </div> -->
                         <button type="button" class="btn btn-primary ms-50" id="add-part" count="0">Add Part</button>
-                        <button type="submit" form="create_template" class="btn btn-success ms-auto d-block mt-5">Create Template</button>
+                        <button type="submit" form="template-form" class="btn btn-success ms-auto d-block mt-5">Create Template</button>
                     </form>
                 </div>
             </div>
@@ -98,20 +109,22 @@
             let partNumOfQuestion = partInput + "[num_of_question]";
             let partOrderInTest = partInput + "[order_in_test]";
             let partHaveScoreRange = partInput + "[have_score-range]";
+            let temp = "Part-" + partCount;
+            let partNameValue = temp.split('-').join(' ');
             let block = '<div class="d-flex flex-column mb-4 m-3 p-3 border rounded part-block">';
             block += '<div class="d-flex flex-row justify-content-between">';
             block += "<h2 class='card-title display-inline-block'>Part " + partCount + "</h2>";
             block += '<button type="button" class="btn btn-danger float-end delete-part">Delete Part</button>';
             block += '</div>';
             block += "<label for=" + partName + " class='form-label'>Part name</label>";
-            block += "<input type='text' class='form-control' id=" + partName + " name=" + partName + ">";
+            block += "<input required type='text' class='form-control part-name' id=" + partName + " name=" + partName + " value='" + partNameValue + "'>";
             block += "<label for=" + partOrderInTest + " class='form-label'>Order in test</label>";
-            block += "<input type='number' class='form-control' id=" + partOrderInTest + " name=" + partOrderInTest + ">";
+            block += "<input required type='number' class='form-control part-order-in-test' id=" + partOrderInTest + " name=" + partOrderInTest + " value = " + partCount + ">";
             block += "<label for=" + partDescription + " class='form-label'>Description</label>";
-            block += "<textarea class='form-control' rows='3' id=" + partDescription + " name=" + partDescription + "></textarea>";
+            block += "<textarea required class='form-control' rows='3' id=" + partDescription + " name=" + partDescription + "></textarea>";
             block += "<label for=" + partNumOfQuestion + " class='form-label'>Total questions</label>";
-            block += "<input type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
-            block += "<button type='button' class='btn btn-primary mt-2 ms-auto add-cluster' count='1' belongTo="+partInput+">Add Cluster</button>";
+            block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
+            block += "<button type='button' class='btn btn-primary mt-2 ms-auto add-cluster' count='1' belongTo=" + partInput + ">Add Cluster</button>";
             block += '</div>';
             partCount++;
             partId++;
@@ -124,6 +137,8 @@
             $(".part-block").each((i, item) => {
                 console.log($(item).text());
                 $(item).find('h2').text("Part " + partCount);
+                $(item).find('.part-name').attr("value", "Part " + partCount);
+                $(item).find('.part-order-in-test').attr("value", partCount);
                 partCount++;
             });
         });
@@ -131,7 +146,7 @@
         $(document).on('click', '.add-cluster', function() {
             let clusterId = $(this).attr("count");
             let belongTo = $(this).attr("belongTo");
-            let clusterName = belongTo + "[cluster]["+clusterId+"]"; 
+            let clusterName = belongTo + "[cluster][" + clusterId + "]";
             let numInPart = clusterName + "[num_in_part]";
             let numOfQuestion = clusterName + "[num_of_question]";
             let block = "<div class='d-flex flex-column mb-4 m-3 p-3 border rounded cluster-block'>";
@@ -140,12 +155,12 @@
             block += '<button type="button" class="btn btn-danger float-end delete-cluster">Delete Cluster</button>';
             block += '</div>';
             block += "<label for=" + numInPart + " class='form-label'>Cluster in part</label>";
-            block += "<input type='number' class='form-control' id=" + numInPart + " name=" + numInPart + ">";
+            block += "<input required type='number' class='form-control' id=" + numInPart + " name=" + numInPart + ">";
             block += "<label for=" + numOfQuestion + " class='form-label'>Total question</label>";
-            block += "<input type='number' class='form-control' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
+            block += "<input required type='number' class='form-control' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
             block += "</div>";
             $(this).before(block);
-            $(this).attr("count",++clusterId);
+            $(this).attr("count", ++clusterId);
         });
 
         $(document).on('click', '.delete-cluster', function() {
@@ -156,7 +171,7 @@
                 $(item).find('h2').text("Cluster " + clusterCount);
                 clusterCount++;
             });
-            partBlock.find(".add-cluster").attr("count",clusterCount);
+            partBlock.find(".add-cluster").attr("count", clusterCount);
         });
     });
 </script>

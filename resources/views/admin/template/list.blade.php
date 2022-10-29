@@ -10,15 +10,35 @@
             <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif -->
+        <div class="admin-top-message">
+            @if(session()->has('templateCreateSuccess'))
+            <div class="alert alert-success ms-5 my-3 d-flex w-fit-content" role="alert">
+                {{ session()->get('templateCreateSuccess') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if(session()->has('templateUpdateSuccess'))
+            <div class="alert alert-success ms-5 mt-3 mb-0 d-flex w-fit-content" role="alert">
+                {{ session()->get('templateUpdateSuccess') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if(session()->has('deleteTemplateSuccessfully'))
+            <div class="alert alert-success ms-5 mt-3 mb-0 d-flex w-fit-content " role="alert">
+                {{ session()->get('deleteTemplateSuccessfully') }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+        </div>
         <div class="col-lg-12 grid-margin stretch-card px-5 pt-4 w-100">
             <div class="card shadow">
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">Test Template</h4>
                     <div class="d-flex flex-row py-2 justify-content-between">
-                        <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.user.search')}}">
+                        <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.template.search')}}">
                             @csrf
                             <label for="search">Search</label>
-                            <input type="text" name="search" id="search" class="form-control d-inline-block ms-2">
+                            <input type="text" name="search" id="search" class="form-control d-inline-block ms-2" value="{{request('search')?request('search'):'' }}">
                             <button type="submit" class="btn btn-primary ms-4 d-flex">
                                 <i class="bi bi-search pe-2"></i>
                                 Search
@@ -49,7 +69,7 @@
                                     <td class="text-center">
                                         <a class="btn btn-info px-1 py-0" href="{{route('admin.template.show',$template->id)}}">
                                             <label class="badge badge-info">
-                                            <i class="bi bi-eye pe-2"></i>
+                                                <i class="bi bi-eye pe-2"></i>
                                                 Show
                                             </label>
                                         </a>
@@ -76,6 +96,11 @@
                             @endforeach
 
                         </table>
+                        @if ($data["templates"]->count() == 0)
+                            <div class="d-flex justify-content-center ">
+                                <h4>No result found</h4>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="ms-4">

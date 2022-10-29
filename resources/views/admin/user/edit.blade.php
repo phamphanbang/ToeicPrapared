@@ -39,6 +39,14 @@
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>
+                            <div class=" mb-4">
+                                <label for="role" class="form-label">Role</label>
+                                <select name="role" id="role" class="form-select">
+                                    <option {!! $data['user']->role == 'admin' ?'selected':'' !!} value="admin">Admin</option>
+                                    <option {!! $data['user']->role == 'modder' ?'selected':'' !!} value="modder">Modder</option>
+                                    <option {!! $data['user']->role == 'user' ?'selected':'' !!} value="user">User</option>
+                                </select>
+                            </div>
                             <div class="mb-4">
                                 <label for="password" class="form-label">New Password</label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">

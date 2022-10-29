@@ -23,7 +23,7 @@
         <div class="container h-100 w-100 d-flex justify-content-center align-items-center">
             <div class="row justify-content-center w-50">
                 <div class="col-md-8 w-100">
-                    <div class="card">
+                    <!-- <div class="card">
                         <div class="card-header">{{ __('Admin Login') }}</div>
 
                         <div class="card-body">
@@ -79,8 +79,34 @@
                                 </div>
                             </form>
                         </div>
+                    </div> -->
+
+                    <div class="d-flex flex-column align-items-center border border-2 rounded py-5 shadow-lg">
+                        <h2 class="login-header">TOEICAMP</h2>
+                        <form method="POST" action="/admin/login" class="admin-login-form">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email')?old('email'):'' }}">
+                                @error('email')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">{{ __('Password') }}</label>
+                                <input id="password" type="password" class="form-control" name="password">
+                                @error('password')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
+                                @if(session()->has('loginFail'))
+                                <p class="text-danger">{{ session()->get('loginFail') }}</p>
+                                @endif
+                            </div>
+                            <button type="submit" class="btn btn-primary float-end w-100 py-2 mt-2">Login</button>
+                        </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

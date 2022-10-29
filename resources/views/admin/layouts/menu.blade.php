@@ -13,8 +13,10 @@
                 <i class="bi bi-journal-code pe-2"></i>
                 Test's Template
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                <a href="#" class="list-group-item list-group-item-action disabled rounded-0" tabindex="-1" aria-disabled="true">A disabled link item</a>
+                <a href="{{ route('admin.test.index')}}" class="list-group-item list-group-item-action rounded-0 {{ Request::is('admin/test*') ? 'active' : '' }}">
+                <i class="bi bi-journal-check pe-2"></i>
+                Test 
+                </a>
             </div>
         </div>
     </div>

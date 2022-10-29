@@ -56,13 +56,13 @@
                                 <h2 class="card-title display-inline-block">{{ $part->name }}</h2>
                             </div>
                             <label class="form-label">Part name</label>
-                            <input type="text" class="form-control" id="part[1]" name="part[1]" value="{{$part->name}}">
+                            <input type="text" class="form-control" id="part[1]" name="part[1]" value="{{$part->name}}" readonly>
                             <label class="form-label">Order in test</label>
-                            <input type="number" class="form-control" id="partname" name="partname" value="{{$part->order_in_test}}">
+                            <input type="number" class="form-control" id="partname" name="partname" value="{{$part->order_in_test}}" readonly>
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" id="partname" name="partname">{{ trim($part->description) }}</textarea>
+                            <textarea class="form-control" id="partname" name="partname" readonly>{{ trim($part->description) }}</textarea>
                             <label class="form-label">Total questions</label>
-                            <input type="number" class="form-control" id="partname" name="partname" value="{{$part->num_of_question}}">
+                            <input type="number" class="form-control" id="partname" name="partname" value="{{$part->num_of_question}}" readonly>
                             @foreach ($part->clusterTemplate as $cluster)
                             <div class="d-flex flex-column mb-4 m-3 p-3 border rounded">
                                 <div class="d-flex flex-row justify-content-between">

@@ -107,6 +107,11 @@
                             @endforeach
 
                         </table>
+                        @if ($data["users"]->count() == 0)
+                            <div class="d-flex justify-content-center ">
+                                <h4>No result found</h4>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="ms-4">
