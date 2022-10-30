@@ -85,10 +85,19 @@
                             <label class="form-label label-num-of-question">Total questions</label>
                             <input required type="number" class="form-control input-num-of-question" id="partname" name="partname" value="{{$part->num_of_question}}">
                             <label class="form-label label-num-of-answer">Total answer of each question</label>
-                            <!-- <input required type="number" class="form-control input-num-of-answer" id="partname" name="partname" value="{{$part->num_of_answer}}"> -->
                             <select name="by" id="search-by" class="form-select input-num-of-answer">
                                 <option {!! $part->num_of_answer=="3"?'selected':'' !!} value="3">3</option>
                                 <option {!! $part->num_of_answer=="4"?'selected':'' !!} value="4">4</option>
+                            </select>
+                            <label class="form-label label-have-attachment">Question has attachment</label>
+                            <select name="by" id="search-by" class="form-select input-have-attachment">
+                                <option {!! $part->have_attachment=="1"?'selected':'' !!} value="yes">Yes</option>
+                                <option {!! $part->have_attachment=="0"?'selected':'' !!} value="no">No</option>
+                            </select>
+                            <label class="form-label label-have-question">Question has content</label>
+                            <select name="by" id="search-by" class="form-select input-have-question">
+                                <option {!! $part->have_question=="1"?'selected':'' !!} value="yes">Yes</option>
+                                <option {!! $part->have_question=="0"?'selected':'' !!} value="no">No</option>
                             </select>
                             @foreach ($part->clusterTemplate as $cluster)
                             <div class="d-flex flex-column mb-4 m-3 p-3 border rounded cluster-block">
@@ -100,6 +109,16 @@
                                 <input required type="text" class="form-control input-cluster-num-in-part" id="partname" name="partname" value="{{$cluster->num_in_part}}">
                                 <label class="form-label label-cluster-num-of-question">Total question</label>
                                 <input required type="text" class="form-control input-cluster-num-of-question" id="partname" name="partname" value="{{$cluster->num_of_question}}">
+                                <label class="form-label label-cluster-have-attachment">Question has attachment</label>
+                                <select name="by" id="search-by" class="form-select input-cluster-have-attachment">
+                                    <option {!! $cluster->have_attachment=="1"?'selected':'' !!} value="yes">Yes</option>
+                                    <option {!! $cluster->have_attachment=="0"?'selected':'' !!} value="no">No</option>
+                                </select>
+                                <label class="form-label label-cluster-have-question">Question has content</label>
+                                <select name="by" id="search-by" class="form-select input-cluster-have-question">
+                                    <option {!! $cluster->have_question=="1"?'selected':'' !!} value="yes">Yes</option>
+                                    <option {!! $cluster->have_question=="0"?'selected':'' !!} value="no">No</option>
+                                </select>
                             </div>
                             @endforeach
                             <button type='button' class='btn btn-primary mt-2 ms-auto add-cluster' count='1' belongTo="">Add Cluster</button>
@@ -147,6 +166,14 @@
                 "id": partInput + "[num_of_answer]",
                 "name": partInput + "[num_of_answer]"
             });
+            $(item).find('.input-have-attachment').attr({
+                "id": partInput + "[have_attachment]",
+                "name": partInput + "[have_attachment]"
+            });
+            $(item).find('.input-have-question').attr({
+                "id": partInput + "[have_question]",
+                "name": partInput + "[have_question]"
+            });
             $(item).children('.cluster-block').each((j, citem) => {
                 let jndex = ++j;
                 let clusterName = partInput + "[cluster][" + jndex + "]";
@@ -157,6 +184,14 @@
                 $(citem).find('.input-cluster-num-of-question').attr({
                     "id": clusterName + "[num_of_question]",
                     "name": clusterName + "[num_of_question]"
+                });
+                $(citem).find('.input-cluster-have-attachment').attr({
+                    "id": clusterName + "[have_attachment]",
+                    "name": clusterName + "[have_attachment]"
+                });
+                $(citem).find('.input-cluster-have_question').attr({
+                    "id": clusterName + "[have_question]",
+                    "name": clusterName + "[have_question]"
                 });
                 $(item).find('button.add-cluster').attr("count", jndex);
             });
@@ -170,6 +205,8 @@
             let partDescription = partInput + "[description]";
             let partNumOfQuestion = partInput + "[num_of_question]";
             let partOrderInTest = partInput + "[order_in_test]";
+            let partHaveAttachment = partInput + "[have_atachment]";
+            let partHaveQuestion = partInput + "[have_question]";
             let block = '<div class="d-flex flex-column mb-4 m-3 p-3 border rounded part-block">';
             block += '<div class="d-flex flex-row justify-content-between">';
             block += "<h2 class='card-title display-inline-block'>Part " + partCount + "</h2>";
@@ -184,9 +221,19 @@
             block += "<label for=" + partNumOfQuestion + " class='form-label'>Total questions</label>";
             block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">";
             block += "<label for=" + partNumOfAnswer + " class='form-label'>Total answer of each question</label>";
-            block += "<select name="+partNumOfAnswer+" id="+partNumOfAnswer+" class='form-select'>";
+            block += "<select name=" + partNumOfAnswer + " id=" + partNumOfAnswer + " class='form-select'>";
             block += "<option value='3'>3</option>";
             block += "<option value='4'>4</option>";
+            block += "</select>";
+            block += "<label for=" + partHaveAttachment + " class='form-label'>Question has attac</label>";
+            block += "<select name=" + partHaveAttachment + " id=" + partHaveAttachment + " class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
+            block += "</select>";
+            block += "<label for=" + partHaveQuestion + " class='form-label'>Question has attac</label>";
+            block += "<select name=" + partHaveQuestion + " id=" + partHaveQuestion + " class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
             block += "</select>";
             block += "<button type='button' class='btn btn-primary mt-2 ms-auto add-cluster' count='1' belongTo=" + partInput + ">Add Cluster</button>";
             block += '</div>';
@@ -211,6 +258,8 @@
             let clusterName = belongTo + "[cluster][" + clusterId + "]";
             let numInPart = clusterName + "[num_in_part]";
             let numOfQuestion = clusterName + "[num_of_question]";
+            let haveAttachment = clusterName + "[have_attachment]";
+            let haveQuestion = clusterName + "[have_question]";
             let block = "<div class='d-flex flex-column mb-4 m-3 p-3 border rounded cluster-block'>";
             block += '<div class="d-flex flex-row justify-content-between">';
             block += "<h2 class='card-title display-inline-block'>Cluster " + clusterId + "</h2>";
@@ -220,6 +269,16 @@
             block += "<input required type='number' class='form-control' id=" + numInPart + " name=" + numInPart + ">";
             block += "<label for=" + numOfQuestion + " class='form-label'>Total question</label>";
             block += "<input required type='number' class='form-control' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
+            block += "<label for=" + haveAttachment + " class='form-label'>Cluster has attacment</label>";
+            block += "<select name="+haveAttachment+" id="+haveAttachment+" class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
+            block += "</select>";
+            block += "<label for=" + haveQuestion + " class='form-label'>Cluster has content</label>";
+            block += "<select name="+haveQuestion+" id="+haveQuestion+" class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
+            block += "</select>";
             block += "</div>";
             $(this).before(block);
             $(this).attr("count", ++clusterId);

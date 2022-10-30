@@ -49,6 +49,8 @@ class TestTemplateController extends Controller
             $part->description = $data["description"];
             $part->num_of_question = $data["num_of_question"];
             $part->num_of_answer = $data["num_of_answer"];
+            $part->have_attachment = $data["have_attachment"] == "yes" ? true : false;
+            $part->have_question = $data["have_question"] == "yes" ? true : false;
             $part->test_id = $template->id;
             if (array_key_exists("cluster", $data)) {
                 $part->have_cluster = true;
@@ -57,6 +59,8 @@ class TestTemplateController extends Controller
                     $cluster = new ClusterTemplate;
                     $cluster->num_in_part = $clusterData["num_in_part"];
                     $cluster->num_of_question = $clusterData["num_of_question"];
+                    $cluster->have_attachment = $data["have_attachment"] == "yes" ? true : false;
+                    $cluster->have_question = $data["have_question"] == "yes" ? true : false;
                     $cluster->part_id = $part->id;
                     $cluster->save();
                 };
@@ -97,6 +101,8 @@ class TestTemplateController extends Controller
                 $part->description = $data["description"];
                 $part->num_of_question = $data["num_of_question"];
                 $part->num_of_answer = $data["num_of_answer"];
+                $part->have_attachment = $data["have_attachment"] == "yes" ? true : false;
+                $part->have_question = $data["have_question"] == "yes" ? true : false;
                 $part->test_id = $template->id;
                 if (array_key_exists("cluster", $data)) {
                     $part->have_cluster = true;
@@ -105,6 +111,8 @@ class TestTemplateController extends Controller
                         $cluster = new ClusterTemplate;
                         $cluster->num_in_part = $clusterData["num_in_part"];
                         $cluster->num_of_question = $clusterData["num_of_question"];
+                        $cluster->have_attachment = $data["have_attachment"] == "yes" ? true : false;
+                        $cluster->have_question = $data["have_question"] == "yes" ? true : false;
                         $cluster->part_id = $part->id;
                         $cluster->save();
                     };
@@ -130,8 +138,9 @@ class TestTemplateController extends Controller
         return redirect()->route('admin.blog.index')->with('deleteTemplateSuccessfully', 'Template deleted successfully');
     }
 
-    public function search(Request $request) {
-        $data["templates"] = TestTemplate::where('name', 'like','%'.$request->search.'%')->paginate(5);
-        return view('admin.template.list')->with('data',$data);
+    public function search(Request $request)
+    {
+        $data["templates"] = TestTemplate::where('name', 'like', '%' . $request->search . '%')->paginate(5);
+        return view('admin.template.list')->with('data', $data);
     }
 }

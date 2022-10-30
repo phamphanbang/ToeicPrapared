@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Test;
 use App\Models\TestTemplate;
 use Illuminate\Support\Facades\Session;
+use SebastianBergmann\Template\Template;
 
 class TestController extends Controller
 {
@@ -26,7 +27,9 @@ class TestController extends Controller
     }
 
     public function generate(Request $request) {
-
+        $data["templates"] = TestTemplate::where('status' , '=' , 'public')->get();
+        $data["template"] = TestTemplate::find($request->template);
+        return view('admin.test.create')->with('data',$data);
     }
 
     public function store() {

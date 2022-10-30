@@ -116,7 +116,8 @@
             let partNumOfQuestion = partInput + "[num_of_question]";
             let partNumOfAnswer = partInput + "[num_of_answer]";
             let partOrderInTest = partInput + "[order_in_test]";
-            let partHaveScoreRange = partInput + "[have_score-range]";
+            let partHaveAttachment = partInput + "[have_attachment]";
+            let partHaveQuestion = partInput + "[have_question]";
             let temp = "Part-" + partCount;
             let partNameValue = temp.split('-').join(' ');
             let block = '<div class="d-flex flex-column mb-4 m-3 p-3 border rounded part-block">';
@@ -133,10 +134,19 @@
             block += "<label for=" + partNumOfQuestion + " class='form-label'>Total questions</label>";
             block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
             block += "<label for=" + partNumOfAnswer + " class='form-label'>Total answer of each question</label>";
-            // block += "<input required type='number' class='form-control' id=" + partNumOfAnswer + " name=" + partNumOfAnswer + ">"
             block += "<select name="+partNumOfAnswer+" id="+partNumOfAnswer+" class='form-select'>";
             block += "<option value='3'>3</option>";
             block += "<option value='4'>4</option>";
+            block += "</select>";
+            block += "<label for=" + partHaveAttachment + " class='form-label'>Question has attacment</label>";
+            block += "<select name="+partHaveAttachment+" id="+partHaveAttachment+" class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
+            block += "</select>";
+            block += "<label for=" + partHaveQuestion + " class='form-label'>Question has content</label>";
+            block += "<select name="+partHaveQuestion+" id="+partHaveQuestion+" class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
             block += "</select>";
             block += "<button type='button' class='btn btn-primary mt-2 ms-auto add-cluster' count='1' belongTo=" + partInput + ">Add Cluster</button>";
             block += '</div>';
@@ -163,6 +173,8 @@
             let clusterName = belongTo + "[cluster][" + clusterId + "]";
             let numInPart = clusterName + "[num_in_part]";
             let numOfQuestion = clusterName + "[num_of_question]";
+            let haveAttachment = clusterName + "[have_attachment]";
+            let haveQuestion = clusterName + "[have_question]";
             let block = "<div class='d-flex flex-column mb-4 m-3 p-3 border rounded cluster-block'>";
             block += '<div class="d-flex flex-row justify-content-between">';
             block += "<h2 class='card-title display-inline-block'>Cluster " + clusterId + "</h2>";
@@ -172,6 +184,16 @@
             block += "<input required type='number' class='form-control' id=" + numInPart + " name=" + numInPart + ">";
             block += "<label for=" + numOfQuestion + " class='form-label'>Total question</label>";
             block += "<input required type='number' class='form-control' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
+            block += "<label for=" + haveAttachment + " class='form-label'>Cluster has attacment</label>";
+            block += "<select name="+haveAttachment+" id="+haveAttachment+" class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
+            block += "</select>";
+            block += "<label for=" + haveQuestion + " class='form-label'>Cluster has content</label>";
+            block += "<select name="+haveQuestion+" id="+haveQuestion+" class='form-select'>";
+            block += "<option value='yes'>Yes</option>";
+            block += "<option value='no'>No</option>";
+            block += "</select>";
             block += "</div>";
             $(this).before(block);
             $(this).attr("count", ++clusterId);
