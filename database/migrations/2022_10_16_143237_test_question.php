@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('part_id')->constrained('test_part')->onDelete('cascade');
             $table->foreignId('cluster_id')->nullable()->constrained('test_cluster')->onDelete('cascade');
             $table->integer('order_in_test');
-            $table->text('question');
+            $table->text('question')->nullable();
             $table->string('option_1');
             $table->string('option_2');
             $table->string('option_3');

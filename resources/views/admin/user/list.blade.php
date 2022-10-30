@@ -109,7 +109,7 @@
                         </table>
                         @if ($data["users"]->count() == 0)
                             <div class="d-flex justify-content-center ">
-                                <h4>No result found</h4>
+                                <h4>No record available</h4>
                             </div>
                         @endif
                     </div>

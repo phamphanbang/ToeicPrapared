@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Test;
+use App\Models\TestTemplate;
 use Illuminate\Support\Facades\Session;
 
 class TestController extends Controller
@@ -20,7 +21,12 @@ class TestController extends Controller
     }
 
     public function create() {
-        
+        $data["templates"] = TestTemplate::where('status' , '=' , 'public')->get();
+        return view('admin.test.create')->with('data',$data);
+    }
+
+    public function generate(Request $request) {
+
     }
 
     public function store() {

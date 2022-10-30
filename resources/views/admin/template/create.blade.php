@@ -58,6 +58,13 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group mb-4">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select">
+                                <option value="public">Public</option>
+                                <option value="onhold">On Hold</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
                             <label for="have_score_range" class="form-label">Have score range</label>
                             <select name="have_score_range" id="have_score_range" class="form-select">
                                 <option value="yes">Yes</option>
@@ -107,6 +114,7 @@
             let partName = partInput + "[name]";
             let partDescription = partInput + "[description]";
             let partNumOfQuestion = partInput + "[num_of_question]";
+            let partNumOfAnswer = partInput + "[num_of_answer]";
             let partOrderInTest = partInput + "[order_in_test]";
             let partHaveScoreRange = partInput + "[have_score-range]";
             let temp = "Part-" + partCount;
@@ -124,6 +132,12 @@
             block += "<textarea required class='form-control' rows='3' id=" + partDescription + " name=" + partDescription + "></textarea>";
             block += "<label for=" + partNumOfQuestion + " class='form-label'>Total questions</label>";
             block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
+            block += "<label for=" + partNumOfAnswer + " class='form-label'>Total answer of each question</label>";
+            // block += "<input required type='number' class='form-control' id=" + partNumOfAnswer + " name=" + partNumOfAnswer + ">"
+            block += "<select name="+partNumOfAnswer+" id="+partNumOfAnswer+" class='form-select'>";
+            block += "<option value='3'>3</option>";
+            block += "<option value='4'>4</option>";
+            block += "</select>";
             block += "<button type='button' class='btn btn-primary mt-2 ms-auto add-cluster' count='1' belongTo=" + partInput + ">Add Cluster</button>";
             block += '</div>';
             partCount++;

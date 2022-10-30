@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('test_type_id')->constrained('test_template');
             $table->foreignId('comment_set_id')->constrained('comment_set');
             $table->string('name');
-            $table->enum('status',['finished','draft'])->default('finished');
+            $table->enum('status',['public','onhold'])->default('public');
             $table->integer('num_of_question');
             $table->integer('score_range')->nullable();
         });

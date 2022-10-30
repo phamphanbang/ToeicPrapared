@@ -55,6 +55,13 @@
                             <label for="duration" class="form-label">Duration</label>
                             <input required type="text" class="form-control" id="duration" name="duration" value="{{$data['template']->duration}}">
                         </div>
+                        <div class="form-group mb-4">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select">
+                                <option {!! $data['template']->status == 'public' ?'selected':'' !!} value="public">Public</option>
+                                <option {!! $data['template']->status == 'onhold' ?'selected':'' !!} value="onhold">On Hold</option>
+                            </select>
+                        </div>
                         <div class=" mb-4">
                             <label for="have_score_range" class="form-label">Have score range</label>
                             <select name="have_score_range" id="have_score_range" class="form-select">
@@ -77,6 +84,12 @@
                             <textarea required class="form-control input-description" id="partname" name="partname">{{ trim($part->description) }}</textarea>
                             <label class="form-label label-num-of-question">Total questions</label>
                             <input required type="number" class="form-control input-num-of-question" id="partname" name="partname" value="{{$part->num_of_question}}">
+                            <label class="form-label label-num-of-answer">Total answer of each question</label>
+                            <!-- <input required type="number" class="form-control input-num-of-answer" id="partname" name="partname" value="{{$part->num_of_answer}}"> -->
+                            <select name="by" id="search-by" class="form-select input-num-of-answer">
+                                <option {!! $part->num_of_answer=="3"?'selected':'' !!} value="3">3</option>
+                                <option {!! $part->num_of_answer=="4"?'selected':'' !!} value="4">4</option>
+                            </select>
                             @foreach ($part->clusterTemplate as $cluster)
                             <div class="d-flex flex-column mb-4 m-3 p-3 border rounded cluster-block">
                                 <div class="d-flex flex-row justify-content-between">
@@ -130,6 +143,10 @@
                 "id": partInput + "[num_of_question]",
                 "name": partInput + "[num_of_question]"
             });
+            $(item).find('.input-num-of-answer').attr({
+                "id": partInput + "[num_of_answer]",
+                "name": partInput + "[num_of_answer]"
+            });
             $(item).children('.cluster-block').each((j, citem) => {
                 let jndex = ++j;
                 let clusterName = partInput + "[cluster][" + jndex + "]";
@@ -165,7 +182,12 @@
             block += "<label for=" + partDescription + " class='form-label'>Description</label>";
             block += "<textarea required class='form-control' rows='3' id=" + partDescription + " name=" + partDescription + "></textarea>";
             block += "<label for=" + partNumOfQuestion + " class='form-label'>Total questions</label>";
-            block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
+            block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">";
+            block += "<label for=" + partNumOfAnswer + " class='form-label'>Total answer of each question</label>";
+            block += "<select name="+partNumOfAnswer+" id="+partNumOfAnswer+" class='form-select'>";
+            block += "<option value='3'>3</option>";
+            block += "<option value='4'>4</option>";
+            block += "</select>";
             block += "<button type='button' class='btn btn-primary mt-2 ms-auto add-cluster' count='1' belongTo=" + partInput + ">Add Cluster</button>";
             block += '</div>';
             partCount++;

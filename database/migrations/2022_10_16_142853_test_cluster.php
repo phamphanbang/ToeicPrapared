@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('order_in_part');
             $table->integer('question_begin');
             $table->integer('question_end');
-            $table->text('question');
-            $table->string('attachment');
+            $table->text('question')->nullable();
+            $table->string('attachment')->nullable();
         });
     }
 

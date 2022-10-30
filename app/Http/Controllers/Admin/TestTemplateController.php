@@ -38,6 +38,7 @@ class TestTemplateController extends Controller
         $template->description = $request->description;
         $template->num_of_part = $request->num_of_part;
         $template->num_of_question = $request->num_of_question;
+        $template->status = $request->status;
         $template->duration = $request->duration;
         $template->have_score_range = $request->have_score_range == "yes" ? true : false;
         $template->save();
@@ -47,6 +48,7 @@ class TestTemplateController extends Controller
             $part->order_in_test = $data["order_in_test"];
             $part->description = $data["description"];
             $part->num_of_question = $data["num_of_question"];
+            $part->num_of_answer = $data["num_of_answer"];
             $part->test_id = $template->id;
             if (array_key_exists("cluster", $data)) {
                 $part->have_cluster = true;
@@ -83,6 +85,7 @@ class TestTemplateController extends Controller
         $template->num_of_part = $request->num_of_part;
         $template->num_of_question = $request->num_of_question;
         $template->duration = $request->duration;
+        $template->status = $request->status;
         $template->have_score_range = $request->have_score_range == "yes" ? true : false;
         $template->save();
         $template->partTemplates()->delete();
@@ -93,6 +96,7 @@ class TestTemplateController extends Controller
                 $part->order_in_test = $data["order_in_test"];
                 $part->description = $data["description"];
                 $part->num_of_question = $data["num_of_question"];
+                $part->num_of_answer = $data["num_of_answer"];
                 $part->test_id = $template->id;
                 if (array_key_exists("cluster", $data)) {
                     $part->have_cluster = true;

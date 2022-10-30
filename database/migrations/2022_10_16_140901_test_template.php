@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->enum('status',['public','onhold'])->default('public');
             $table->integer('num_of_part');
             $table->integer('num_of_question');
             $table->integer('duration');
