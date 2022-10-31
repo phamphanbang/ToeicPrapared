@@ -69,6 +69,13 @@
                                 <option {!! $data['template']->have_score_range == 0 ?'selected':'' !!} value="no">No</option>
                             </select>
                         </div>
+                        <div class="from-group mb-4">
+                            <label class="form-label" for="have_audio_file">Have audio file</label>
+                            <select name="have_audio_file" id="have_audio_file" class="form-select">
+                                <option {!! $data['template']->have_audio_file == 1 ?'selected':'' !!} value="yes">Yes</option>
+                                <option {!! $data['template']->have_audio_file == 0 ?'selected':'' !!} value="no">No</option>
+                            </select>
+                        </div>
                         @foreach ($data["template"]->partTemplates as $part)
                         <div class="d-flex flex-column mb-4 m-3 p-3 border rounded part-block">
                             <div class="d-flex flex-row justify-content-between">

@@ -71,6 +71,13 @@
                                 <option value="no">No</option>
                             </select>
                         </div>
+                        <div class="from-group mb-4">
+                            <label class="form-label" for="have_audio_file">Have audio file</label>
+                            <select name="have_audio_file" id="have_audio_file" class="form-select">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
                         <!-- <div class="d-flex flex-column mb-4 m-3 p-3 border rounded">
                             <div class="d-flex flex-row justify-content-between">
                                 <h2 class="card-title display-inline-block">Part 1</h2>
@@ -120,7 +127,7 @@
             let partHaveQuestion = partInput + "[have_question]";
             let temp = "Part-" + partCount;
             let partNameValue = temp.split('-').join(' ');
-            let block = '<div class="d-flex flex-column mb-4 m-3 p-3 border rounded part-block">';
+            let block = '<div class="d-flex flex-column mb-4 m-3 p-3 border shadow rounded part-block">';
             block += '<div class="d-flex flex-row justify-content-between">';
             block += "<h2 class='card-title display-inline-block'>Part " + partCount + "</h2>";
             block += '<button type="button" class="btn btn-danger float-end delete-part">Delete Part</button>';
@@ -134,17 +141,17 @@
             block += "<label for=" + partNumOfQuestion + " class='form-label'>Total questions</label>";
             block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
             block += "<label for=" + partNumOfAnswer + " class='form-label'>Total answer of each question</label>";
-            block += "<select name="+partNumOfAnswer+" id="+partNumOfAnswer+" class='form-select'>";
+            block += "<select name=" + partNumOfAnswer + " id=" + partNumOfAnswer + " class='form-select'>";
             block += "<option value='3'>3</option>";
             block += "<option value='4'>4</option>";
             block += "</select>";
             block += "<label for=" + partHaveAttachment + " class='form-label'>Question has attacment</label>";
-            block += "<select name="+partHaveAttachment+" id="+partHaveAttachment+" class='form-select'>";
+            block += "<select name=" + partHaveAttachment + " id=" + partHaveAttachment + " class='form-select'>";
             block += "<option value='yes'>Yes</option>";
             block += "<option value='no'>No</option>";
             block += "</select>";
             block += "<label for=" + partHaveQuestion + " class='form-label'>Question has content</label>";
-            block += "<select name="+partHaveQuestion+" id="+partHaveQuestion+" class='form-select'>";
+            block += "<select name=" + partHaveQuestion + " id=" + partHaveQuestion + " class='form-select'>";
             block += "<option value='yes'>Yes</option>";
             block += "<option value='no'>No</option>";
             block += "</select>";
@@ -175,7 +182,7 @@
             let numOfQuestion = clusterName + "[num_of_question]";
             let haveAttachment = clusterName + "[have_attachment]";
             let haveQuestion = clusterName + "[have_question]";
-            let block = "<div class='d-flex flex-column mb-4 m-3 p-3 border rounded cluster-block'>";
+            let block = "<div class='d-flex flex-column mb-4 m-3 p-3 border rounded shadow cluster-block'>";
             block += '<div class="d-flex flex-row justify-content-between">';
             block += "<h2 class='card-title display-inline-block'>Cluster " + clusterId + "</h2>";
             block += '<button type="button" class="btn btn-danger float-end delete-cluster">Delete Cluster</button>';
@@ -185,12 +192,12 @@
             block += "<label for=" + numOfQuestion + " class='form-label'>Total question</label>";
             block += "<input required type='number' class='form-control' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
             block += "<label for=" + haveAttachment + " class='form-label'>Cluster has attacment</label>";
-            block += "<select name="+haveAttachment+" id="+haveAttachment+" class='form-select'>";
+            block += "<select name=" + haveAttachment + " id=" + haveAttachment + " class='form-select'>";
             block += "<option value='yes'>Yes</option>";
             block += "<option value='no'>No</option>";
             block += "</select>";
             block += "<label for=" + haveQuestion + " class='form-label'>Cluster has content</label>";
-            block += "<select name="+haveQuestion+" id="+haveQuestion+" class='form-select'>";
+            block += "<select name=" + haveQuestion + " id=" + haveQuestion + " class='form-select'>";
             block += "<option value='yes'>Yes</option>";
             block += "<option value='no'>No</option>";
             block += "</select>";

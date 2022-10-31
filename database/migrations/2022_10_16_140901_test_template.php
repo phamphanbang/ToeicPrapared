@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('num_of_question');
             $table->integer('duration');
             $table->boolean('have_score_range');
+            $table->boolean('have_audio_file');
         });
     }
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('status',['public','onhold'])->default('public');
             $table->integer('num_of_question');
             $table->integer('score_range')->nullable();
+            $table->string('audio_file')->nullable();
         });
     }
 

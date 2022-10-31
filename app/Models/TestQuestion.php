@@ -13,7 +13,8 @@ class TestQuestion extends Model
 {
     use HasFactory;
 
-    protected $table = "test_cluster";
+    protected $table = "test_question";
+    public $timestamps = false;
 
     protected $fillable = [
         'order_in_test',

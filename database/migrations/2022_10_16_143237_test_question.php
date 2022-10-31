@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('option_1');
             $table->string('option_2');
             $table->string('option_3');
-            $table->string('option_4');
-            $table->integer('answer');
-            $table->string('attachment');
-            $table->text('explaination')->nullable();
+            $table->string('option_4')->nullable();
+            $table->string('answer');
+            $table->string('attachment')->nullable();;
+            $table->text('explanation')->nullable();
         });
     }
 

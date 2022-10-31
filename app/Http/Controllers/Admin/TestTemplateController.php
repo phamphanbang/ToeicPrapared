@@ -41,6 +41,7 @@ class TestTemplateController extends Controller
         $template->status = $request->status;
         $template->duration = $request->duration;
         $template->have_score_range = $request->have_score_range == "yes" ? true : false;
+        $template->have_audio_file = $request->have_audio_file == "yes" ? true : false;
         $template->save();
         foreach ($request["parts"] as $data) {
             $part = new PartTemplate;
@@ -91,6 +92,7 @@ class TestTemplateController extends Controller
         $template->duration = $request->duration;
         $template->status = $request->status;
         $template->have_score_range = $request->have_score_range == "yes" ? true : false;
+        $template->have_audio_file = $request->have_audio_file == "yes" ? true : false;
         $template->save();
         $template->partTemplates()->delete();
         if ($request->has('parts')) {

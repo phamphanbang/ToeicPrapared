@@ -13,6 +13,7 @@ class TestCluster extends Model
     use HasFactory;
 
     protected $table = "test_cluster";
+    public $timestamps = false;
 
     protected $fillable = [
         'order_in_part',
