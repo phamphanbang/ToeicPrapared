@@ -61,8 +61,30 @@
                             <input type="number" class="form-control" id="partname" name="partname" value="{{$part->order_in_test}}" readonly>
                             <label class="form-label">Description</label>
                             <textarea class="form-control" id="partname" name="partname" readonly>{{ trim($part->description) }}</textarea>
-                            <label class="form-label">Total questions</label>
-                            <input type="number" class="form-control" id="partname" name="partname" value="{{$part->num_of_question}}" readonly>
+                            <div class="d-flex justify-content-between">
+                                <div class="w-40">
+                                    <label class="form-label">Total questions</label>
+                                    <input type="number" class="form-control" id="partname" name="partname" value="{{$part->num_of_question}}" readonly>
+                                </div>
+                                <div class="w-40">
+                                    <label class="form-label">Total answer of each question</label>
+                                    <input type="number" class="form-control" id="partname" name="partname" value="{{$part->num_of_answer}}" readonly>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="w-40">
+                                    <label class="form-label">Question has content</label>
+                                    <input type="text" class="form-control" id="partname" name="partname" value="{!! $part->have_question == 1 ? 'Yes':'No' !!}" readonly>
+                                </div>
+                                <div class="w-40">
+                                    <label class="form-label">Question has attachment</label>
+                                    <input type="text" class="form-control" id="partname" name="partname" value="{!! $part->have_attachment == 1 ? 'Yes':'No' !!}" readonly>
+                                </div>
+                            </div>
+                            <div class="w-40">
+                                <label class="form-label">Part has cluster</label>
+                                <input type="text" class="form-control" id="partname" name="partname" value="{!! $part->have_cluster == 1 ? 'Yes':'No' !!}" readonly>
+                            </div>
                             @foreach ($part->clusterTemplate as $cluster)
                             <div class="d-flex flex-column mb-4 m-3 p-3 border rounded">
                                 <div class="d-flex flex-row justify-content-between">
@@ -72,6 +94,10 @@
                                 <input type="text" class="form-control" id="partname" name="partname" value="{{$cluster->num_in_part}}" readonly>
                                 <label class="form-label">Total question</label>
                                 <input type="text" class="form-control" id="partname" name="partname" value="{{$cluster->num_of_question}}" readonly>
+                                <label class="form-label">Cluster has attacment</label>
+                                <input type="text" class="form-control" id="partname" name="partname" value="{!! $cluster->have_attachment == 1 ? 'Yes':'No' !!}" readonly>
+                                <label class="form-label">Cluster has content</label>
+                                <input type="text" class="form-control" id="partname" name="partname" value="{!! $cluster->have_question == 1 ? 'Yes':'No' !!}" readonly>
                             </div>
                             @endforeach
                         </div>

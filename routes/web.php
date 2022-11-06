@@ -40,7 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'],
 
     Route::resource('test',TestController::class);
     Route::post('test/search',[TestController::class,'search'])->name('test.search');
-    Route::post('test/create/generate',[TestController::class,'generate'])->name('test.create.generate');
+    Route::post('test/generate',[TestController::class,'generate'])->name('test.generate');
 });
 Route::get('admin/login',[AdminLoginController::class,'index'])->name('admin.index');
 Route::get('admin/logout',[AdminLoginController::class,'logout'])->name('admin.logout');

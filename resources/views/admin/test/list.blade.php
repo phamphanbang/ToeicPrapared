@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container m-0 p-0">
-    <div class="row">
+    <div class="row w-100">
         <!-- @if(session()->has('deleteUserSuccessfully'))
         <div class="alert alert-success ms-5 my-3 d-flex" role="alert">
             {{ session()->get('deleteUserSuccessfully') }}
@@ -25,7 +25,7 @@
             @endif
             @if(session()->has('deleteTestSuccessfully'))
             <div class="alert alert-success ms-5 mt-3 mb-0 d-flex w-fit-content " role="alert">
-                {{ session()->get('deletetestSuccessfully') }}
+                {{ session()->get('deleteTestSuccessfully') }}
                 <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             @endif
@@ -33,7 +33,7 @@
         <div class="col-lg-12 grid-margin stretch-card px-5 pt-4 w-100">
             <div class="card shadow">
                 <div class="card-body">
-                    <h4 class="card-title display-inline-block">Test</h4>
+                    <h4 class="card-title display-inline-block">Test Management</h4>
                     <div class="d-flex flex-row py-2 justify-content-between">
                         <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.test.search')}}">
                             @csrf
@@ -99,9 +99,9 @@
 
                         </table>
                         @if ($data["tests"]->count() == 0)
-                            <div class="d-flex justify-content-center ">
-                                <h4>No record available</h4>
-                            </div>
+                        <div class="d-flex justify-content-center ">
+                            <h4>No record available</h4>
+                        </div>
                         @endif
                     </div>
                 </div>

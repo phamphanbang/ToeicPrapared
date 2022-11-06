@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container m-0 p-0">
-    <div class="row">
+    <div class="row w-100">
         <!-- @if(session()->has('deleteUserSuccessfully'))
         <div class="alert alert-success ms-5 my-3 d-flex" role="alert">
             {{ session()->get('deleteUserSuccessfully') }}
@@ -33,7 +33,7 @@
         <div class="col-lg-12 grid-margin stretch-card px-5 pt-4 w-100">
             <div class="card shadow">
                 <div class="card-body">
-                    <h4 class="card-title display-inline-block">Test Template</h4>
+                    <h4 class="card-title display-inline-block">Template Management</h4>
                     <div class="d-flex flex-row py-2 justify-content-between">
                         <form class="d-flex flex-row justify-content-start align-items-center" method="POST" action="{{route('admin.template.search')}}">
                             @csrf

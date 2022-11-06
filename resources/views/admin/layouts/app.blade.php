@@ -69,7 +69,7 @@
             </div>
         </nav>
 
-        <main class="d-flex flex-row admin-main">
+        <main class="d-flex flex-row admin-main w-100">
             @include('admin.layouts.menu')    
             @yield('content')
         </main>

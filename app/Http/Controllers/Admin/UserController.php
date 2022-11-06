@@ -26,6 +26,7 @@ class UserController extends Controller
         $data["user"] = new User;
         $data["user"]->name = $request->name;
         $data["user"]->email = $request->email;
+        $data["user"]->role = $request->role;
         $data["user"]->password = Hash::make($request->password);
         $data["user"]->save();
         if(session('task_url')){

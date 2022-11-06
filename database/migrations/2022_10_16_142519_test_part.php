@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('order_in_test');
             $table->integer('num_of_question');
+            $table->integer('num_of_answer');
             $table->boolean('have_cluster');
             $table->boolean('have_attachment');
             $table->boolean('have_question');

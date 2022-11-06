@@ -11,7 +11,7 @@ use App\Models\TestPart;
 use App\Models\TestQuestion;
 use App\Models\TestTemplate;
 use Illuminate\Support\Facades\Session;
-use SebastianBergmann\Template\Template;
+use App\Http\Requests\CreateTestRequest;
 
 class TestController extends Controller
 {
@@ -22,8 +22,10 @@ class TestController extends Controller
         return view('admin.test.list')->with('data', $data);
     }
 
-    public function show()
+    public function show($id)
     {
+        $data["test"] = Test::find($id);
+        return view('admin.test.show')->with('data',$data);
     }
 
     public function create()
@@ -37,6 +39,7 @@ class TestController extends Controller
         $data["templates"] = TestTemplate::where('status', '=', 'public')->get();
         $data["template"] = TestTemplate::find($request->template);
         return view('admin.test.create')->with('data', $data);
+        // return redirect()->route('admin.test.create')->with('data', $data);
     }
 
     public function store(Request $request)
@@ -67,16 +70,24 @@ class TestController extends Controller
         return redirect()->route('admin.test.index')->with('testCreateSuccess', 'Test created successfully');
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $data["test"] = Test::find($id);
+        return view('admin.test.edit')->with('data',$data);
     }
 
     public function update()
     {
     }
 
-    public function destroy()
+    public function destroy($id)
     {
+        $test = Test::find($id);
+        $test->delete();
+        if(session('task_url')){
+            return redirect(session('task_url'))->with('deleteTestSuccessfully','Test deleted successfully');
+        }
+        return redirect()->route('admin.test.index')->with('deleteTestSuccessfully','Test deleted successfully');
     }
 
     public function search()
@@ -101,8 +112,8 @@ class TestController extends Controller
         if ($data->has("audio_file")) {
             $file = $data->file("audio_file");
             $extension = $file->extension();
-            $file->move(public_path('tests/audio/'), $test->id .'.'. $extension);
-            $test->audio_file = 'pulic/tests/audio/' . $test->id.'.' . $extension;
+            $file->storeAs('public/tests/audio/', $test->id .'.'. $extension);
+            $test->audio_file = 'tests/audio/' . $test->id.'.' . $extension;
         }
         $test->update();
         return $test;
@@ -114,6 +125,7 @@ class TestController extends Controller
         $part->order_in_test = $data["order_in_test"];
         $part->name = $data["name"];
         $part->num_of_question = $data["num_of_question"];
+        $part->num_of_answer = $data["num_of_answer"];
         $part->description = $data["description"];
         $part->have_cluster = $data["have_cluster"]  == "yes" ? true : false;
         $part->have_attachment = $data["have_attachment"]  == "yes" ? true : false;
@@ -139,8 +151,8 @@ class TestController extends Controller
             $file = $data["attachment"]->file("attachment");
             
             $extension = $file->extension();
-            $file->move(public_path('images/cluster/'), $cluster->id .'.'. $extension);
-            $cluster->attachment = 'pulic/images/cluster/' . $cluster->id .'.'. $extension;
+            $file->storeAs('public/images/cluster/', $cluster->id .'.'. $extension);
+            $cluster->attachment = 'images/cluster/' . $cluster->id .'.'. $extension;
         }
         $cluster->update();
         return $cluster;
@@ -154,7 +166,7 @@ class TestController extends Controller
         $question->option_2 = $data["option_2"];
         $question->option_3 = $data["option_3"];
         $question->answer = $data["answer"];
-        $question->explanation = $data["option_3"];
+        $question->explanation = $data["explanation"];
         $question->part_id = $part->id;
         if ($part->have_question) {
             $question->question = $data["question"];
@@ -168,8 +180,8 @@ class TestController extends Controller
         $question->save();
         if ($part->have_attachment) {
             $extension = $data["attachment"]->extension();
-            $data["attachment"]->move(public_path('images/question/'), $question->id .'.'. $extension);
-            $question->attachment = 'pulic/images/question/' . $question->id .'.'. $extension;
+            $data["attachment"]->storeAs('public/images/question/', $question->id .'.'. $extension);
+            $question->attachment = 'images/question/' . $question->id .'.'. $extension;
         }
         $question->update();
         return $question;

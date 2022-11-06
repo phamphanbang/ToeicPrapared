@@ -1,3 +1,13 @@
+html, body
+{
+    height: 100%;
+}
+
+#app {
+    height: 100%;
+    background-color: #f1f4f8
+}
+
 .blog-divider {
     border-top: 10px solid #bbb;
     border-radius: 5px;
@@ -38,3 +48,60 @@
 .admin-main {
     background-color: #f1f4f8
 }
+
+.menu-container {
+    width: 20%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.question-image {
+    width: 500px;
+    height: 250px;
+}
+
+.test-nav {
+    width: 20%;
+    max-height: 100%;
+}
+
+.test-nav-scroll {
+    max-height: 100%;
+    overflow: auto;
+    overflow-x:hidden;
+}
+
+.question-highlight {
+    border: rgb(240, 237, 107) solid 2px;
+    border-radius: 2%;
+}
+
+.duration {
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.small-img {
+    width: 300px;
+    height: 150px;
+}
+
+.label-button {
+    border: #0d6efd solid 1px;
+    padding: 6px 12px;
+    margin: 6px 0px;
+    border-radius: 0.25rem;
+    background-color: #0d6efd;
+    color: white;
+    width: fit-content;
+}
+
+.label-button:hover {
+    border: #0a57cc solid 1px;
+    background-color: #0a57cc;
+    cursor: pointer;
+}
+
