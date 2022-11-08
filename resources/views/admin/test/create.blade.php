@@ -42,7 +42,7 @@
 
                         </div>
                         @if (!empty($data['template']))
-                        <button type="submit" form="create-test" class="btn btn-success d-block h-fit-content ms-auto">Create Template</button>
+                        <button type="submit" form="create-test" class="btn btn-success d-block h-fit-content ms-auto">Create Test</button>
                         @endif
                     </div>
                     @if (!empty($data['template']))
@@ -54,6 +54,14 @@
                             @error('name')
                             <p class="text-danger">{{$message}}</p>
                             @enderror
+                        </div>
+                        <div class=" mb-4">
+                            <label for="type" class="form-label">Test's Type</label>
+                            <select name="type" id="type" class="form-select" disabled>
+                                <option {!! $data['template']->type == 'fulltest' ? 'selected' : '' !!} value="fulltest">Full Test</option>
+                                <option {!! $data['template']->type == 'minitest' ? 'selected' : '' !!} value="minitest">Mini Test</option>
+                                <option {!! $data['template']->type == 'parttest' ? 'selected' : '' !!} value="parttest">Part Test</option>
+                            </select>
                         </div>
                         <div class=" mb-4">
                             <label for="status" class="form-label">Status</label>

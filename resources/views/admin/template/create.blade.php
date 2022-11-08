@@ -4,18 +4,6 @@
 
 <div class="container m-0 p-0">
     <div class="row w-100">
-        <!-- @error('name')
-        <div class="alert alert-danger ms-5 mt-3 mb-0 w-auto d-flex float-alert" role="alert">
-            {{ $message }}
-            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @enderror
-        @error('blog')
-        <div class="alert alert-danger ms-5 mt-3 mb-0 w-auto d-flex float-alert" role="alert">
-            {{ $message }}
-            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @enderror -->
         <div class="col-lg-12 grid-margin stretch-card ps-5 pt-4 w-100 ">
             <div class="card w-100 shadow">
                 <div class="card-body">
@@ -58,12 +46,21 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group mb-4">
+                            <label for="type" class="form-label">Test's Type</label>
+                            <select name="type" id="type" class="form-select">
+                                <option value="fulltest">Full Test</option>
+                                <option value="minitest">Mini Test</option>
+                                <option value="parttest">Part Test</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select">
                                 <option value="public">Public</option>
                                 <option value="onhold">On Hold</option>
                             </select>
                         </div>
+
                         <div class="form-group mb-4">
                             <label for="have_score_range" class="form-label">Have score range</label>
                             <select name="have_score_range" id="have_score_range" class="form-select">
@@ -78,31 +75,6 @@
                                 <option value="no">No</option>
                             </select>
                         </div>
-                        <!-- <div class="d-flex flex-column mb-4 m-3 p-3 border rounded">
-                            <div class="d-flex flex-row justify-content-between">
-                                <h2 class="card-title display-inline-block">Part 1</h2>
-                                <button type="button" class="btn btn-danger float-end">Delete Part</button>
-                            </div>
-                            <label for="part[1]" class="form-label">Part name</label>
-                            <input type="text" class="form-control" id="part[1]" name="part[1]" placeholder="" value="">
-                            <label for="partname" class="form-label">Order in test</label>
-                            <input type="text" class="form-control" id="partname" name="partname" placeholder="" value="">
-                            <label for="partname" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="partname" name="partname" placeholder="" value="">
-                            <label for="partname" class="form-label">Total questions</label>
-                            <input type="text" class="form-control" id="partname" name="partname" placeholder="" value="">
-                            <div class="d-flex flex-column mb-4 m-3 p-3 border rounded">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h2 class="card-title display-inline-block">Cluster 1</h2>
-                                    <button type="button" class="btn btn-danger float-end">Delete Cluster</button>
-                                </div>
-                                <label for="partname" class="form-label">Cluster in part</label>
-                                <input type="text" class="form-control" id="partname" name="partname" placeholder="" value="">
-                                <label for="partname" class="form-label">Total question</label>
-                                <input type="text" class="form-control" id="partname" name="partname" placeholder="" value="">
-                            </div>
-                            <button type="button" class="btn btn-primary mt-2 ms-auto" id="add-cluster" count="0">Add Cluster</button>
-                        </div> -->
                         <button type="button" class="btn btn-primary ms-50" id="add-part" count="0">Add Part</button>
                         <button type="submit" form="template-form" class="btn btn-success ms-auto d-block mt-5">Create Template</button>
                     </form>

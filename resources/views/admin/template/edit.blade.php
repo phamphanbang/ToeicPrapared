@@ -56,6 +56,14 @@
                             <input required type="text" class="form-control" id="duration" name="duration" value="{{$data['template']->duration}}">
                         </div>
                         <div class="form-group mb-4">
+                            <label for="type" class="form-label">Test's Type</label>
+                            <select name="type" id="type" class="form-select">
+                                <option {!! $data['template']->type == 'fulltest' ?'selected':'' !!} value="fulltest">Full Test</option>
+                                <option {!! $data['template']->type == 'minitest' ?'selected':'' !!} value="minitest">Mini Test</option>
+                                <option {!! $data['template']->type == 'parttest' ?'selected':'' !!} value="parttest">Part Test</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select">
                                 <option {!! $data['template']->status == 'public' ?'selected':'' !!} value="public">Public</option>

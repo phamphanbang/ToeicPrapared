@@ -39,6 +39,7 @@ class TestTemplateController extends Controller
         $template->num_of_part = $request->num_of_part;
         $template->num_of_question = $request->num_of_question;
         $template->status = $request->status;
+        $template->type = $request->type;
         $template->duration = $request->duration;
         $template->have_score_range = $request->have_score_range == "yes" ? true : false;
         $template->have_audio_file = $request->have_audio_file == "yes" ? true : false;
@@ -91,6 +92,7 @@ class TestTemplateController extends Controller
         $template->num_of_question = $request->num_of_question;
         $template->duration = $request->duration;
         $template->status = $request->status;
+        $template->type = $request->type;
         $template->have_score_range = $request->have_score_range == "yes" ? true : false;
         $template->have_audio_file = $request->have_audio_file == "yes" ? true : false;
         $template->save();

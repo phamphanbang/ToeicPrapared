@@ -25,7 +25,7 @@ class TestController extends Controller
     public function show($id)
     {
         $data["test"] = Test::find($id);
-        return view('admin.test.show')->with('data',$data);
+        return view('admin.test.show')->with('data', $data);
     }
 
     public function create()
@@ -54,13 +54,12 @@ class TestController extends Controller
                 foreach ($data["cluster"] as $cluster_data) {
                     $cluster = $this->saveCluster($cluster_data, $part->id);
                     foreach ($cluster_data["question"] as $data_question) {
-                        $question = $this->saveQuestion($data_question,$part,$cluster);
+                        $question = $this->saveQuestion($data_question, $part, $cluster);
                     }
                 }
-            }
-            else {
-                foreach ($data["question"] as $data_question){
-                    $question = $this->saveQuestion($data_question,$part);
+            } else {
+                foreach ($data["question"] as $data_question) {
+                    $question = $this->saveQuestion($data_question, $part);
                 }
             }
         }
@@ -73,21 +72,70 @@ class TestController extends Controller
     public function edit($id)
     {
         $data["test"] = Test::find($id);
-        return view('admin.test.edit')->with('data',$data);
+        $data["test_template"] = $data["test"]->testTemplate;
+        return view('admin.test.edit')->with('data', $data);
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $test = Test::find($id);
+        $test->status = $request->status;
+        if ($request->has('score_range')) {
+            $test->score_range = $request->score_range;
+        }
+        if ($request->hasFile('audio_file')) {
+            $file = $request->file("audio_file");
+            $extension = $file->extension();
+            $file->storeAs('public/tests/audio/', $test->id . '.' . $extension);
+            $test->audio_file = 'tests/audio/' . $test->id . '.' . $extension;
+        }
+        $test->update();
+        foreach ($request->cluster as $data) {
+            $cluster = TestCluster::find($data["id"]);
+            if(array_key_exists("question",$data)) {
+                $cluster->question = $data["question"];
+            }
+            if (array_key_exists("attachment", $data) && $data["attachment"] != null) {
+                $file = $data["attachment"]->file("attachment");
+                $extension = $file->extension();
+                $file->storeAs('public/images/cluster/', $cluster->id . '.' . $extension);
+                $cluster->attachment = 'images/cluster/' . $cluster->id . '.' . $extension;
+            }
+            $cluster->update();
+        }
+        foreach ($request->question as $data) {
+            $question = TestQuestion::find($data["id"]);
+            if(array_key_exists("question",$data)) {
+                $question->question = $data["question"];
+            }
+            if (array_key_exists("attachment", $data) && $data["attachment"] != null) {
+                $extension = $data["attachment"]->extension();
+                $data["attachment"]->storeAs('public/images/question/', $question->id . '.' . $extension);
+                $question->attachment = 'images/question/' . $question->id . '.' . $extension;
+            }
+            $question->option_1 = $data["option_1"];
+            $question->option_2 = $data["option_2"];
+            $question->option_3 = $data["option_3"];
+            if(array_key_exists("option_4",$data)) {
+                $question->option_4 = $data["option_4"];
+            }
+            $question->explanation = $data["explanation"];
+            $question->update();
+        }
+        if (session('task_url')) {
+            return redirect(session('task_url'))->with('testUpdateSuccess', 'Test updated successfully');
+        }
+        return redirect()->route('admin.test.index')->with('testUpdateSuccess', 'Test updated successfully');
     }
 
     public function destroy($id)
     {
         $test = Test::find($id);
         $test->delete();
-        if(session('task_url')){
-            return redirect(session('task_url'))->with('deleteTestSuccessfully','Test deleted successfully');
+        if (session('task_url')) {
+            return redirect(session('task_url'))->with('deleteTestSuccessfully', 'Test deleted successfully');
         }
-        return redirect()->route('admin.test.index')->with('deleteTestSuccessfully','Test deleted successfully');
+        return redirect()->route('admin.test.index')->with('deleteTestSuccessfully', 'Test deleted successfully');
     }
 
     public function search()
@@ -112,8 +160,8 @@ class TestController extends Controller
         if ($data->has("audio_file")) {
             $file = $data->file("audio_file");
             $extension = $file->extension();
-            $file->storeAs('public/tests/audio/', $test->id .'.'. $extension);
-            $test->audio_file = 'tests/audio/' . $test->id.'.' . $extension;
+            $file->storeAs('public/tests/audio/', $test->id . '.' . $extension);
+            $test->audio_file = 'tests/audio/' . $test->id . '.' . $extension;
         }
         $test->update();
         return $test;
@@ -138,7 +186,7 @@ class TestController extends Controller
     public function saveCluster($data, $part_id)
     {
         $cluster = new TestCluster;
-        
+
         $cluster->order_in_part = $data["order_in_part"];
         $cluster->question_begin = $data["question_begin"];
         $cluster->question_end = $data["question_end"];
@@ -149,10 +197,10 @@ class TestController extends Controller
         $cluster->save();
         if (array_key_exists("attachment", $data)) {
             $file = $data["attachment"]->file("attachment");
-            
+
             $extension = $file->extension();
-            $file->storeAs('public/images/cluster/', $cluster->id .'.'. $extension);
-            $cluster->attachment = 'images/cluster/' . $cluster->id .'.'. $extension;
+            $file->storeAs('public/images/cluster/', $cluster->id . '.' . $extension);
+            $cluster->attachment = 'images/cluster/' . $cluster->id . '.' . $extension;
         }
         $cluster->update();
         return $cluster;
@@ -180,8 +228,8 @@ class TestController extends Controller
         $question->save();
         if ($part->have_attachment) {
             $extension = $data["attachment"]->extension();
-            $data["attachment"]->storeAs('public/images/question/', $question->id .'.'. $extension);
-            $question->attachment = 'images/question/' . $question->id .'.'. $extension;
+            $data["attachment"]->storeAs('public/images/question/', $question->id . '.' . $extension);
+            $question->attachment = 'images/question/' . $question->id . '.' . $extension;
         }
         $question->update();
         return $question;

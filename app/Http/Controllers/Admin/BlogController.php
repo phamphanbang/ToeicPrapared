@@ -71,16 +71,6 @@ class BlogController extends Controller
 
     public function search(Request $request) {
         if($request->by == "author") {
-            // $users = User::where('name like','%'.$request->search.'%');
-            // $blogs = [];
-            // foreach($users as $user) {
-            //     $blogs += $user->blogs;
-            // }
-            // $collection = new Collection();
-            // foreach($blogs as $blog) {
-            //     $collection->push($blog);
-            // }
-            // $data["blogs"] = $collection->paginate(5);
             $data["blogs"] = Blog::whereHas('user', function (Builder $query ) use($request) {
                 $query->where('name', 'like', $request->search);
             })->paginate(5);

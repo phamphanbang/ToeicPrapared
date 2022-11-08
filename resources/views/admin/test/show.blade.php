@@ -58,7 +58,7 @@
                                         <div class="cluster-block">
                                             <div class="fw-bold">{{$cluster->question_begin}}-{{$cluster->question_end}}</div>
                                             @if ($cluster->question)
-                                            <div class="cluster-question">
+                                            <div>
                                                 {!! $cluster->question !!}
                                             </div>
                                             @endif
@@ -124,7 +124,7 @@
                                     @else
                                     <div class="part-block mt-3" partorder="{{$part->order_in_test}}">
                                         @foreach ($part->testQuestions as $question)
-                                        <div class="question-block mt-2 ms-2">
+                                        <div class="question-block my-2 ms-2">
                                             <div class="d-flex flex-row">
                                                 <div class="fw-bold me-2">{!! $question->order_in_test !!}</div>
                                                 <div class="content d-flex flex-column w-100">

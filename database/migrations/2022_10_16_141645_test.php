@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('comment_set_id')->constrained('comment_set');
             $table->string('name');
             $table->enum('status',['public','onhold'])->default('public');
+            $table->enum('type',['fulltest','minitest','parttest'])->default('fulltest');
             $table->integer('num_of_question');
             $table->integer('score_range')->nullable();
             $table->string('audio_file')->nullable();

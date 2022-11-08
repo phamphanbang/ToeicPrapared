@@ -49,6 +49,14 @@
                             @enderror
                         </div>
                         <div class=" mb-4">
+                            <label for="type" class="form-label">Test's Type</label>
+                            <select name="type" id="type" class="form-select" disabled>
+                                <option {!! $data['test']->type == 'fulltest' ? 'selected' : '' !!} value="fulltest">Full Test</option>
+                                <option {!! $data['test']->type == 'minitest' ? 'selected' : '' !!} value="minitest">Mini Test</option>
+                                <option {!! $data['test']->type == 'parttest' ? 'selected' : '' !!} value="parttest">Part Test</option>
+                            </select>
+                        </div>
+                        <div class=" mb-4">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select">
                                 <option {!! $data['test']->status == 1 ? "selected" : "" !!} value="public">Public</option>
@@ -63,14 +71,14 @@
                             <label for="duration" class="form-label">Duration</label>
                             <input type="number" class="form-control" id="duration" name="duration" value="{{$data['test']->duration}}" readonly>
                         </div>
-                        @if ($data['test']->testTemplate->have_score_range == '1')
+                        @if ($data['test_template']->have_score_range == '1')
                         <div class=" mb-4">
                             <label for="score_range" class="form-label">Score range</label>
                             <input type="number" class="form-control" id="score_range" name="score_range" value="{{$data['test']->score_range}}">
                         </div>
                         @endif
 
-                        @if ($data['test']->audio_file != NULL)
+                        @if ($data['test_template']->have_audio_file == '1')
                         <div class="d-flex flex-column">
                             <audio controls>
                                 <source src="{{asset('storage/'.$data['test']->audio_file)}}" type="audio/mpeg">
@@ -148,12 +156,11 @@
                                         </div>
                                         <div class="collapsable">
                                             @if ($cluster->question != NULL)
-                                            <label class="form-label" for="cluster[{{$cluster->id}}]['question']">Cluster question</label>
-                                            <textarea class="form-control" rows="3" id="cluster[{{$cluster->id}}]['question']" name="cluster[{{$cluster->id}}]['question']" required>{!! $cluster->question !!}</textarea>
+                                            <label class="form-label" for="cluster[{{$cluster->id}}][question]">Cluster question</label>
+                                            <textarea class="form-control" rows="3" id="cluster[{{$cluster->id}}][question]" name="cluster[{{$cluster->id}}][question]" required>{!! $cluster->question !!}</textarea>
                                             @endif
 
-                                            @if ($cluster->have_attachment == 1)
-
+                                            @if ($cluster->attachment != NULL)
                                             <img src="{{asset('storage/'.$cluster->attachment)}}" alt="" class="small-img m-auto">
                                             <label class="form-label" for="cluster[{{$cluster->id}}][attachment]">Select new attachment</label>
                                             <input class="form-control" type="file" id="cluster[{{$cluster->id}}][attachment]" name="cluster[{{$cluster->id}}][attachment]" placeholder="Upload new image">
