@@ -13,6 +13,7 @@ class TrainingPlan extends Model
     use HasFactory;
 
     protected $table = "training_plan";
+    public $timestamps = false;
 
     protected $fillable = [
         'status',
@@ -30,7 +31,4 @@ class TrainingPlan extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
-    public function trainingHistory() {
-        return $this->hasMany(TrainingHistory::class,'plan_id');
-    }
 }

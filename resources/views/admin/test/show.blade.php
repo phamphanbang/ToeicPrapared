@@ -58,8 +58,8 @@
                                         <div class="cluster-block">
                                             <div class="fw-bold">{{$cluster->question_begin}}-{{$cluster->question_end}}</div>
                                             @if ($cluster->question)
-                                            <div>
-                                                {!! $cluster->question !!}
+                                            <div class="cluster-question">
+                                                {!! nl2br($cluster->question) !!}
                                             </div>
                                             @endif
                                             @if ($cluster->attachment)

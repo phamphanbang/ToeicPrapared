@@ -31,6 +31,7 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required','string', 'max:255'],
             'email' => ['required','string', 'email', 'max:255', 'unique:user,email,'.$this->old_email.',email'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'avatar' => ['mimes:png,jpg,jpeg'],
         ];
     }
 
@@ -40,7 +41,8 @@ class UpdateUserRequest extends FormRequest
             'unique' => 'The :attribute is already existed',
             'min' => [
             'string' => 'The :attribute cannot below 8 character'
-            ]
+            ],
+            'mimes' => 'Only png,jpg,jpeg are allowed'
         ];
     }
 }

@@ -29,6 +29,13 @@ class UserController extends Controller
         $data["user"]->role = $request->role;
         $data["user"]->password = Hash::make($request->password);
         $data["user"]->save();
+        if($request->hasFile('avatar')){
+            $file = $request->file("avatar");
+            $extension = $file->extension();
+            $file->storeAs('public/images/avatar/', $data["user"]->id . '.' . $extension);
+            $data["user"]->avatar = 'images/avatar/' . $data["user"]->id . '.' . $extension;
+            $data["user"]->update();
+        }
         if(session('task_url')){
             return redirect(session('task_url'))->with('registerSuccess','User created successfully');
         }
@@ -49,6 +56,13 @@ class UserController extends Controller
         $data["user"]->email = $request->email;
         $data["user"]->role = $request->role;
         $data["user"]->save();
+        if($request->hasFile('avatar')){
+            $file = $request->file("avatar");
+            $extension = $file->extension();
+            $file->storeAs('public/images/avatar/', $data["user"]->id . '.' . $extension);
+            $data["user"]->avatar = 'images/avatar/' . $data["user"]->id . '.' . $extension;
+            $data["user"]->update();
+        }
         if(session('task_url')){
             return redirect(session('task_url'))->with('profileChangeSuccess','Profile changed successfully');
         }

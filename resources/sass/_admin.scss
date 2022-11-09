@@ -13,6 +13,31 @@ html, body
     border-radius: 5px;
 }
 
+.logo-span {
+    padding: 0.5rem 1rem;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.logo-span-small {
+    padding: 0.5rem 1rem;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.avatar-icon {
+    font-size: 2rem;
+    margin: 0px 10px;
+}
+
+.image-container {
+    width: 100%;
+}
+
+.image-container img {
+    width: 100%;
+    border-radius: 50%;
+}
 .admin-top-message {
     position: fixed;
     width: fit-content;

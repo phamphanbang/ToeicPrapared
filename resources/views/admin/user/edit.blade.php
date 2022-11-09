@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">Edit User {{$data["user"]->name }}</h4>
                     <div class="d-flex justify-content-center mt-3">
-                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.user.update',$data['user']->id)}}">
+                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.user.update',$data['user']->id)}}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class=" mb-4">
@@ -58,6 +58,20 @@
                                 <label for="password_confirmation" class="form-label">Confirm New Password</label>
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password">
                                 @error('password')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4 d-flex flex-column">
+                                @if ($data['user']->avatar != null)
+                                <div class="image-container">
+                                <img src="{{asset('storage/'.$data['user']->avatar)}}" alt="">
+                                </div>
+                                @else
+                                <i class="bi bi-person-circle avatar-icon"></i>
+                                @endif
+                                <label for="avatar" class="form-label">Avatar</label>
+                                <input type="file" class="form-control" id="avatar" name="avatar" >
+                                @error('avatar')
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>

@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">Create New User</h4>
                     <div class="d-flex justify-content-center mt-3">
-                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.user.store')}}">
+                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.user.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class=" mb-4">
                                 <label for="name" class="form-label">Name</label>
@@ -64,6 +64,13 @@
                                 <label for="password_confirmation" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password">
                                 @error('password')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="avatar" class="form-label">Avatar</label>
+                                <input type="file" class="form-control" id="avatar" name="avatar" >
+                                @error('avatar')
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>

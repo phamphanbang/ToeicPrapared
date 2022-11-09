@@ -27,6 +27,7 @@ class RegistrationRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'avatar' => ['mimes:png,jpg,jpeg'],
         ];
     }
 
@@ -38,7 +39,8 @@ class RegistrationRequest extends FormRequest
             'confirmed' => 'The :attribute is not match',
             'min' => [
             'string' => 'The :attribute cannot below 8 character'
-            ]
+            ],
+            'mimes' => 'Only png,jpg,jpeg are allowed'
         ];
     }
 }

@@ -24,7 +24,9 @@
             <div class="row justify-content-center w-50">
                 <div class="col-md-8 w-100">
                     <div class="d-flex flex-column align-items-center border border-2 rounded py-5 shadow-lg">
-                        <h2 class="login-header">TOEICAMP</h2>
+                        <div class="logo">
+                            <span class="logo-span">TOEICAMP</span>
+                        </div>
                         <form method="POST" action="/admin/login" class="admin-login-form">
                             @csrf
                             <div class="mb-3">
