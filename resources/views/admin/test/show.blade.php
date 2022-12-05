@@ -39,7 +39,7 @@
                     </div>
                     <h3>{{$data['test']->name}}</h3>
                     <div class="d-flex flex-column w-100">
-                        <audio controls>
+                        <audio controls class="w-75">
                             <source src="{{asset('storage/'.$data['test']->audio_file)}}" type="audio/mpeg">
                         </audio>
                         <div class="main-test d-flex flex-row mt-2 w-100">
@@ -189,7 +189,7 @@
                                         <div class="menu-name fw-bold">{{$part->name}}</div>
                                         <div class="d-flex flex-row flex-wrap">
                                             @foreach ($part->testQuestions as $question)
-                                            <button type="button" class="question-check btn btn-secondary me-2 mt-2" question="{{$question->order_in_test}}">{{$question->order_in_test}}</button>
+                                            <button type="button" class="question-check btn btn-secondary me-1 mt-1" question="{{$question->order_in_test}}">{{$question->order_in_test}}</button>
                                             @endforeach
                                         </div>
                                     </div>
@@ -208,13 +208,18 @@
 <script type="module">
     $(document).ready(function() {
         let initTime = parseInt($('#duration').attr("duration")) * 60;
-        let min = 0;
-        let sec = 0;
+        let min = Math.floor(initTime / 60);
+        let sec = initTime % 60;
         let countdown = setInterval(() => {
             min = Math.floor(initTime / 60);
             sec = initTime % 60;
-            $("#duration").text(min + ":" + sec);
+            let processNumber = (x) => {
+                if(x < 10) return ("0" + x).slice(-2);
+                return x;
+            }
+            $("#duration").text(processNumber(min) + ":" + processNumber(sec));
             initTime -= 1;
+            console.log(processNumber(min) + ":" + processNumber(sec) )
         }, 1000);
 
         $("div.part-block").each((i, item) => {

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -71,6 +72,7 @@ class UserController extends Controller
 
     public function destroy($id) {
         $user = User::find($id);
+        Storage::delete('public/'.$user->avatar);
         $user->delete();
         if(session('task_url')){
             return redirect(session('task_url'))->with('deleteUserSuccessfully','User deleted successfully');

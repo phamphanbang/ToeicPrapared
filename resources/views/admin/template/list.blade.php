@@ -56,6 +56,7 @@
                                     <th class="">Name</th>
                                     <th class="">Total Question</th>
                                     <th class="">Total Parts</th>
+                                    <th class="">Duration</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -66,6 +67,7 @@
                                     <td class="">{{ $template->name }}</td>
                                     <td class="">{{ $template->num_of_question }}</td>
                                     <td class="">{{ $template->num_of_part }}</td>
+                                    <td class="">{{ $template->duration }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-info px-1 py-0" href="{{route('admin.template.show',$template->id)}}">
                                             <label class="badge badge-info">

@@ -20,8 +20,8 @@ html, body
 }
 
 .logo-span-small {
-    padding: 0.5rem 1rem;
-    font-size: 2rem;
+    padding: 0rem 1rem;
+    font-size: 1.5rem;
     font-weight: 900;
 }
 
@@ -37,6 +37,7 @@ html, body
 .image-container img {
     width: 100%;
     border-radius: 50%;
+    clip-path: circle();
 }
 .admin-top-message {
     position: fixed;
@@ -130,3 +131,9 @@ html, body
     cursor: pointer;
 }
 
+.question-check {
+    padding: 0px;
+    font-size: smaller;
+    height: fit-content;
+    width: 15%;
+}

@@ -83,8 +83,8 @@
                             <audio controls>
                                 <source src="{{asset('storage/'.$data['test']->audio_file)}}" type="audio/mpeg">
                             </audio>
-                            <label for="audio_file" class="label-button">Upload new audio file</label>
-                            <input type="file" class="form-control" id="audio_file" name="audio_file">
+                            <label for="audio_file" class="form-label">Upload new audio file</label>
+                            <input type="file" class="form-control" id="audio_file" name="audio_file" >
                         </div>
                         @endif
 
