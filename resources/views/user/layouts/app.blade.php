@@ -23,7 +23,7 @@
     <div id="app">
         @include('user.layouts.nav')
 
-        <main class="d-flex flex-row admin-main w-100">
+        <main class="d-flex flex-column admin-main w-100">
             @yield('content')
             @include('user.layouts.footer')
         </main>

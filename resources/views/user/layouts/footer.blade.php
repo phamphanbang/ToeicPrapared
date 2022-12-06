@@ -1,6 +1,6 @@
 <div class="footer">
     <div class="mt-4 d-flex flex-row w-100">
-        <div class="footer-logo d-flex flex-column w-20 ps-3">
+        <div class="footer-logo d-flex flex-column w-20 ps-4 ms-4">
             <a class="navbar-brand" href="{{ route('home') }}">
                 <span class="logo-span-small p-0">TOEICAMP</span>
             </a>

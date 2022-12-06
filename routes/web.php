@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\TestController;
 use App\Http\Controllers\Admin\TestTemplateController;
+use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\HomePageController;
 
 /*
@@ -49,3 +50,8 @@ Route::post('admin/login', [AdminLoginController::class, 'postLogin'])->name('ad
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', [HomePageController::class, 'index'])->name('home');
+Route::get('/login', [LoginController::class, 'index'])->name('user.login');
+Route::get('/registration', [LoginController::class, 'registration'])->name('user.registration');
+Route::post('/login', [LoginController::class, 'login'])->name('user.login.post');
+Route::post('/registration', [LoginController::class, 'register'])->name('user.registration.post');
+Route::get('/logout',[LoginController::class,'logout'])->name('user.logout');

@@ -20,6 +20,26 @@ html, body
     width: 20%;
 }
 
+.w-30 {
+    width: 30%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-img {
+    width: 8%;
+}
+
+.c-gray {
+    color: gray;
+}
+
+.bg-white {
+    background-color: white;
+}
+
 .logo-span-small {
     padding: 0rem 1rem;
     font-size: 1.5rem;
@@ -74,4 +94,50 @@ a.nav-link:hover {
 
 .resource-span {
     font-weight: bold;
+}
+
+.login-container {
+    height: fit-content;
+    margin: 2rem 0rem;
+}
+
+.form-container {
+    height: fit-content;
+    background-color: white;
+}
+
+.login-text {
+    font-size: 1rem;
+}
+
+.image-container {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.image-container img {
+    width: 100%;
+    border-radius: 50%;
+    clip-path: circle();
+}
+
+.custom-login::after {
+    content: none;
+}
+
+.custom-login {
+    width: auto;
+}
+
+.no-hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.custom-dropdown {
+    left: -160% !important;
+}
+
+.avatar-icon {
+    font-size: 1.7rem;
 }
