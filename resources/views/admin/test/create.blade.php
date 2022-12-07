@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container m-0 p-0">
-    <div class="row w-100">
+    <div class="add-message row w-100">
         <div class="admin-top-message">
             @if ($errors->any())
             @foreach ($errors->all() as $error)
@@ -13,8 +13,6 @@
             </div>
             @endforeach
             @endif
-            
-
         </div>
         <div class="col-lg-12 grid-margin stretch-card ps-5 pt-4 w-100 ">
             <div class="card w-100 shadow">
@@ -42,7 +40,7 @@
 
                         </div>
                         @if (!empty($data['template']))
-                        <button type="submit" form="create-test" class="btn btn-success d-block h-fit-content ms-auto">Create Test</button>
+                        <button type="submit" id="create-test-submit" form="create-test" class="btn btn-success d-block h-fit-content ms-auto">Create Test</button>
                         @endif
                     </div>
                     @if (!empty($data['template']))
@@ -50,7 +48,7 @@
                         @csrf
                         <div class=" mb-4">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" value="" required>
+                            <input type="text inp-check" class="form-control" id="name" name="name" value="" required>
                             @error('name')
                             <p class="text-danger">{{$message}}</p>
                             @enderror
@@ -88,7 +86,7 @@
                         @if ($data['template']->have_audio_file == '1')
                         <div class=" mb-4">
                             <label for="audio_file" class="form-label">Audio File</label>
-                            <input type="file" class="form-control" id="audio_file" name="audio_file">
+                            <input type="file" class="form-control file-check" id="audio_file" name="audio_file" message="Test audio file" required>
                         </div>
                         @endif
 
@@ -167,12 +165,12 @@
                                             <div class="collapsable">
                                                 @if ($cluster->have_question == 1)
                                                 <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]">Cluster question</label>
-                                                <textarea class="form-control" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" temp4required></textarea>
+                                                <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" temp4required></textarea>
                                                 @endif
 
                                                 @if ($cluster->have_attachment == 1)
                                                 <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]">Atachment</label>
-                                                <input class="form-control" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" required>
+                                                <input class="form-control inp-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" required>
                                                 @endif
 
 
@@ -191,34 +189,34 @@
 
                                                             @if ($part->have_question == 1)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]">Question</label>
-                                                            <textarea class="form-control" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" required></textarea>
+                                                            <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" required></textarea>
                                                             @endif
 
                                                             @if ($part->have_attachment == 1)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]">Atachment</label>
-                                                            <input class="form-control" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" required>
+                                                            <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" required>
                                                             @endif
 
                                                             <div class="d-flex flex-row justify-content-between">
                                                                 <div class="w-40">
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]">Option 1</label>
-                                                                    <input type="text" class="form-control" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" value="A." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" value="A." required>
                                                                 </div>
                                                                 <div class="w-40">
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]">Option 2</label>
-                                                                    <input type="text" class="form-control" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" value="B." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" value="B." required>
                                                                 </div>
                                                             </div>
 
                                                             <div class="d-flex flex-row justify-content-between">
                                                                 <div class="w-40">
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]">Option 3</label>
-                                                                    <input type="text" class="form-control" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" value="C." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" value="C." required>
                                                                 </div>
                                                                 <div class="w-40">
                                                                     @if ($part->num_of_answer == 4)
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]">Option 4</label>
-                                                                    <input type="text" class="form-control" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" value="D." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" value="D." required>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -254,32 +252,32 @@
 
                                                     @if ($part->have_question==1)
                                                     <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][question]">Question</label>
-                                                    <textarea class="form-control" rows="3" id="part[{{$part->order_in_test}}][question][{{$i}}][question]" name="part[{{$part->order_in_test}}][question][{{$i}}][question]" required></textarea>
+                                                    <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][question][{{$i}}][question]" name="part[{{$part->order_in_test}}][question][{{$i}}][question]" required></textarea>
                                                     @endif
 
                                                     @if ($part->have_attachment==1)
                                                     <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][attachment]">Atachment</label>
-                                                    <input class="form-control" type="file" id="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" required>
+                                                    <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" required>
                                                     @endif
                                                     <div class="d-flex flex-row justify-content-between">
                                                         <div class="w-40">
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_1]">Option 1</label>
-                                                            <input type="text" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" value="A." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" value="A." required>
                                                         </div>
                                                         <div class="w-40">
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_1]">Option 2</label>
-                                                            <input type="text" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" value="B." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" value="B." required>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-between">
                                                         <div class="w-40">
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_3]">Option 3</label>
-                                                            <input type="text" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" value="C." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" value="C." required>
                                                         </div>
                                                         <div class="w-40">
                                                             @if ($part->num_of_answer == 4)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_4]">Option 4</label>
-                                                            <input type="text" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" value="D." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" value="D." required>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -373,10 +371,26 @@
             $(item).find(".question-end").attr("value", question_end);
         });
 
-        // $("#create-proxy").click((e) => {
-        //     console.log("submit");
-        //     $("#create-test").submit();
-        // });
+        $("#create-test-submit").click((e) => {
+            $(".file-check").each((i, item) => {
+                if (item.files.length === 0) {
+                    let message = $(item).attr("message");
+                    createAlert(message);
+                    return false;
+                }
+            })
+        })
+
+        function createAlert(message) {
+            let ele = '<div class="admin-top-message"><div class="alert alert-danger mt-3 mb-0 d-flex w-fit-content" role="alert">';
+            ele += message + " cannot be empty";
+            ele += '<button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button></div></div>';
+
+            $(".add-message").prepend(ele);
+            setTimeout(function() {
+                $(".admin-top-message").remove();
+            }, 4000);
+        }
     });
 </script>
 @endsection

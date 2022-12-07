@@ -4,8 +4,8 @@ html, body
 }
 
 #app {
-    height: 100%;
-    background-color: #f1f4f8
+    // height: 100%;
+    background-color: white
 }
 
 .w-100 {
@@ -38,6 +38,10 @@ html, body
 
 .bg-white {
     background-color: white;
+}
+
+.shadow-top {
+    box-shadow: 0 -1rem 1rem rgb(0 0 0 / 15%) !important;
 }
 
 .logo-span-small {
@@ -140,4 +144,59 @@ a.nav-link:hover {
 
 .avatar-icon {
     font-size: 1.7rem;
+}
+
+.panel-container {
+    background-size: 165%;
+    background-repeat: no-repeat;
+    height: 80vh;
+    background-position: center;
+}
+
+.panel-tittle {
+    font-size: 3rem;
+    font-weight: bolder;
+    color: #f3f3f3;
+}
+
+.panel-content {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: #f3f3f3;
+    text-align: center;
+}
+
+.no-text-deco {
+    text-decoration: none;
+    color: black;
+}
+
+.no-text-deco:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.cs-light-btn {
+    border-color: #2b417e;
+    color: #2b417e;
+    font-weight: bold;
+}
+
+.cs-light-btn:hover {
+    border-color: #2b417e;
+    background-color: #2b417e;
+    color: white;
+    font-weight: bold;
+}
+
+.item-wraper {
+    background-color: white;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) ;
+    height: 100%;
+}
+
+.item-wraper:hover {
+    transform: translateY(-2px);
+    transition: all .4s;
+    box-shadow: 0 0rem 1rem 11px rgb(0 0 0 / 15%);
 }

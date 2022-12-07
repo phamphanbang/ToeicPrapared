@@ -44,10 +44,32 @@
                             <input type="text" class="form-control" id="duration" name="duration" value="{{$data['template']->duration}}" readonly>
                         </div>
                         <div class=" mb-4">
+                            <label for="type" class="form-label">Test's Type</label>
+                            <select name="type" id="type" class="form-select" readonly disabled>
+                                <option {!! $data['template']->type=="fulltest"?"selected":"" !!} value="fulltest">Full Test</option>
+                                <option {!! $data['template']->type=="minitest"?"selected":"" !!} value="minitest">Mini Test</option>
+                                <option {!! $data['template']->type=="parttest"?"selected":"" !!} value="parttest">Part Test</option>
+                            </select>
+                        </div>
+                        <div class=" mb-4">
                             <label for="have_score_range" class="form-label">Have score range</label>
-                            <select name="have_score_range" id="have_score_range" class="form-select" readonly>
+                            <select name="have_score_range" id="have_score_range" class="form-select" readonly disabled>
                                 <option {!! $data['template']->have_score_range?"selected":"" !!} value="yes">Yes</option>
                                 <option {!! $data['template']->have_score_range?"selected":"" !!} value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-select" disabled>
+                                <option {!! $data['template']->status == 'public' ?'selected':'' !!} value="public">Public</option>
+                                <option {!! $data['template']->status == 'onhold' ?'selected':'' !!} value="onhold">On Hold</option>
+                            </select>
+                        </div>
+                        <div class="from-group mb-4">
+                            <label class="form-label" for="have_audio_file">Have audio file</label>
+                            <select name="have_audio_file" id="have_audio_file" class="form-select" disabled>
+                                <option {!! $data['template']->have_audio_file == 1 ?'selected':'' !!} value="yes">Yes</option>
+                                <option {!! $data['template']->have_audio_file == 0 ?'selected':'' !!} value="no">No</option>
                             </select>
                         </div>
                         @foreach ($data["template"]->partTemplates as $part)
