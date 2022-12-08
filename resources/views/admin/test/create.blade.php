@@ -48,7 +48,7 @@
                         @csrf
                         <div class=" mb-4">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text inp-check" class="form-control" id="name" name="name" value="" required>
+                            <input type="text" class="form-control" id="name" name="name" value="" required>
                             @error('name')
                             <p class="text-danger">{{$message}}</p>
                             @enderror
@@ -86,7 +86,7 @@
                         @if ($data['template']->have_audio_file == '1')
                         <div class=" mb-4">
                             <label for="audio_file" class="form-label">Audio File</label>
-                            <input type="file" class="form-control file-check" id="audio_file" name="audio_file" message="Test audio file" required>
+                            <input type="file" class="form-control audio-check" id="audio_file" name="audio_file" message="Test audio file" required>
                         </div>
                         @endif
 
@@ -165,12 +165,12 @@
                                             <div class="collapsable">
                                                 @if ($cluster->have_question == 1)
                                                 <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]">Cluster question</label>
-                                                <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" temp4required></textarea>
+                                                <textarea class="form-control cluster-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" blpart="{{$part->order_in_test}}" blstart="" blend=""></textarea>
                                                 @endif
 
                                                 @if ($cluster->have_attachment == 1)
                                                 <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]">Atachment</label>
-                                                <input class="form-control inp-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" required>
+                                                <input class="form-control cluster-file-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" required blpart="{{$part->order_in_test}}">
                                                 @endif
 
 
@@ -189,34 +189,34 @@
 
                                                             @if ($part->have_question == 1)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]">Question</label>
-                                                            <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" required></textarea>
+                                                            <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" required blpart="{{$part->order_in_test}}" blquestion=""></textarea>
                                                             @endif
 
                                                             @if ($part->have_attachment == 1)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]">Atachment</label>
-                                                            <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" required>
+                                                            <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" required blpart="{{$part->order_in_test}}" blquestion="">
                                                             @endif
 
                                                             <div class="d-flex flex-row justify-content-between">
                                                                 <div class="w-40">
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]">Option 1</label>
-                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" value="A." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_1]" value="A." required blpart="{{$part->order_in_test}}" blquestion="">
                                                                 </div>
                                                                 <div class="w-40">
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]">Option 2</label>
-                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" value="B." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_2]" value="B." required blpart="{{$part->order_in_test}}" blquestion="">
                                                                 </div>
                                                             </div>
 
                                                             <div class="d-flex flex-row justify-content-between">
                                                                 <div class="w-40">
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]">Option 3</label>
-                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" value="C." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_3]" value="C." required blpart="{{$part->order_in_test}}" blquestion="">
                                                                 </div>
                                                                 <div class="w-40">
                                                                     @if ($part->num_of_answer == 4)
                                                                     <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]">Option 4</label>
-                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" value="D." required>
+                                                                    <input type="text" class="form-control inp-check" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][option_4]" value="D." required blpart="{{$part->order_in_test}}" blquestion="">
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -252,32 +252,32 @@
 
                                                     @if ($part->have_question==1)
                                                     <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][question]">Question</label>
-                                                    <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][question][{{$i}}][question]" name="part[{{$part->order_in_test}}][question][{{$i}}][question]" required></textarea>
+                                                    <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][question][{{$i}}][question]" name="part[{{$part->order_in_test}}][question][{{$i}}][question]" required blpart="{{$part->order_in_test}}" blquestion=""></textarea>
                                                     @endif
 
                                                     @if ($part->have_attachment==1)
                                                     <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][attachment]">Atachment</label>
-                                                    <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" required>
+                                                    <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" required blpart="{{$part->order_in_test}}" blquestion="">
                                                     @endif
                                                     <div class="d-flex flex-row justify-content-between">
                                                         <div class="w-40">
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_1]">Option 1</label>
-                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" value="A." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_1]" value="A." required blpart="{{$part->order_in_test}}" blquestion="">
                                                         </div>
                                                         <div class="w-40">
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_1]">Option 2</label>
-                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" value="B." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_2]" value="B." required blpart="{{$part->order_in_test}}" blquestion="">
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-between">
                                                         <div class="w-40">
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_3]">Option 3</label>
-                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" value="C." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_3]" value="C." required blpart="{{$part->order_in_test}}" blquestion="">
                                                         </div>
                                                         <div class="w-40">
                                                             @if ($part->num_of_answer == 4)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_4]">Option 4</label>
-                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" value="D." required>
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" value="D." required blpart="{{$part->order_in_test}}" blquestion=""> 
                                                             @endif
                                                         </div>
                                                     </div>
@@ -358,6 +358,11 @@
             $(item).find('.question').each((j, citem) => {
                 $(citem).find('.question-id').text(question_begin);
                 $(citem).find('.question-order-in-test').attr("value", question_begin);
+                $(citem).find('.file-check').attr("blquestion", question_begin);
+                $(citem).find('.txt-check').attr("blquestion", question_begin);
+                $(citem).find('.txt-check').each((i,q) => {
+                    $(q).attr("blquestion", question_begin);
+                })
                 question_begin++;
             });
             previous_num_of_question += parseInt($(item).attr("question"));
@@ -369,12 +374,56 @@
             $(item).find(".cluster-id").text(question_begin + "-" + question_end);
             $(item).find(".question-begin").attr("value", question_begin);
             $(item).find(".question-end").attr("value", question_end);
+            $(item).find(".cluster-check").attr("blstart", question_begin);
+            $(item).find(".cluster-check").attr("blend", question_end);
         });
 
         $("#create-test-submit").click((e) => {
+            let check = true;
             $(".file-check").each((i, item) => {
+                
                 if (item.files.length === 0) {
-                    let message = $(item).attr("message");
+                    let start = $(item).attr("blquestion");
+                    let part = $(item).attr("blpart");
+                    let message = "Part " + part + " file of question " + start ;
+                    createAlert(message);
+                    check = false;
+                    return false;
+                }
+                
+            });
+            if (check == false) return false;
+            $(".cluster-check").each((i,item) => {
+                if($(item).val().length == 0 ) {
+                    let start = $(item).attr("blstart");
+                    let end = $(item).attr("blend");
+                    let part = $(item).attr("blpart");
+                    let message = "Part " + part + " cluster from question " + start + " to " + end ;
+                    console.log(message);
+                    createAlert(message);
+                    return false;
+                }
+            })
+            if (check == false) return false;
+            $(".txt-check").each((i,item) => {
+                
+                if($(item).val().length === 0 ) {
+                    console.log(1);
+                    let start = $(item).attr("blquestion");
+                    let part = $(item).attr("blpart");
+                    let message = "Part " + part + " question " + start ;
+                    console.log(message);
+                    createAlert(message);
+                    return false;
+                }
+            })
+            if (check == false) return false;
+            $(".inp-check").each((i,item) => {
+                if($(item).val().length == 0 ) {
+                    let start = $(item).closest(".question-order-in-test").val();
+                    let part = $(item).attr("blpart");
+                    let message = "Part " + part + "answer of question " + start ;
+                    console.log(message);
                     createAlert(message);
                     return false;
                 }
