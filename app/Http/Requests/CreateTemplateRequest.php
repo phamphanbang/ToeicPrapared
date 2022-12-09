@@ -25,9 +25,9 @@ class CreateTemplateRequest extends FormRequest
         return [
             'name' => ['required','string','unique:test_template' ,'max:255'],
             'description' => ['required','string',],
-            'num_of_question' => ['required','integer',],
-            'num_of_part' => ['required','integer',],
-            'duration' => ['required','integer',],
+            'num_of_question' => ['required','integer','min:1'],
+            'num_of_part' => ['required','integer','min:1'],
+            'duration' => ['required','integer','min:1'],
         ];
     }
 
@@ -36,6 +36,9 @@ class CreateTemplateRequest extends FormRequest
         return [
             'required' => 'The :attribute field is required.',
             'unique' => 'The :attribute is already existed',
+            'min.num_of_part' => 'Test must have at least :min part',
+            'min.num_of_part' => 'Test must have at least :min question',
+            'min.duration' => "Test's duration must last at least :min minute",
         ];
     }
 }

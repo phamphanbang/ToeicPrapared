@@ -3,7 +3,17 @@
 @section('content')
 
 <div class="container m-0 p-0">
-    <div class="row w-100">
+    <div class="add-message row w-100">
+        <div class="admin-top-message">
+            @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-danger mt-3 mb-0 d-flex w-fit-content" role="alert">
+                {{ $error }}
+                <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endforeach
+            @endif
+        </div>
         <div class="col-lg-12 grid-margin stretch-card ps-5 pt-4 w-100 ">
             <div class="card w-100 shadow">
                 <div class="card-body">
@@ -13,9 +23,10 @@
                             Back
                         </a>
                     </div>
-                    <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row justify-content-between w-75">
                         <h4 class="card-title display-inline-block">Create New Test's Template</h4>
-
+                        <button type="button" id="check-template" class="btn btn-primary ">Check Template</button>
+                        <button type="submit" id="submit-template" form="template-form" class="btn btn-success d-none">Create Template</button>
                     </div>
 
                     <form class="display-inline-block float-right w-75 " id="template-form" method="POST" action="{{route('admin.template.store')}}">
@@ -32,17 +43,17 @@
                         </div>
                         <div class="form-group mb-4">
                             <label for="num_of_part" class="form-label">Total parts</label>
-                            <input type="number" class="form-control" id="num_of_part" name="num_of_part" required>
+                            <input type="number" class="form-control" id="num_of_part" name="num_of_part" min="1" ) required>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group mb-4">
                             <label for="num_of_question" class="form-label">Total questions</label>
-                            <input type="number" class="form-control" id="num_of_question" name="num_of_question" required>
+                            <input type="number" class="form-control" id="num_of_question" name="num_of_question" min="1" required>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group mb-4">
                             <label for="duration" class="form-label">Duration</label>
-                            <input type="text" class="form-control" id="duration" name="duration" required>
+                            <input type="number" class="form-control" id="duration" name="duration" min="1" required>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group mb-4">
@@ -76,7 +87,6 @@
                             </select>
                         </div>
                         <button type="button" class="btn btn-primary ms-50" id="add-part" count="0">Add Part</button>
-                        <button type="submit" form="template-form" class="btn btn-success ms-auto d-block mt-5">Create Template</button>
                     </form>
                 </div>
             </div>
@@ -99,19 +109,19 @@
             let partHaveQuestion = partInput + "[have_question]";
             let temp = "Part-" + partCount;
             let partNameValue = temp.split('-').join(' ');
-            let block = '<div class="d-flex flex-column mb-4 m-3 p-3 border shadow rounded part-block">';
+            let block = "<div class='d-flex flex-column mb-4 m-3 p-3 border shadow rounded part-block' partid=" + partCount + "> ";
             block += '<div class="d-flex flex-row justify-content-between">';
             block += "<h2 class='card-title display-inline-block'>Part " + partCount + "</h2>";
             block += '<button type="button" class="btn btn-danger float-end delete-part">Delete Part</button>';
-            block += '</div>';
+            block += "</div>";
             block += "<label for=" + partName + " class='form-label'>Part name</label>";
             block += "<input required type='text' class='form-control part-name' id=" + partName + " name=" + partName + " value='" + partNameValue + "'>";
             block += "<label for=" + partOrderInTest + " class='form-label'>Order in test</label>";
             block += "<input required type='number' class='form-control part-order-in-test' id=" + partOrderInTest + " name=" + partOrderInTest + " value = " + partCount + ">";
             block += "<label for=" + partDescription + " class='form-label'>Description</label>";
             block += "<textarea required class='form-control' rows='3' id=" + partDescription + " name=" + partDescription + "></textarea>";
-            block += "<label for=" + partNumOfQuestion + " class='form-label'>Total questions</label>";
-            block += "<input required type='number' class='form-control' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
+            block += "<label for=" + partNumOfQuestion + " class='form-label '>Total questions</label>";
+            block += "<input required type='number' class='form-control part-num-of-question' id=" + partNumOfQuestion + " name=" + partNumOfQuestion + ">"
             block += "<label for=" + partNumOfAnswer + " class='form-label'>Total answer of each question</label>";
             block += "<select name=" + partNumOfAnswer + " id=" + partNumOfAnswer + " class='form-select'>";
             block += "<option value='3'>3</option>";
@@ -160,9 +170,9 @@
             block += '<button type="button" class="btn btn-danger float-end delete-cluster">Delete Cluster</button>';
             block += '</div>';
             block += "<label for=" + numInPart + " class='form-label'>Cluster in part</label>";
-            block += "<input required type='number' class='form-control' id=" + numInPart + " name=" + numInPart + ">";
+            block += "<input required type='number' class='form-control cluster-num-in-part' id=" + numInPart + " name=" + numInPart + ">";
             block += "<label for=" + numOfQuestion + " class='form-label'>Total question</label>";
-            block += "<input required type='number' class='form-control' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
+            block += "<input required type='number' class='form-control cluster-num-of-question' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
             block += "<label for=" + haveAttachment + " class='form-label'>Cluster has attacment</label>";
             block += "<select name=" + haveAttachment + " id=" + haveAttachment + " class='form-select'>";
             block += "<option value='yes'>Yes</option>";
@@ -188,6 +198,91 @@
             });
             partBlock.find(".add-cluster").attr("count", clusterCount);
         });
+
+        $(document).on('click', '#check-template', function(e) {
+            let check = true;
+            let numOfPart = $(".part-block").length;
+            let stateNumOfPart = $("#num_of_part").val();
+            let stateNumOfQuestion = $("#num_of_question").val();
+            let numOfQuestion = 0;
+            let arr = ["name","description","num_of_part","num_of_question","duration"];
+            arr.every(element => {
+                let m = templateCheck(element);
+                if (m == false) {
+                    check = false;
+                    return false;
+                }
+                return true;
+            });
+            $(".part-block").each((i, item) => {
+                let num = $(item).children(".part-num-of-question").val();
+                numOfQuestion += parseInt(num);
+            });
+            if (stateNumOfPart != numOfPart) {
+                let message = "Number of part does not match";
+                if (stateNumOfPart > numOfPart) message = "You have created less parts than declared."
+                if (stateNumOfPart < numOfPart) message = "You have created more parts than declared."
+                createAlert(message);
+                return false
+            }
+            if (stateNumOfQuestion != numOfQuestion) {
+                let message = "Number of part does not match";
+                if (stateNumOfQuestion > numOfQuestion) message = "You have stated less questions than declared."
+                if (stateNumOfQuestion < numOfQuestion) message = "You have stated more questions than declared."
+                createAlert(message);
+                return false
+            }
+            $(".part-block").each((i, item) => {
+                let p = parseInt($(item).attr("partid"));
+                let stateQuesInPart = parseInt($(item).children(".part-num-of-question").val());
+                let quesInPart = 0;
+                let numOfCluster = $(item).children(".cluster-block").length;
+                let haveCluster = numOfCluster > 0 ? true : false;
+                console.log("x:" + numOfCluster + "  " + haveCluster);
+                if (haveCluster) {
+                    $(item).children(".cluster-block").each((j, cluster) => {
+                        let part = $(cluster).children(".cluster-num-in-part").val();
+                        let ques = $(cluster).children(".cluster-num-of-question").val();
+                        quesInPart += parseInt(part) * parseInt(ques);
+                    });
+                    if (stateQuesInPart != quesInPart) {
+                        let message = "Number of part does not match";
+                        if (stateQuesInPart > quesInPart) message = "At part "+ p+", You have stated less questions than declared."
+                        if (stateQuesInPart < quesInPart) message = "At part "+ p+", You have stated more questions than declared."
+                        createAlert(message);
+                        return false
+                    }
+                }
+            })
+
+            if(check) {
+                $("#check-template").addClass("d-none");
+                $("#submit-template").removeClass("d-none");
+            }
+        });
+
+        function templateCheck(attr) {
+            if($("#" + attr).val() <= 0 ) {
+                let name = attr;
+                if(attr == "num_of_part") name = "total parts";
+                if(attr == "num_of_question") name = "total questions";
+                let message = "Template's "+ name+ " cannot be empty";
+                createAlert(message);
+                return false;
+            }
+            return true;
+        }
+
+        function createAlert(message) {
+            let ele = '<div class="admin-top-message"><div class="alert alert-danger mt-3 mb-0 d-flex w-fit-content" role="alert">';
+            ele += message;
+            ele += '<button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button></div></div>';
+
+            $(".add-message").prepend(ele);
+            setTimeout(function() {
+                $(".admin-top-message").remove();
+            }, 4000);
+        }
     });
 </script>
 
