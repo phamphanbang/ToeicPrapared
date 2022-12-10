@@ -9,10 +9,12 @@
                 <i class="bi bi-book pe-2"></i>
                 Blog Management
                 </a>
+                @if (Auth::user()->role == "admin")
                 <a href="{{ route('admin.template.index')}}" class="list-group-item list-group-item-action rounded-0 {{ Request::is('admin/template*') ? 'active' : '' }}">
                 <i class="bi bi-journal-code pe-2"></i>
                 Template Management
                 </a>
+                @endif
                 <a href="{{ route('admin.test.index')}}" class="list-group-item list-group-item-action rounded-0 {{ Request::is('admin/test*') ? 'active' : '' }}">
                 <i class="bi bi-journal-check pe-2"></i>
                 Test Management

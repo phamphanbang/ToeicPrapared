@@ -27,7 +27,6 @@ class CreateTemplateRequest extends FormRequest
             'description' => ['required','string',],
             'num_of_question' => ['required','integer','min:1'],
             'num_of_part' => ['required','integer','min:1'],
-            'duration' => ['required','integer','min:1'],
         ];
     }
 
@@ -38,7 +37,6 @@ class CreateTemplateRequest extends FormRequest
             'unique' => 'The :attribute is already existed',
             'min.num_of_part' => 'Test must have at least :min part',
             'min.num_of_part' => 'Test must have at least :min question',
-            'min.duration' => "Test's duration must last at least :min minute",
         ];
     }
 }

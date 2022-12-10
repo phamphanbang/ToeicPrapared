@@ -81,7 +81,7 @@
                                                 Edit
                                             </label>
                                         </a>
-                                        @if ($user->role == 'admin')
+                                        @if (Auth::user()->role != 'admin' && $user->role == "admin")
                                         <a class="confirm btn btn-danger px-1 py-0 mx-1 disabled " item-id="user_id" item-type="user">
                                             <label class="badge badge-danger">
                                                 <i class="bi bi-trash pe-2"></i>

@@ -195,6 +195,13 @@ a.nav-link:hover {
     font-weight: bold;
 }
 
+.cs-light-btn:active {
+    border-color: #2b417e !important;
+    background-color: #2b417e !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
 .item-wraper {
     background-color: white;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) ;
@@ -205,4 +212,54 @@ a.nav-link:hover {
     transform: translateY(-2px);
     transition: all .4s;
     box-shadow: 0 0rem 1rem 11px rgb(0 0 0 / 15%);
+}
+
+.mini-panel {
+    background-image: url('./img/mini-test.png');
+}
+
+.part-panel {
+    background-image: url('./img/part-test.png');
+}
+
+.test-item-panel {
+    margin-top: 1rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1rem 1.5rem;
+    width: 47%;
+    border-radius: 1rem;
+}
+
+.test-item-panel-main-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+}
+
+.test-item-panel-main-decs {
+    width: 70%;
+    font-size: 16px;
+    color: white;
+}
+
+.panel-button {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
+
+.cs-test-type-btn {
+    color: black;
+}
+
+.cs-test-type-btn:hover {
+    color: black;
+    background-color: #d2d4d6;
+}
+
+.cs-test-type-btn-active {
+    color: blue;
+    background-color: #d7dff7;
+    font-weight: 700;
 }

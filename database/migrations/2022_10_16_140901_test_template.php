@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('type',['fulltest','minitest','parttest'])->default('fulltest');
             $table->integer('num_of_part');
             $table->integer('num_of_question');
-            $table->integer('duration');
+            $table->integer('duration')->nullable();
             $table->boolean('have_score_range');
             $table->boolean('have_audio_file');
         });

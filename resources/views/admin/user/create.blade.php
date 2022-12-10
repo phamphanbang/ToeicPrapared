@@ -47,10 +47,10 @@
                             </div>
                             <div class=" mb-4">
                                 <label for="role" class="form-label">Role</label>
-                                <select name="role" id="role" class="form-select">
+                                <select name="role" id="role" class="form-select"  {{ Auth::user()->role != "admin" ? "disabled" : "" }}>
                                     <option value="admin">Admin</option>
                                     <option value="modder">Modder</option>
-                                    <option value="user">User</option>
+                                    <option value="user" selected>User</option>
                                 </select>
                             </div>
                             <div class="mb-4">

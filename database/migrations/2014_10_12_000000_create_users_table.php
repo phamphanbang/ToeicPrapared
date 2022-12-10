@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('phone')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('role', ['admin', 'user','modder'])->default('user');
             $table->timestamps();

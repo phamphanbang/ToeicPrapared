@@ -9,10 +9,10 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" href="#">Trang chủ</a>
+          <a class="nav-link" href="{{route('home')}}">Trang chủ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Đề thi online</a>
+          <a class="nav-link" href="{{route('user.test.index')}}">Đề thi online</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Blogs</a>

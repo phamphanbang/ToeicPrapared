@@ -42,11 +42,80 @@
                     <a href="#" class="btn btn-outline-primary cs-light-btn mt-2">Chi tiết</a>
 
                 </div>
-                
+
             </div>
-            
+
         </div>
     </div>
 </div>
+
+<div class="home-section my-4">
+    <div class="container">
+        <h2 class="home-h2 text-center fw-bold">Mô phỏng bài thi TOEIC</h2>
+        <div class="d-flex flex-row justify-content-between">
+            <div class="test-item-panel mini-panel">
+                <div class="test-item-panel-main">
+                    <div class="test-item-panel-main-title">
+                        MINI TEST
+                    </div>
+                    <div class="test-item-panel-main-decs">
+                        Làm bài mini test với số lượng câu hỏi và thời gian giảm một nửa so với bài thi thật
+                    </div>
+                </div>
+                <div class="test-item-panel-function w-100 d-flex flex-row-reverse">
+                    <a href="#" role="button" class="btn btn-primary rounded login-button panel-button">Luyện tập</a>
+                </div>
+            </div>
+            <div class="test-item-panel part-panel">
+                <div class="test-item-panel-main">
+                    <div class="test-item-panel-main-title">
+                        PART TEST
+                    </div>
+                    <div class="test-item-panel-main-decs">
+                        Làm bài part test với số lượng câu hỏi luyện tập theo từng phần giống trong đề thi thật
+                    </div>
+                </div>
+                <div class="test-item-panel-function w-100 d-flex flex-row-reverse">
+                    <a href="#" role="button" class="btn btn-primary rounded login-button panel-button">Luyện tập</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="home-section my-4">
+    <div class="container">
+        <h2 class="home-h2 text-center fw-bold">Blog mới nhất</h2>
+        <div class="d-flex flex-wrap m-0">
+            <div class="col-md-3 px-2 py-1 mb-4">
+                <div class="item-wraper p-3 mb-1 d-flex flex-column justify-content-between border">
+                    <a href="#" class="no-text-deco">
+                        <h3 class="text-wrap">ESL 2022 Test 1</h3>
+                        <div>
+                            <span>Bộ đề thi: ESL 2022</span>
+                        </div>
+                        <div>
+                            <i class="bi bi-clock"></i>
+                            <span>Thời gian làm bài: 120 phút</span>
+                        </div>
+                        <div>
+                            <i class="bi bi-journals"></i>
+                            <span>Số phần thi: 7 phần</span>
+                        </div>
+                        <div>
+                            <i class="bi bi-question-circle"></i>
+                            <span>Số câu hỏi: 200</span>
+                        </div>
+                    </a>
+                    <a href="#" class="btn btn-outline-primary cs-light-btn mt-2">Chi tiết</a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 @endsection

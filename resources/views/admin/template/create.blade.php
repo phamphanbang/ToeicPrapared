@@ -51,11 +51,7 @@
                             <input type="number" class="form-control" id="num_of_question" name="num_of_question" min="1" required>
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="form-group mb-4">
-                            <label for="duration" class="form-label">Duration</label>
-                            <input type="number" class="form-control" id="duration" name="duration" min="1" required>
-                            <div class="invalid-feedback"></div>
-                        </div>
+                        
                         <div class="form-group mb-4">
                             <label for="type" class="form-label">Test's Type</label>
                             <select name="type" id="type" class="form-select">
@@ -63,6 +59,11 @@
                                 <option value="minitest">Mini Test</option>
                                 <option value="parttest">Part Test</option>
                             </select>
+                        </div>
+                        <div class="form-group mb-4" id="duration-block">
+                            <label for="duration" class="form-label">Duration</label>
+                            <input type="number" class="form-control" id="duration" name="duration" min="1">
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group mb-4">
                             <label for="status" class="form-label">Status</label>
@@ -199,13 +200,26 @@
             partBlock.find(".add-cluster").attr("count", clusterCount);
         });
 
+
+        let arr = ["name","description","num_of_part","num_of_question","duration"];
+        $("#type").on("change",function () {
+            if ($(this).val() == "parttest") {
+                $("#duration-block").addClass("d-none");
+            }
+            else {
+                $("#duration-block").removeClass("d-none");
+            }
+        })
         $(document).on('click', '#check-template', function(e) {
             let check = true;
             let numOfPart = $(".part-block").length;
             let stateNumOfPart = $("#num_of_part").val();
             let stateNumOfQuestion = $("#num_of_question").val();
             let numOfQuestion = 0;
-            let arr = ["name","description","num_of_part","num_of_question","duration"];
+            if ($("#type").val() == "parttest") {
+                arr.indexOf('duration') !== -1 && arr.splice(arr.indexOf('duration'), 1)
+            }
+            
             arr.every(element => {
                 let m = templateCheck(element);
                 if (m == false) {

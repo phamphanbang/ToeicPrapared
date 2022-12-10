@@ -44,6 +44,6 @@ class Test extends Model
     }
 
     public function scopeGetAllTests($query){
-        return $query->paginate(5);
+        return $query->paginate(1);
     }
 }

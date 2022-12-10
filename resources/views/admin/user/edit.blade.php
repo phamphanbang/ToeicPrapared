@@ -19,6 +19,12 @@
         <div class="col-lg-12 grid-margin stretch-card px-5 pt-4 w-100">
             <div class="card w-50 shadow">
                 <div class="card-body">
+                    <div class="mb-3 d-flex flex-row align-items-center">
+                        <a class="btn btn-primary" href="{{url()->previous()}}" role="button">
+                            <i class="bi bi-arrow-left pe-2"></i>
+                            Back
+                        </a>
+                    </div>
                     <h4 class="card-title display-inline-block">Edit User {{$data["user"]->name }}</h4>
                     <div class="d-flex justify-content-center mt-3">
                         <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.user.update',$data['user']->id)}}" enctype="multipart/form-data">
@@ -64,13 +70,13 @@
                             <div class="mb-4 d-flex flex-column">
                                 @if ($data['user']->avatar != null)
                                 <div class="image-container">
-                                <img src="{{asset('storage/'.$data['user']->avatar)}}" alt="">
+                                    <img src="{{asset('storage/'.$data['user']->avatar)}}" alt="">
                                 </div>
                                 @else
                                 <i class="bi bi-person-circle avatar-icon"></i>
                                 @endif
                                 <label for="avatar" class="form-label">Avatar</label>
-                                <input type="file" class="form-control" id="avatar" name="avatar" >
+                                <input type="file" class="form-control" id="avatar" name="avatar">
                                 @error('avatar')
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror

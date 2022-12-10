@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\TestController;
 use App\Http\Controllers\Admin\TestTemplateController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\HomePageController;
+use App\Http\Controllers\User\TestController as UserTestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,9 @@ Route::get('/registration', [LoginController::class, 'registration'])->name('use
 Route::post('/login', [LoginController::class, 'login'])->name('user.login.post');
 Route::post('/registration', [LoginController::class, 'register'])->name('user.registration.post');
 Route::get('/logout',[LoginController::class,'logout'])->name('user.logout');
+
+Route::get('/test',[UserTestController::class,'index'])->name('user.test.index');
+Route::get('/test/{id}',[UserTestController::class,'show'])->name('user.test.show');
+Route::get('/test/{id}/start',[UserTestController::class,'start'])->name('user.test.start');
+Route::get('/test/{id}/result/{result_id}',[UserTestController::class,'result'])->name('user.test.result');
+Route::get('/test/{id}/result/{result_id}/details',[UserTestController::class,'detail'])->name('user.test.detail');

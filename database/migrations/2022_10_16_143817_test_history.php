@@ -18,8 +18,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
             $table->foreignId('test_id')->constrained('test')->onDelete('cascade');
             $table->timestamps();
-            $table->string('duration');
-            $table->integer('score');
+            $table->string('duration')->nullable();
+            $table->integer('total_question');
+            $table->integer('right_question');
+            $table->integer('wrong_question');
+            $table->integer('empty_question');
+            $table->integer('score')->nullable();
         });
     }
 
