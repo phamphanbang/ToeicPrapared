@@ -62,7 +62,10 @@ class BlogController extends Controller
 
     public function destroy($id){
         $blog = Blog::find($id);
+        $comment_set_id = $blog->commentSet->id;
         $blog->delete();
+        $comment_set = CommentSet::find($comment_set_id);
+        $comment_set->delete();
         if(session('task_url')){
             return redirect(session('task_url'))->with('deleteBlogSuccessfully','Blog deleted successfully');
         }

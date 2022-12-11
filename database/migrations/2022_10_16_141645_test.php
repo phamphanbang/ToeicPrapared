@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('test', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_type_id')->constrained('test_template');
-            $table->foreignId('comment_set_id')->constrained('comment_set');
+            $table->foreignId('test_type_id')->constrained('test_template')->onDelete('cascade');
+            $table->foreignId('comment_set_id')->constrained('comment_set')->onDelete('cascade');
             $table->string('name');
             $table->enum('status',['public','onhold'])->default('public');
             $table->enum('type',['fulltest','minitest','parttest'])->default('fulltest');

@@ -13,6 +13,7 @@ class TestHistoryAnswer extends Model
     use HasFactory;
 
     protected $table = "test_history_answer";
+    public $timestamps = false;
 
     protected $fillable = [
         'answer',

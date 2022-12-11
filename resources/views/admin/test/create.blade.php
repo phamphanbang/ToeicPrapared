@@ -222,11 +222,11 @@
                                                             </div>
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][answer]">Answer</label>
                                                             <select name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][answer]" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][answer]" class="form-select">
-                                                                <option value="option_1">A</option>
-                                                                <option value="option_2">B</option>
-                                                                <option value="option_3">C</option>
+                                                                <option value="A">A</option>
+                                                                <option value="B">B</option>
+                                                                <option value="C">C</option>
                                                                 @if ($part->num_of_answer == 4)
-                                                                <option value="option_4">D</option>
+                                                                <option value="D">D</option>
                                                                 @endif
                                                             </select>
 
@@ -284,11 +284,11 @@
 
                                                     <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][answer]">Answer</label>
                                                     <select name="part[{{$part->order_in_test}}][question][{{$i}}][answer]" id="part[{{$part->order_in_test}}][question][{{$i}}][answer]" class="form-select">
-                                                        <option value="option_1">A</option>
-                                                        <option value="option_2">B</option>
-                                                        <option value="option_3">C</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
                                                         @if ($part->num_of_answer == 4)
-                                                        <option value="option_4">D</option>
+                                                        <option value="D">D</option>
                                                         @endif
                                                     </select>
 

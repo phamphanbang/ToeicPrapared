@@ -132,8 +132,11 @@ class TestController extends Controller
     public function destroy($id)
     {
         $test = Test::find($id);
+        $comment_set_id = $test->commentSet->id;
         Storage::deleteDirectory('public/tests/'.$test->id);
         $test->delete();
+        $comment_set = CommentSet::find($comment_set_id);
+        $comment_set->delete();
         if (session('task_url')) {
             return redirect(session('task_url'))->with('deleteTestSuccessfully', 'Test deleted successfully');
         }

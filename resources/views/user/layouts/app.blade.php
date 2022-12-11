@@ -24,10 +24,13 @@
         @include('user.layouts.nav')
 
         <main class="d-flex flex-column admin-main w-100">
-            @yield('content')
-            @include('user.layouts.footer')
+            <div class="main-content">
+                @yield('content')
+            </div>
+            
         </main>
     </div>
+    @include('user.layouts.footer')
 </body>
 
 </html>

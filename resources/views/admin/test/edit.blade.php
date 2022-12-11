@@ -211,11 +211,11 @@
                                                     </div>
                                                     <label class="form-label" for="question[{{$question->id}}][answer]">Answer</label>
                                                     <select name="question[{{$question->id}}][answer]" id="question[{{$question->id}}][answer]" class="form-select">
-                                                        <option {!! $question->answer == "option_1" ? "selected":"" !!} value="option_1">A</option>
-                                                        <option {!! $question->answer == "option_2" ? "selected":"" !!} value="option_2">B</option>
-                                                        <option {!! $question->answer == "option_3" ? "selected":"" !!} value="option_3">C</option>
+                                                        <option {!! $question->answer == "A" ? "selected":"" !!} value="A">A</option>
+                                                        <option {!! $question->answer == "B" ? "selected":"" !!} value="B">B</option>
+                                                        <option {!! $question->answer == "C" ? "selected":"" !!} value="C">C</option>
                                                         @if ($part->num_of_answer == 4)
-                                                        <option {!! $question->answer == "option_4" ? "selected":"" !!} value="option_4">D</option>
+                                                        <option {!! $question->answer == "D" ? "selected":"" !!} value="D">D</option>
                                                         @endif
                                                     </select>
 
@@ -272,11 +272,11 @@
 
                                             <label class="form-label" for="question[{{$question->id}}][answer]">Answer</label>
                                             <select name="question[{{$question->id}}][answer]" id="question[{{$question->id}}][answer]" class="form-select">
-                                                <option {!! $question->answer == "option_1" ? "selected":"" !!} value="option_1">A</option>
-                                                <option {!! $question->answer == "option_2" ? "selected":"" !!} value="option_2">B</option>
-                                                <option {!! $question->answer == "option_3" ? "selected":"" !!} value="option_3">C</option>
+                                                <option {!! $question->answer == "A" ? "selected":"" !!} value="A">A</option>
+                                                <option {!! $question->answer == "B" ? "selected":"" !!} value="B">B</option>
+                                                <option {!! $question->answer == "C" ? "selected":"" !!} value="C">C</option>
                                                 @if ($part->num_of_answer == 4)
-                                                <option {!! $question->answer == "option_4" ? "selected":"" !!} value="option_4">D</option>
+                                                <option {!! $question->answer == "D" ? "selected":"" !!} value="D">D</option>
                                                 @endif
                                             </select>
 

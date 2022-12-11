@@ -60,5 +60,6 @@ Route::get('/logout',[LoginController::class,'logout'])->name('user.logout');
 Route::get('/test',[UserTestController::class,'index'])->name('user.test.index');
 Route::get('/test/{id}',[UserTestController::class,'show'])->name('user.test.show');
 Route::get('/test/{id}/start',[UserTestController::class,'start'])->name('user.test.start');
+Route::post('/test/{id}/submit',[UserTestController::class,'submit'])->name('user.test.submit');
 Route::get('/test/{id}/result/{result_id}',[UserTestController::class,'result'])->name('user.test.result');
-Route::get('/test/{id}/result/{result_id}/details',[UserTestController::class,'detail'])->name('user.test.detail');
+Route::get('/test/{id}/result/{result_id}/details',[UserTestController::class,'details'])->name('user.test.detail');
