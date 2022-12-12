@@ -63,7 +63,7 @@
                             <tbody>
                                 <tr>
                                     <td class="">{{ $blog->id }}</td>
-                                    <td class="">{{ $blog->name }}</td>
+                                    <td class="" style="width: 45%;">{{ $blog->name }}</td>
                                     <td class="">{{ $blog->user->name }}</td>
                                     <td class="">{{ $blog->created_at }}</td>
                                     <td class="text-center">

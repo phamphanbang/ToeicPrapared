@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">Create New Blog</h4>
                     <div class="d-flex justify-content-center mt-3">
-                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.blog.store')}}">
+                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.blog.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class=" mb-4">
                                 <label for="name" class="form-label">Title</label>
@@ -29,6 +29,10 @@
                                 @error('name')
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="banner" class="form-label">Banner</label>
+                                <input type="file" class="form-control" id="banner" name="banner" >
                             </div>
                             <div class="mb-4">
                                 <textarea class="tinymce-editor" name="blog"></textarea>
@@ -59,7 +63,7 @@
             'insertdatetime media table paste code help wordcount', 'image'
         ],
         toolbar: 'undo redo | formatselect | image ' +
-            'bold italic backcolor | alignleft aligncenter ' +
+            'bold italic backcolor link unlink| alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
         content_css: '//www.tiny.cloud/css/codepen.min.css'

@@ -31,6 +31,16 @@
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>
+                            <div class="mb-4 d-flex flex-column">
+                                <div class="w-100">
+                                    <img src="{{asset('storage/'.$data['blog']->banner)}}" class="w-100" alt="">
+                                </div>
+                                <label for="banner" class="form-label">New Banner</label>
+                                <input type="file" class="form-control" id="banner" name="banner">
+                                @error('banner')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
+                            </div>
                             <div class="mb-4">
                                 <textarea class="tinymce-editor" name="blog" value="{{$data['blog']->blog}}"></textarea>
                                 @error('blog')
@@ -54,7 +64,7 @@
     var blog = {!!  json_encode(old('blog')?old('blog'):$data['blog']->blog) !!};
     tinymce.init({
         selector: 'textarea.tinymce-editor',
-        height: 300,
+        height: 400,
         menubar: false,
         plugins: [
             'advlist autolink lists link image charmap print preview anchor',
@@ -62,7 +72,7 @@
             'insertdatetime media table paste code help wordcount', 'image'
         ],
         toolbar: 'undo redo | formatselect | image ' +
-            'bold italic backcolor | alignleft aligncenter ' +
+            'bold italic backcolor link unlink| alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
         content_css: '//www.tiny.cloud/css/codepen.min.css',

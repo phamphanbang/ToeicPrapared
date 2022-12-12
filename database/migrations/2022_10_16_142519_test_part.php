@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('have_cluster');
             $table->boolean('have_attachment');
             $table->boolean('have_question');
-            $table->string('description');
+            $table->text('description');
         });
     }
 

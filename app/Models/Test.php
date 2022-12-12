@@ -44,6 +44,10 @@ class Test extends Model
     }
 
     public function scopeGetAllTests($query){
-        return $query->paginate(1);
+        return $query->paginate(12);
+    }
+
+    public function scopeGetByType($query,$type){
+        return $query->where('type' , '=' , $type)->paginate(12);
     }
 }

@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-9 col-12 border shadow rounded bg-white">
                 <div class="test-container-block p-2">
-                    <h1>Kết quả thi: {{$data["tests"]->name}}</h1>
+                    <h1 class="fw-bolder">Kết quả thi: {{$data["tests"]->name}}</h1>
                     <div>
                         <span><strong>Bộ đề thi: {{$data["tests"]->testTemplate->name }}</strong></span>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="d-flex flex-row mt-3">
                         <div class="row w-100">
                             <div class="col-md-4">
-                                <div class="d-flex flex-column p-3">
+                                <div class="d-flex flex-column p-3 border rounded bg-gray-custom">
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="me-1 d-flex">
                                             <i class="bi bi-check-lg"></i>
@@ -50,7 +50,7 @@
                                             </p>
                                         </div>
                                         <div>
-                                            {{ $data["result"]->right_question }}/{{ $data["result"]->total_question }}
+                                            {{ $data["result"]->duration}}
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row justify-content-between">
@@ -121,7 +121,7 @@
                                 @foreach ($part["questions"] as $question)
                                 <div class="d-flex align-items-center my-2">
                                     <div class="question-order">
-                                        <strong class="qid-click" >{!! $question["order_in_test"] !!}</strong>
+                                        <strong class="qid-click">{!! $question["order_in_test"] !!}</strong>
                                     </div>
                                     <div class="d-flex ms-2 align-items-center">
                                         <span>{{ $question["answer"] }}</span>
@@ -135,7 +135,7 @@
                                         <span class="text-decoration-line-through">{{ $question["select"] }}</span>
                                         <i class="bi bi-x txt-red fs-4"></i>
                                         @endif
-                                        
+
                                     </div>
                                 </div>
                                 @endforeach
@@ -152,24 +152,39 @@
             <div class="col-md-9 col-12 border shadow rounded bg-white">
                 <div class="comment-block py-3">
                     <h4 class="fw-bold">Bình luận</h4>
-                    <form action="" method="POST" class="d-flex flex-row justify-content-between mt-1">
-                        <textarea name="" id="" rows="1" class="form-control ps-4" placeholder="Chia sẻ cảm nghĩ của bạn ..."></textarea>
+                    @guest
+                    <div>
+                        <p>Vui lòng <a href="{{route('user.login')}}" class="text-decoration-none">đăng nhập</a> để bình luận.</p>
+                    </div>
+                    @endguest
+                    @auth
+                    <form action="{{route('user.test.comment',$data['tests']->id)}}" method="POST" class="d-flex flex-row justify-content-between mt-1">
+                        @csrf
+                        <input type="number" class="d-none" name="comment_set_id" value="{{$data['tests']->comment_set_id}}">
+                        <input type="number" class="d-none" name="user_id" value="{{Auth::user()->id}}">
+                        <textarea name="comment" id="" rows="1" class="form-control ps-4" placeholder="Chia sẻ cảm nghĩ của bạn ..."></textarea>
                         <button type="submit" class="btn btn-primary login-button">Gửi</button>
                     </form>
+                    @endauth
                     <div class="comment-list mt-2">
+                        @if ($data["num_of_comments"] == 0)
                         <div class="fst-italic">
                             Chưa có bình luận nào. Hãy trở thành người đầu tiên bình luận bài này.
                         </div>
-                        <div class="comment-user d-flex flex-row">
-                            <div class="user-ava">
-                                <i class="bi bi-person-circle avatar-icon c-gray"></i>
-                            </div>
-                            <div class="user-content px-3">
-                                <div>
-                                    <strong>Adam Johnson</strong> , Dec. 11,2022
+                        @else
+                        @foreach ($data["comments"] as $comment)
+                        <div class="comment-user d-flex flex-row w-100 justify-content-between my-2">
+                            <div class="d-flex">
+                                <div class="user-ava">
+                                    <i class="bi bi-person-circle avatar-icon c-gray"></i>
                                 </div>
-                                <div>
-                                    Mọi người cho mình hỏi cách triển khai ý cho bài writing task 2 nhanh và logic được không ạ? Thường mọi người áp dụng cách nào share mình với ạ
+                                <div class="user-content px-3">
+                                    <div>
+                                        <strong>{{$comment->user->name}}</strong> , {{$comment->created_at->format("F j, Y, g:i a") }}
+                                    </div>
+                                    <div>
+                                        {!! nl2br($comment->comment) !!}
+                                    </div>
                                 </div>
                             </div>
                             <div class="user-option">
@@ -183,9 +198,13 @@
                                 </div>
                             </div>
                         </div>
+                        @endforeach
+                        @endif
+                        <div class="my-2">
+                            {{ $data["comments"]->links("pagination::bootstrap-4") }}
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

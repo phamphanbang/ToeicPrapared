@@ -17,14 +17,10 @@ class TrainingPlan extends Model
 
     protected $fillable = [
         'status',
-        'initial_score',
         'current_score',
         'goal_score',
-        'score_between_test',
-        'time_between_test',
-        'date_start',
-        'date_end_goal',
-        'date_end'
+        'date_end',
+        'part_suggestion'
     ];
 
     public function user() {

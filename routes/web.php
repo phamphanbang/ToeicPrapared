@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\TestTemplateController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\HomePageController;
 use App\Http\Controllers\User\TestController as UserTestController;
+use App\Http\Controllers\User\BlogController as UserBlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,8 +59,16 @@ Route::post('/registration', [LoginController::class, 'register'])->name('user.r
 Route::get('/logout',[LoginController::class,'logout'])->name('user.logout');
 
 Route::get('/test',[UserTestController::class,'index'])->name('user.test.index');
-Route::get('/test/{id}',[UserTestController::class,'show'])->name('user.test.show');
+Route::get('/test/{type}',[UserTestController::class,'type'])->name('user.test.type');
+Route::post('/test/search',[UserTestController::class,'search'])->name('user.test.search');
+Route::get('/test/{id}/show',[UserTestController::class,'show'])->name('user.test.show');
 Route::get('/test/{id}/start',[UserTestController::class,'start'])->name('user.test.start');
 Route::post('/test/{id}/submit',[UserTestController::class,'submit'])->name('user.test.submit');
+Route::post('/test/{id}/comment',[UserTestController::class,'comment'])->name('user.test.comment');
 Route::get('/test/{id}/result/{result_id}',[UserTestController::class,'result'])->name('user.test.result');
 Route::get('/test/{id}/result/{result_id}/details',[UserTestController::class,'details'])->name('user.test.detail');
+
+Route::get('/blog',[UserBlogController::class,'index'])->name('user.blog.index');
+Route::get('/blog/{id}',[UserBlogController::class,'show'])->name('user.blog.show');
+Route::post('/blog/search',[UserBlogController::class,'search'])->name('user.blog.search');
+Route::post('/blog/comment',[UserBlogController::class,'comment'])->name('user.blog.comment');

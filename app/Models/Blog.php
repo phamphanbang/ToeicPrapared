@@ -17,6 +17,7 @@ class Blog extends Model
     protected $fillable = [
         'name',
         'blog',
+        'banner'
     ];
 
     public function user() {

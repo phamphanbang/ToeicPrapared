@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateBlogRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -33,9 +34,20 @@ class BlogController extends Controller
         $data["blog"] = new Blog;
         $data["blog"]->name = $request->name;
         $data["blog"]->blog = $request->blog;
+        if ($request->banner) {
+            $data["blog"]->banner = $request->banner;
+        }
+
         $data["blog"]->comment_set_id = $comment_set->id;
         $data["blog"]->user_id = $request->user()->id;
         $data["blog"]->save();
+        if($request->hasFile('banner')){
+            $file = $request->file("banner");
+            $extension = $file->extension();
+            $file->storeAs('public/images/blog/', $data["blog"]->id . '.' . $extension);
+            $data["blog"]->banner = 'images/blog/' . $data["blog"]->id . '.' . $extension;
+            $data["blog"]->update();
+        }
         if(session('task_url')){
             return redirect(session('task_url'))->with('blogCreateSuccess','Blog created successfully');
         }
@@ -56,6 +68,16 @@ class BlogController extends Controller
         $data["blog"] = Blog::find($id);
         $data["blog"]->name = $request->name;
         $data["blog"]->blog = $request->blog;
+        if ($request->banner) {
+            $data["blog"]->banner = $request->banner;
+        }
+        if($request->hasFile('banner')){
+            $file = $request->file("banner");
+            $extension = $file->extension();
+            $file->storeAs('public/images/blog/', $data["blog"]->id . '.' . $extension);
+            $data["blog"]->banner = 'images/blog/' . $data["blog"]->id . '.' . $extension;
+            $data["blog"]->update();
+        }
         $data["blog"]->save();
         return redirect(route('admin.blog.edit',$data["blog"]->id))->with('data',$data)->with('blogChangeSuccess','Blog changed successfully');
     }
@@ -63,6 +85,7 @@ class BlogController extends Controller
     public function destroy($id){
         $blog = Blog::find($id);
         $comment_set_id = $blog->commentSet->id;
+        Storage::delete('public/'.$blog->banner);
         $blog->delete();
         $comment_set = CommentSet::find($comment_set_id);
         $comment_set->delete();

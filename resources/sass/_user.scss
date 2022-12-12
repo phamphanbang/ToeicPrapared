@@ -3,6 +3,10 @@
     src: url("./font/Roboto-Regular.ttf");
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 html,
 body {
     font-family: "Roboto";
@@ -53,6 +57,10 @@ body {
 
 .w-40 {
     width: 40%;
+}
+
+.w-20rem {
+    width: 20rem;
 }
 
 .w-img {
@@ -276,17 +284,22 @@ a.nav-link:hover {
 
 .cs-test-type-btn {
     color: black;
+    border-color: transparent;
 }
 
 .cs-test-type-btn:hover {
     color: black;
     background-color: #d2d4d6;
+    border-color: #d2d4d6;
+    ;
 }
 
-.cs-test-type-btn-active {
+.cs-test-type-btn-active,
+.cs-test-type-btn-active:hover {
     color: blue;
     background-color: #d7dff7;
     font-weight: 700;
+    border-color: #d7dff7;
 }
 
 .part-button {
@@ -301,7 +314,8 @@ a.nav-link:hover {
     border-color: #f8f9fa;
 }
 
-.part-button:active, .part-button.active {
+.part-button:active,
+.part-button.active {
     background-color: #e8f2ff;
     color: #35509a;
     font-weight: 500;
@@ -312,6 +326,7 @@ a.nav-link:hover {
 .question-image {
     width: 500px;
     height: 250px;
+    object-fit: contain;
 }
 
 .question-order strong {
@@ -348,7 +363,8 @@ a.nav-link:hover {
     cursor: pointer;
 }
 
-.question-check:hover, .question-check.done {
+.question-check:hover,
+.question-check.done {
     background-color: #35509a;
     color: #fff;
     border-color: #35509a;
@@ -361,7 +377,7 @@ a.nav-link:hover {
 }
 
 .text-warning {
-    color: #ffad3b!important;
+    color: #ffad3b !important;
     font-size: small;
 }
 
@@ -379,4 +395,89 @@ a.nav-link:hover {
 
 .column-2 {
     columns: 2;
+}
+
+.bg-gray-custom {
+    background-color: #efeaea;
+}
+
+.question-highlight {
+    border: rgb(240, 237, 107) solid 2px;
+    border-radius: 2%;
+}
+
+.radio-gray {
+    color: gray !important;
+    background-color: gray !important;
+    border-color: gray !important;
+}
+
+.result-right {
+    background-color: #acfbac;
+    border-color: #00a500;
+}
+
+.result-right:hover,
+.result-right:active {
+    background-color: #00a500;
+    border-color: #00a500;
+}
+
+.result-wrong {
+    background-color: #ffbaba;
+    border-color: #ef5050;
+}
+
+.result-wrong:hover,
+.result-wrong:active {
+    background-color: #ef5050;
+    border-color: #ef5050;
+}
+
+.result-none {
+    background-color: rgb(194, 194, 194);
+    border-color: grey;
+}
+
+.result-none:hover,
+.result-none:active {
+    background-color: grey;
+    border-color: grey;
+}
+
+.right-answer {
+    color: green;
+    font-size: large;
+}
+
+.user-panel {
+    background-color: #becdff;
+}
+
+.text-blue {
+    color: #35509a !important;
+}
+
+.blog-link,
+.blog-link:hover {
+    color: #1a1a1a;
+    ;
+}
+
+.blog-description {
+    overflow: hidden;
+    width: 20rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.blog-wrapper {
+    background-color: white;
+}
+
+.blog-wrapper:hover {
+    transform: translateY(-2px);
+    transition: all .4s;
+    box-shadow: 0 0rem 1rem 11px rgb(0 0 0 / 15%);
 }

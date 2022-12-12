@@ -25,4 +25,8 @@ class Comment extends Model
     public function user() {
         return $this->belongsTo(User::class,'user_id');
     }
+
+    public function scopeGetAllComments($query,$comment_set_id){
+        return $query->where('comment_set_id' , '=' , $comment_set_id)->paginate(10);
+    }
 }

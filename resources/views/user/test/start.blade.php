@@ -5,7 +5,7 @@
 <div class="d-flex flex-column py-3 px-2">
     <div class="start-tittle d-flex flex-row justify-content-center align-items-center ">
         <h3 class="m-0">{{$data["tests"]->name}}</h3>
-        <a role="button" class="btn btn-outline-primary cs-light-btn ms-2">Thoát</a>
+        <a role="button" class="btn btn-outline-primary cs-light-btn ms-2" href="{{ route('user.test.show',$data['tests']->id) }}">Thoát</a>
     </div>
     <div class="start-template d-flex flex-row justify-content-center mt-2">
         <h4>Bộ đề thi : {{$data["tests"]->testTemplate->name}}</h4>
@@ -20,9 +20,9 @@
                 <source src="{{asset('storage/'.$data['tests']->audio_file)}}" type="audio/mpeg">
             </audio>
             @endif
-            <div class="part-nav">
+            <div class="part-nav" id="nav-top">
                 @foreach ($data['tests']->testParts as $part )
-                <button type="button" class="btn btn-outline-primary rounded-pill part-button" part="{{$part->order_in_test}}">{{$part->name}}</button>
+                <button type="button" class="btn btn-outline-primary rounded-pill part-button top" part="{{$part->order_in_test}}">{{$part->name}}</button>
                 @endforeach
             </div>
             @foreach ($data['tests']->testParts as $part )
@@ -167,6 +167,11 @@
             </div>
             @endif
             @endforeach
+            <div class="part-nav">
+                @foreach ($data['tests']->testParts as $part )
+                <button type="button" class="btn btn-outline-primary rounded-pill part-button bot" part="{{$part->order_in_test}}">{{$part->name}}</button>
+                @endforeach
+            </div>
         </div>
         <div class="d-flex flex-column w-15 border rounded shadow bg-white h-fit-content">
             <div class="test-nav h-fit-content p-3 d-flex flex-column">
@@ -179,7 +184,7 @@
                     </div>
                     <input class="d-none" type="text" name="duration" id="test-duration" mdone="0" sdone="0" value="">
                     <input class="d-none" type="text" name="total_question" value="{{$data['tests']->num_of_question}}">
-                    <button type="submit" form="submit-test" class="btn btn-outline-primary cs-light-btn w-100 mb-3">Nộp bài</button>
+                    <button type="submit" id="button-submit-test" form="submit-test" class="btn btn-outline-primary cs-light-btn w-100 mb-3">Nộp bài</button>
                     <div>
                         <p class="text-warning">
                             <i>
@@ -207,6 +212,7 @@
 
 <script type="module">
     $(document).ready(function() {
+        let duration = parseInt($('#duration').attr("duration")) * 60;
         let initTime = parseInt($('#duration').attr("duration")) * 60;
         let min = Math.floor(initTime / 60);
         let sec = initTime % 60;
@@ -219,19 +225,14 @@
                 if (x < 10) return ("0" + x).slice(-2);
                 return x;
             }
-            sdone += 1;
-            if (sdone == 60) {
-                mdone += 1;
-                sdone = 0;
-            }
+            let timeleft = duration - initTime; 
 
             $("#duration").text(processNumber(min) + ":" + processNumber(sec));
-            $("#test-duration").attr("mdone", mdone);
-            $("#test-duration").attr("sdone", sdone);
-            console.log(processNumber(mdone) + ":" + processNumber(sdone));
-            $("#test-duration").val(processNumber(mdone) + ":" + processNumber(sdone));
+            $("#test-duration").val(processNumber(Math.floor(timeleft / 60)) + ":" + processNumber(timeleft % 60));
             initTime -= 1;
-            console.log(processNumber(min) + ":" + processNumber(sec))
+            if(initTime == 0) {
+                $("#button-submit-test").click();
+            }
         }, 1000);
 
         $("div.part-block").each((i, item) => {
@@ -253,6 +254,9 @@
                 $(item).removeClass("active");
             });
             $(".part-button[part=" + partSelected + "]").addClass("active");
+            $('html, body').animate({
+                scrollTop: $("#nav-top").offset().top
+            }, 1000);
         });
 
         $(".form-check-input").click((e) => {

@@ -15,7 +15,7 @@
           <a class="nav-link" href="{{route('user.test.index')}}">Đề thi online</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Blogs</a>
+          <a class="nav-link" href="{{route('user.blog.index')}}">Blogs</a>
         </li>
         <li class="nav-item">
           @guest

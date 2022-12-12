@@ -29,7 +29,8 @@ class CreateBlogRequest extends FormRequest
     {
         return [
             'name' => ['required','string','unique:blog' ,'max:255'],
-            'blog' => ['required','string']
+            'blog' => ['required','string'],
+            'avatar' => ['mimes:png,jpg,jpeg'],
         ];
     }
 
@@ -38,6 +39,7 @@ class CreateBlogRequest extends FormRequest
         return [
             'required' => 'The :attribute field is required.',
             'unique' => 'The :attribute is already existed',
+            'mimes' => 'Only png,jpg,jpeg are allowed'
         ];
     }
 }
