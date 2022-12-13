@@ -10,7 +10,7 @@ class UserRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string','unique:user', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
@@ -20,7 +20,8 @@ class UserRegistrationRequest extends FormRequest
     {
         return [
             'required' => 'Vui lòng bạn điền thông tin vào vùng trên',
-            'unique' => 'Email này đã có người dùng',
+            'email.unique' => 'Email này đã có người dùng',
+            'name.unique' => 'Tên này đã có người dùng',
             'confirmed' => 'Mật khẩu không trùng khớp',
             'password.min' => 'Mật khẩu không được dưới 8 ký tự'
         ];

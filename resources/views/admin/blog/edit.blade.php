@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <h4 class="card-title display-inline-block">Edit Blog {{$data["blog"]->name }}</h4>
                     <div class="d-flex justify-content-center mt-3">
-                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.blog.update',$data['blog']->id)}}">
+                        <form class="display-inline-block float-right w-75" method="POST" action="{{route('admin.blog.update',$data['blog']->id)}}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class=" mb-4">
@@ -38,6 +38,13 @@
                                 <label for="banner" class="form-label">New Banner</label>
                                 <input type="file" class="form-control" id="banner" name="banner">
                                 @error('banner')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="glossary" class="form-label">Glossary</label>
+                                <textarea class="form-control" rows="3" id="glossary" name="glossary" required>{{$data['blog']->glossary}}</textarea>
+                                @error('glossary')
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>

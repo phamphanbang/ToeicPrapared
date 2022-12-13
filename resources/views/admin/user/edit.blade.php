@@ -33,6 +33,7 @@
                             <div class=" mb-4">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="{{$data['user']->name}}">
+                                <input type="name" class="d-none" name="old_name" value="{{ $data['user']->name }}">
                                 @error('name')
                                 <p class="text-danger">{{$message}}</p>
                                 @enderror
@@ -73,7 +74,7 @@
                                     <img src="{{asset('storage/'.$data['user']->avatar)}}" alt="">
                                 </div>
                                 @else
-                                <i class="bi bi-person-circle avatar-icon"></i>
+                                <i class="bi bi-person-circle avatar-icon avatar-update"></i>
                                 @endif
                                 <label for="avatar" class="form-label">Avatar</label>
                                 <input type="file" class="form-control" id="avatar" name="avatar">

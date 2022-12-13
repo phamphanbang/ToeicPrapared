@@ -47,6 +47,7 @@ class TestTemplateController extends Controller
         foreach ($request["parts"] as $data) {
             $part = new PartTemplate;
             $part->name = $data["name"];
+            $part->type = $data["type"];
             $part->order_in_test = $data["order_in_test"];
             $part->description = $data["description"];
             $part->num_of_question = $data["num_of_question"];
@@ -101,6 +102,7 @@ class TestTemplateController extends Controller
             foreach ($request["parts"] as $data) {
                 $part = new PartTemplate;
                 $part->name = $data["name"];
+                $part->type = $data["type"];
                 $part->order_in_test = $data["order_in_test"];
                 $part->description = $data["description"];
                 $part->num_of_question = $data["num_of_question"];

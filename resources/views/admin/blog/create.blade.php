@@ -35,6 +35,10 @@
                                 <input type="file" class="form-control" id="banner" name="banner" >
                             </div>
                             <div class="mb-4">
+                                <label for="glossary" class="form-label">Glossary</label>
+                                <textarea class="form-control" rows="3" id="glossary" name="glossary" required></textarea>
+                            </div>
+                            <div class="mb-4">
                                 <textarea class="tinymce-editor" name="blog"></textarea>
                                 @error('blog')
                                 <p class="text-danger">{{$message}}</p>

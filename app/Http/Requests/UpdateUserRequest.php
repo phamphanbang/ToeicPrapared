@@ -28,7 +28,7 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string', 'max:255'],
+            'name' => ['required','string','unique:user,name,'.$this->old_name.',name', 'max:255'],
             'email' => ['required','string', 'email', 'max:255', 'unique:user,email,'.$this->old_email.',email'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'avatar' => ['mimes:png,jpg,jpeg'],

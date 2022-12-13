@@ -62,6 +62,9 @@ body {
 .w-20rem {
     width: 20rem;
 }
+.h-11rem {
+    height: 11rem;
+}
 
 .w-img {
     width: 8%;
@@ -77,6 +80,10 @@ body {
 
 .h-fit-content {
     height: fit-content;
+}
+
+.w-fit-content {
+    width: fit-content;
 }
 
 .shadow-top {
@@ -324,8 +331,9 @@ a.nav-link:hover {
 
 
 .question-image {
-    width: 500px;
-    height: 250px;
+    max-width: 700px;
+    width: auto;
+    height: auto;
     object-fit: contain;
 }
 
@@ -466,7 +474,7 @@ a.nav-link:hover {
 
 .blog-description {
     overflow: hidden;
-    width: 20rem;
+    width: 90%;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -480,4 +488,44 @@ a.nav-link:hover {
     transform: translateY(-2px);
     transition: all .4s;
     box-shadow: 0 0rem 1rem 11px rgb(0 0 0 / 15%);
+}
+
+.info-update img {
+    width: 100%;
+    border-radius: 50%;
+    clip-path: circle();
+}
+
+.avatar-update {
+    text-align: center;
+    font-size: 7rem;
+}
+
+
+.info-nav {
+    list-style: none;
+    display: flex;
+}
+
+.info-nav a{
+    color: rgb(151, 151, 151);
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-color: rgb(151, 151, 151);
+}
+
+.info-nav a:hover{
+    font-weight: bold;
+    color: #35509a;
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-color: #35509a;
+}
+
+.info-nav a.active{
+    font-weight: bold;
+    color: #35509a;
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-color: #35509a;
 }

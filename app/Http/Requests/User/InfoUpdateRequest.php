@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class CreateBlogRequest extends FormRequest
+class InfoUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class CreateBlogRequest extends FormRequest
      */
     public function authorize()
     {
-        if(Auth::user()->role == 'admin' || Auth::user()->role == 'modder') {
+        if(Auth::check()) {
             return true;
         }
         else return false;
@@ -28,9 +28,8 @@ class CreateBlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string','unique:blog' ,'max:255'],
-            'blog' => ['required','string'],
-            'glossary' => ['required','string'],
+            'name' => ['required','string','unique:user,name,'.$this->old_name.',name', 'max:30'],
+            'email' => ['required','string', 'email', 'unique:user,email,'.$this->old_email.',email'],
             'avatar' => ['mimes:png,jpg,jpeg'],
         ];
     }
@@ -38,9 +37,9 @@ class CreateBlogRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'The :attribute field is required.',
-            'unique' => 'The :attribute is already existed',
-            'mimes' => 'Only png,jpg,jpeg are allowed'
+            'email.unique' => 'Tài khoản email này đã có người sử dụng',
+            'name.unique' => 'Tên người dùng này đã có người sử dụng',
+            'mimes' => 'Ảnh đại diện chỉ nhận định dạng png,jpg,jpeg '
         ];
     }
 }

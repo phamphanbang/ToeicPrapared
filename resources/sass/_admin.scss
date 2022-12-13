@@ -36,6 +36,11 @@ html, body
     margin: 0px 10px;
 }
 
+.avatar-update {
+    text-align: center;
+    font-size: 7rem;
+}
+
 .image-container {
     width: 100%;
 }
@@ -90,8 +95,9 @@ html, body
 }
 
 .question-image {
-    width: 500px;
-    height: 250px;
+    max-width: 700px;
+    width: auto;
+    height: auto;
 }
 
 .test-nav {

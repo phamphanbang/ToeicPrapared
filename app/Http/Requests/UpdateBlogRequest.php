@@ -30,6 +30,7 @@ class UpdateBlogRequest extends FormRequest
         return [
             'name' => ['required','string','max:255','unique:blog,name,'.$this->name.',name'],
             'blog' => ['required','string'],
+            'glossary' => ['required','string'],
             'avatar' => ['mimes:png,jpg,jpeg'],
         ];
     }

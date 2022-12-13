@@ -53,6 +53,7 @@
                                             {{ $data["result"]->duration}}
                                         </div>
                                     </div>
+                                    @if ($data["tests"]->type == "fulltest")
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="me-1 d-flex">
                                             <i class="bi bi-journal-check"></i>
@@ -61,9 +62,10 @@
                                             </p>
                                         </div>
                                         <div>
-                                            {{ $data["result"]->right_question }}
+                                            {{$data["result"]->score}}
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-8">

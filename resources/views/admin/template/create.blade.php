@@ -51,7 +51,7 @@
                             <input type="number" class="form-control" id="num_of_question" name="num_of_question" min="1" required>
                             <div class="invalid-feedback"></div>
                         </div>
-                        
+
                         <div class="form-group mb-4">
                             <label for="type" class="form-label">Test's Type</label>
                             <select name="type" id="type" class="form-select">
@@ -97,11 +97,19 @@
 
 <script type="module">
     $(document).ready(function() {
+
+        $(window).keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
         let partCount = 1;
         let partId = 1;
         $("#add-part").click(() => {
             let partInput = "parts[" + partId + "]";
             let partName = partInput + "[name]";
+            let partType = partInput + "[type]";
             let partDescription = partInput + "[description]";
             let partNumOfQuestion = partInput + "[num_of_question]";
             let partNumOfAnswer = partInput + "[num_of_answer]";
@@ -119,6 +127,11 @@
             block += "<input required type='text' class='form-control part-name' id=" + partName + " name=" + partName + " value='" + partNameValue + "'>";
             block += "<label for=" + partOrderInTest + " class='form-label'>Order in test</label>";
             block += "<input required type='number' class='form-control part-order-in-test' id=" + partOrderInTest + " name=" + partOrderInTest + " value = " + partCount + ">";
+            block += "<label for=" + partType + " class='form-label'>Part type</label>";
+            block += "<select name=" + partType + " id=" + partType + " class='form-select'>";
+            block += "<option value='reading'>Reading</option>";
+            block += "<option value='listening'>Listening</option>";
+            block += "</select>";
             block += "<label for=" + partDescription + " class='form-label'>Description</label>";
             block += "<textarea required class='form-control' rows='3' id=" + partDescription + " name=" + partDescription + "></textarea>";
             block += "<label for=" + partNumOfQuestion + " class='form-label '>Total questions</label>";
@@ -201,12 +214,11 @@
         });
 
 
-        let arr = ["name","description","num_of_part","num_of_question","duration"];
-        $("#type").on("change",function () {
+        let arr = ["name", "description", "num_of_part", "num_of_question", "duration"];
+        $("#type").on("change", function() {
             if ($(this).val() == "parttest") {
                 $("#duration-block").addClass("d-none");
-            }
-            else {
+            } else {
                 $("#duration-block").removeClass("d-none");
             }
         })
@@ -219,7 +231,7 @@
             if ($("#type").val() == "parttest") {
                 arr.indexOf('duration') !== -1 && arr.splice(arr.indexOf('duration'), 1)
             }
-            
+
             arr.every(element => {
                 let m = templateCheck(element);
                 if (m == false) {
@@ -261,26 +273,26 @@
                     });
                     if (stateQuesInPart != quesInPart) {
                         let message = "Number of part does not match";
-                        if (stateQuesInPart > quesInPart) message = "At part "+ p+", You have stated less questions than declared."
-                        if (stateQuesInPart < quesInPart) message = "At part "+ p+", You have stated more questions than declared."
+                        if (stateQuesInPart > quesInPart) message = "At part " + p + ", You have stated less questions than declared."
+                        if (stateQuesInPart < quesInPart) message = "At part " + p + ", You have stated more questions than declared."
                         createAlert(message);
                         return false
                     }
                 }
             })
 
-            if(check) {
+            if (check) {
                 $("#check-template").addClass("d-none");
                 $("#submit-template").removeClass("d-none");
             }
         });
 
         function templateCheck(attr) {
-            if($("#" + attr).val() <= 0 ) {
+            if ($("#" + attr).val() <= 0) {
                 let name = attr;
-                if(attr == "num_of_part") name = "total parts";
-                if(attr == "num_of_question") name = "total questions";
-                let message = "Template's "+ name+ " cannot be empty";
+                if (attr == "num_of_part") name = "total parts";
+                if (attr == "num_of_question") name = "total questions";
+                let message = "Template's " + name + " cannot be empty";
                 createAlert(message);
                 return false;
             }

@@ -77,7 +77,7 @@
                                                             {!! $question->question !!}
                                                         </div>
                                                         @endif
-                                                        @if ($part->have_attachment == 1)
+                                                        @if ($part->have_attachment == 1 && $question->attachment != null)
                                                         <div class="question-attachment d-flex">
                                                             <img src="{{asset('storage/'.$question->attachment)}}" alt="" class="question-image m-auto">
                                                         </div>
@@ -133,7 +133,7 @@
                                                         {!! $question->question !!}
                                                     </div>
                                                     @endif
-                                                    @if ($part->have_attachment == 1)
+                                                    @if ($part->have_attachment == 1 && $question->attachment != null)
                                                     <div class="question-attachment d-flex">
                                                         <img src="{{asset('storage/'.$question->attachment)}}" alt="" class="question-image m-auto">
                                                     </div>

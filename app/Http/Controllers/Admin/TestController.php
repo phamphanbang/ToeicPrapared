@@ -40,7 +40,6 @@ class TestController extends Controller
         $data["templates"] = TestTemplate::where('status', '=', 'public')->get();
         $data["template"] = TestTemplate::find($request->template);
         return view('admin.test.create')->with('data', $data);
-        // return redirect()->route('admin.test.create')->with('data', $data);
     }
 
     public function store(Request $request)
@@ -53,14 +52,14 @@ class TestController extends Controller
             $part = $this->savePart($data, $test->id);
             if ($part->have_cluster == "true") {
                 foreach ($data["cluster"] as $cluster_data) {
-                    $cluster = $this->saveCluster($cluster_data, $part->id, $test->id);
+                    $cluster = $this->saveCluster($cluster_data, $part, $test->id, $request);
                     foreach ($cluster_data["question"] as $data_question) {
-                        $question = $this->saveQuestion($data_question, $part, $cluster, $test->id);
+                        $question = $this->saveQuestion($data_question, $part, $cluster, $test->id, $request);
                     }
                 }
             } else {
                 foreach ($data["question"] as $data_question) {
-                    $question = $this->saveQuestion($data_question, $part, null, $test->id);
+                    $question = $this->saveQuestion($data_question, $part, null, $test->id, $request);
                 }
             }
         }
@@ -91,37 +90,21 @@ class TestController extends Controller
             $test->audio_file = 'tests/' . $test->id . '/audio/' . $test->id . '.' . $extension;
         }
         $test->update();
-        foreach ($request->cluster as $data) {
-            $cluster = TestCluster::find($data["id"]);
-            if (array_key_exists("question", $data)) {
-                $cluster->question = $data["question"];
+
+        foreach ($request["part"] as $data) {
+            $part = TestPart::find($data["id"]);
+            if ($part->have_cluster == "true") {
+                foreach ($data["cluster"] as $cluster_data) {
+                    $cluster = $this->updateCluster($cluster_data, $part, $test->id, $request);
+                    foreach ($cluster_data["question"] as $data_question) {
+                        $question = $this->updateQuestion($data_question, $part, $cluster, $test->id, $request);
+                    }
+                }
+            } else {
+                foreach ($data["question"] as $data_question) {
+                    $question = $this->updateQuestion($data_question, $part, null, $test->id, $request);
+                }
             }
-            if (array_key_exists("attachment", $data) && $data["attachment"] != null) {
-                $file = $data["attachment"]->file("attachment");
-                $extension = $file->extension();
-                $file->storeAs('public/tests/' . $test->id . '/clusters/', $cluster->id . '.' . $extension);
-                $cluster->attachment = 'tests/' . $test->id . '/clusters/' . $cluster->id . '.' . $extension;
-            }
-            $cluster->update();
-        }
-        foreach ($request->question as $data) {
-            $question = TestQuestion::find($data["id"]);
-            if (array_key_exists("question", $data)) {
-                $question->question = $data["question"];
-            }
-            if (array_key_exists("attachment", $data) && $data["attachment"] != null) {
-                $extension = $data["attachment"]->extension();
-                $data["attachment"]->storeAs('public/tests/' . $test->id . '/questions/', $question->id . '.' . $extension);
-                $question->attachment = 'tests/' . $test->id . '/questions/' . $question->id . '.' . $extension;
-            }
-            $question->option_1 = $data["option_1"];
-            $question->option_2 = $data["option_2"];
-            $question->option_3 = $data["option_3"];
-            if (array_key_exists("option_4", $data)) {
-                $question->option_4 = $data["option_4"];
-            }
-            $question->explanation = $data["explanation"];
-            $question->update();
         }
         if (session('task_url')) {
             return redirect(session('task_url'))->with('testUpdateSuccess', 'Test updated successfully');
@@ -133,7 +116,7 @@ class TestController extends Controller
     {
         $test = Test::find($id);
         $comment_set_id = $test->commentSet->id;
-        Storage::deleteDirectory('public/tests/'.$test->id);
+        Storage::deleteDirectory('public/tests/' . $test->id);
         $test->delete();
         $comment_set = CommentSet::find($comment_set_id);
         $comment_set->delete();
@@ -145,7 +128,7 @@ class TestController extends Controller
 
     public function search(Request $request)
     {
-        $data["tests"] = Test::where('name','like','%'.$request->search.'%')->paginate(5);
+        $data["tests"] = Test::where('name', 'like', '%' . $request->search . '%')->paginate(5);
         return view('admin.test.list')->with('data', $data);
     }
 
@@ -155,11 +138,12 @@ class TestController extends Controller
     {
         $test = new Test;
         $test->name = $data->name;
+        $test->type = $data->type;
         $test->duration = $data->duration;
         $test->status = $data->status;
         $test->num_of_question = $data->num_of_question;
         if ($data->has("score_range")) {
-            $test->num_of_question = $data->num_of_question;
+            $test->score_range = $data->score_range;
         }
         $test->test_type_id = $data->test_type_id;
         $test->comment_set_id = $comment_set_id;
@@ -179,6 +163,7 @@ class TestController extends Controller
         $part = new TestPart;
         $part->order_in_test = $data["order_in_test"];
         $part->name = $data["name"];
+        $part->type = $data["type"];
         $part->num_of_question = $data["num_of_question"];
         $part->num_of_answer = $data["num_of_answer"];
         $part->description = $data["description"];
@@ -190,30 +175,57 @@ class TestController extends Controller
         return $part;
     }
 
-    public function saveCluster($data, $part_id, $testId)
+    public function saveCluster($data, $part, $testId, $request)
     {
         $cluster = new TestCluster;
 
         $cluster->order_in_part = $data["order_in_part"];
         $cluster->question_begin = $data["question_begin"];
         $cluster->question_end = $data["question_end"];
-        $cluster->part_id = $part_id;
+        $cluster->part_id = $part->id;
         if (array_key_exists("question_content", $data)) {
             $cluster->question = $data["question_content"];
         }
         $cluster->save();
-        if (array_key_exists("attachment", $data)) {
-            $file = $data["attachment"]->file("attachment");
-
-            $extension = $file->extension();
-            $file->storeAs('public/tests/' . $testId . '/clusters/', $cluster->id . '.' . $extension);
-            $cluster->attachment = 'tests/' . $testId . '/clusters/' . $cluster->id . '.' . $extension;
+        if ($data["have_attachment"] == 1) {
+            $file_array = $request->file("part")[$part->order_in_test]["cluster"];
+            if (array_key_exists($data["order_in_test"], $file_array)) {
+                $file = [$data["order_in_part"]]["attachment"];
+                if ($file != null) {
+                    $extension = $file->extension();
+                    $file->storeAs('public/tests/' . $testId . '/clusters/', $cluster->id . '.' . $extension);
+                    $cluster->attachment = 'tests/' . $testId . '/clusters/' . $cluster->id . '.' . $extension;
+                }
+            }
         }
         $cluster->update();
         return $cluster;
     }
 
-    public function saveQuestion($data, $part, $cluster = null, $testId)
+    public function updateCluster($data, $part, $testId, $request)
+    {
+        $cluster = TestCluster::find($data["id"]);
+        if (array_key_exists("question", $data)) {
+            $cluster->question = $data["question"];
+        }
+        if (array_key_exists("have_attachment",$data)) {
+            if ($data["have_attachment"] == 1) {
+                $file_array = $request->file("part")[$part->order_in_test]["cluster"];
+                if (array_key_exists($data["order_in_test"], $file_array)) {
+                    $file = [$data["order_in_part"]]["attachment"];
+                    if ($file != null) {
+                        $extension = $file->extension();
+                        $file->storeAs('public/tests/' . $testId . '/clusters/', $cluster->id . '.' . $extension);
+                        $cluster->attachment = 'tests/' . $testId . '/clusters/' . $cluster->id . '.' . $extension;
+                    }
+                }
+            }
+        }  
+        $cluster->update();
+        return $cluster;
+    }
+
+    public function saveQuestion($data, $part, $cluster = null, $testId, $request)
     {
         $question = new TestQuestion;
         $question->order_in_test = $data["order_in_test"];
@@ -233,11 +245,52 @@ class TestController extends Controller
             $question->cluster_id = $cluster->id;
         }
         $question->save();
-        if ($part->have_attachment) {
-            $extension = $data["attachment"]->extension();
-            $data["attachment"]->storeAs('public/tests/' . $testId . '/questions/', $question->id . '.' . $extension);
-            $question->attachment = 'tests/' . $testId . '/questions/' . $question->id . '.' . $extension;
+
+        if ($part->have_attachment == 1) {
+            $file_array = $request->file("part")[$part->order_in_test]["question"];
+            if (array_key_exists($data["order_in_test"], $file_array)) {
+                $file = $file_array[$data["order_in_test"]]["attachment"];
+                if ($file != null) {
+                    $extension = $file->extension();
+                    $file->storeAs('public/tests/' . $testId . '/questions/', $question->id . '.' . $extension);
+                    $question->attachment = 'tests/' . $testId . '/questions/' . $question->id . '.' . $extension;
+                }
+            }
         }
+
+        $question->update();
+        return $question;
+    }
+
+    public function updateQuestion($data, $part, $cluster = null, $testId, $request)
+    {
+        // dd($request);
+        $question = TestQuestion::find($data["id"]);
+        if (array_key_exists("question", $data)) {
+            $question->question = $data["question"];
+        }
+        if ($cluster != null) {
+            $question->cluster_id = $cluster->id;
+        }
+        if ($part->have_attachment == 1) {
+            $file_array = $request->file("part")[$part->order_in_test]["question"];
+            if (array_key_exists($question->order_in_test, $file_array)) {
+                $file = $file_array[$question->order_in_test]["attachment"];
+                if ($file != null) {
+                    $extension = $file->extension();
+                    $file->storeAs('public/tests/' . $testId . '/questions/', $question->id . '.' . $extension);
+                    $question->attachment = 'tests/' . $testId . '/questions/' . $question->id . '.' . $extension;
+                }
+            }
+        }
+        $question->option_1 = $data["option_1"];
+        $question->option_2 = $data["option_2"];
+        $question->option_3 = $data["option_3"];
+        if (array_key_exists("option_4", $data)) {
+            $question->option_4 = $data["option_4"];
+        }
+        $question->answer = $data["answer"];
+        $question->explanation = $data["explanation"];
         $question->update();
         return $question;
     }

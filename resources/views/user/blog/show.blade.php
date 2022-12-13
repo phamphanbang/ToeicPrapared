@@ -17,6 +17,9 @@
                     <div class="w-100 my-3">
                         <img src="{{asset('storage/'.$data['blog']->banner)}}" class="w-100 banner-img" alt="">
                     </div>
+                    <div class="cluster-question">
+                        {!! nl2br($data["blog"]->glossary) !!}
+                    </div>
                     <div class="mx-auto mb-3 border w-40">
                         <h4 class="text-center fw-bold">Mục lục</h4>
                         <div class="block-menu px-4">

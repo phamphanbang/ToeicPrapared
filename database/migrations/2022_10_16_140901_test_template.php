@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('test_template', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->enum('status',['public','onhold'])->default('public');
             $table->enum('type',['fulltest','minitest','parttest'])->default('fulltest');
             $table->integer('num_of_part');

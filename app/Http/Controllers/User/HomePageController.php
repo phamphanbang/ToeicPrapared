@@ -24,14 +24,14 @@ class HomePageController extends Controller
                     
             //     }
             // } 
-            $data["training_plan"] = TrainingPlan::first();
+            $data["plan"] = TrainingPlan::where("user_id" , "=" , Auth::user()->id)->first();
         }
         $data["tests"] = Test::where('type', '=' , 'fulltest')
         ->orderBy('created_at','desc')
         ->limit(8)
         ->get();
         $data["blogs"] = Blog::orderBy('created_at','desc')
-        ->limit(8)
+        ->limit(3)
         ->get();
         return view('user.home')->with('data',$data);
     }

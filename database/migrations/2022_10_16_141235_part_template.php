@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('test_id')->constrained('test_template')->onDelete('cascade');
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->integer('order_in_test');
             $table->integer('num_of_question');
             $table->integer('num_of_answer');

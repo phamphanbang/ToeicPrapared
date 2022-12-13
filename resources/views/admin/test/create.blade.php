@@ -54,12 +54,13 @@
                             @enderror
                         </div>
                         <div class=" mb-4">
-                            <label for="type" class="form-label">Test's Type</label>
-                            <select name="type" id="type" class="form-select" disabled>
+                            <label for="fake_type" class="form-label">Test's Type</label>
+                            <select name="fake_type" id="fake_type" class="form-select" disabled>
                                 <option {!! $data['template']->type == 'fulltest' ? 'selected' : '' !!} value="fulltest">Full Test</option>
                                 <option {!! $data['template']->type == 'minitest' ? 'selected' : '' !!} value="minitest">Mini Test</option>
                                 <option {!! $data['template']->type == 'parttest' ? 'selected' : '' !!} value="parttest">Part Test</option>
                             </select>
+                            <input type="text" class="d-none" name="type" id="type" value="{{$data['template']->type}}">
                         </div>
                         <div class=" mb-4">
                             <label for="status" class="form-label">Status</label>
@@ -72,10 +73,13 @@
                             <label for="num_of_question" class="form-label">Total question</label>
                             <input type="number" class="form-control" id="num_of_question" name="num_of_question" value="{{$data['template']->num_of_question}}" readonly>
                         </div>
+                        @if ($data['template']->type == 'fulltest')
                         <div class=" mb-4">
                             <label for="duration" class="form-label">Duration</label>
                             <input type="number" class="form-control" id="duration" name="duration" value="{{$data['template']->duration}}" readonly>
                         </div>
+                        @endif
+
                         @if ($data['template']->have_score_range == '1')
                         <div class=" mb-4">
                             <label for="score_range" class="form-label">Score range</label>
@@ -108,6 +112,14 @@
                                 <div class=" mb-4">
                                     <label for="part[{{$part->order_in_test}}][description]" class="form-label">Part description</label>
                                     <textarea type="number" class="form-control" id="part[{{$part->order_in_test}}][description]" name="part[{{$part->order_in_test}}][description]" readonly>{{trim($part->description)}}</textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="part[{{$part->order_in_test}}][type]" class="form-label">Part type</label>
+                                    <select name="part[{{$part->order_in_test}}][fake_type]" id="part[{{$part->order_in_test}}][fake_cluster]" class="form-select" disabled>
+                                        <option {!! $part->type == "reading" ? 'selected':'' !!} value="reading">Reading</option>
+                                        <option {!! $part->type == "listening" ? 'selected':'' !!} value="listening">Listening</option>
+                                    </select>
+                                    <input type="text" class="d-none" id="part[{{$part->order_in_test}}][type]" name="part[{{$part->order_in_test}}][type]" value="{{$part->type}}" readonly>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="w-40">
@@ -170,14 +182,14 @@
 
                                                 @if ($cluster->have_attachment == 1)
                                                 <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]">Atachment</label>
-                                                <input class="form-control cluster-file-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" required blpart="{{$part->order_in_test}}">
+                                                <input class="form-control" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" blpart="{{$part->order_in_test}}">
                                                 @endif
 
 
                                                 <input class="form-control d-none order-in-part" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][order_in_part]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][order_in_part]" value="{{$i+1}}">
                                                 <input class="form-control d-none question-begin" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_begin]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_begin]" value="">
                                                 <input class="form-control d-none question-end" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_end]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_end]" value="">
-
+                                                <input class="form-control d-none have_attachment" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][have_attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][have_attachment]" value="{{$cluster->have_attachment}}">
 
 
                                                 @for ($j = 0;$j< $cluster->num_of_question;$j++)
@@ -194,7 +206,7 @@
 
                                                             @if ($part->have_attachment == 1)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]">Atachment</label>
-                                                            <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][atachment]" required blpart="{{$part->order_in_test}}" blquestion="">
+                                                            <input class="form-control" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][attachment]" blpart="{{$part->order_in_test}}" blquestion="">
                                                             @endif
 
                                                             <div class="d-flex flex-row justify-content-between">
@@ -257,7 +269,7 @@
 
                                                     @if ($part->have_attachment==1)
                                                     <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][attachment]">Atachment</label>
-                                                    <input class="form-control file-check" type="file" id="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" required blpart="{{$part->order_in_test}}" blquestion="">
+                                                    <input class="form-control" type="file" id="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][question][{{$i}}][attachment]" blpart="{{$part->order_in_test}}" blquestion="">
                                                     @endif
                                                     <div class="d-flex flex-row justify-content-between">
                                                         <div class="w-40">
@@ -277,7 +289,7 @@
                                                         <div class="w-40">
                                                             @if ($part->num_of_answer == 4)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][option_4]">Option 4</label>
-                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" value="D." required blpart="{{$part->order_in_test}}" blquestion=""> 
+                                                            <input type="text inp-check" class="form-control" id="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" name="part[{{$part->order_in_test}}][question][{{$i}}][option_4]" value="D." required blpart="{{$part->order_in_test}}" blquestion="">
                                                             @endif
                                                         </div>
                                                     </div>
@@ -315,6 +327,13 @@
 
 <script type="module">
     $(document).ready(function() {
+
+        $(window).keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
         $("div.part-block").each((i, item) => {
             if ($(item).attr('id') != 1) {
                 $(item).addClass('d-none');
@@ -360,7 +379,7 @@
                 $(citem).find('.question-order-in-test').attr("value", question_begin);
                 $(citem).find('.file-check').attr("blquestion", question_begin);
                 $(citem).find('.txt-check').attr("blquestion", question_begin);
-                $(citem).find('.txt-check').each((i,q) => {
+                $(citem).find('.txt-check').each((i, q) => {
                     $(q).attr("blquestion", question_begin);
                 })
                 question_begin++;
@@ -380,49 +399,49 @@
 
         $("#create-test-submit").click((e) => {
             let check = true;
-            $(".file-check").each((i, item) => {
-                
-                if (item.files.length === 0) {
-                    let start = $(item).attr("blquestion");
-                    let part = $(item).attr("blpart");
-                    let message = "Part " + part + " file of question " + start ;
-                    createAlert(message);
-                    check = false;
-                    return false;
-                }
-                
-            });
+            // $(".file-check").each((i, item) => {
+
+            //     if (item.files.length === 0) {
+            //         let start = $(item).attr("blquestion");
+            //         let part = $(item).attr("blpart");
+            //         let message = "Part " + part + " file of question " + start;
+            //         createAlert(message);
+            //         check = false;
+            //         return false;
+            //     }
+
+            // });
             if (check == false) return false;
-            $(".cluster-check").each((i,item) => {
-                if($(item).val().length == 0 ) {
+            $(".cluster-check").each((i, item) => {
+                if ($(item).val().length == 0) {
                     let start = $(item).attr("blstart");
                     let end = $(item).attr("blend");
                     let part = $(item).attr("blpart");
-                    let message = "Part " + part + " cluster from question " + start + " to " + end ;
+                    let message = "Part " + part + " cluster from question " + start + " to " + end;
                     console.log(message);
                     createAlert(message);
                     return false;
                 }
             })
             if (check == false) return false;
-            $(".txt-check").each((i,item) => {
-                
-                if($(item).val().length === 0 ) {
+            $(".txt-check").each((i, item) => {
+
+                if ($(item).val().length === 0) {
                     console.log(1);
                     let start = $(item).attr("blquestion");
                     let part = $(item).attr("blpart");
-                    let message = "Part " + part + " question " + start ;
+                    let message = "Part " + part + " question " + start;
                     console.log(message);
                     createAlert(message);
                     return false;
                 }
             })
             if (check == false) return false;
-            $(".inp-check").each((i,item) => {
-                if($(item).val().length == 0 ) {
+            $(".inp-check").each((i, item) => {
+                if ($(item).val().length == 0) {
                     let start = $(item).closest(".question-order-in-test").val();
                     let part = $(item).attr("blpart");
-                    let message = "Part " + part + "answer of question " + start ;
+                    let message = "Part " + part + "answer of question " + start;
                     console.log(message);
                     createAlert(message);
                     return false;

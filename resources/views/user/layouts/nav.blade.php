@@ -34,7 +34,9 @@
               <i class="bi bi-caret-down-fill ps-1 c-gray"></i>
             </button>
             <ul class="dropdown-menu custom-dropdown shadow" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item no-hover" href="#">Trang cá nhân</a></li>
+              <li><a class="dropdown-item no-hover" href="{{route('user.info.info',Auth::user()->id)}}">Trang cá nhân</a></li>
+              <li><a class="dropdown-item no-hover" href="{{route('user.info.history',Auth::user()->id)}}">Kết quả làm bài</a></li>
+              <li><a class="dropdown-item no-hover" href="{{route('user.info.plan',Auth::user()->id)}}">Kế hoạch luyện thi</a></li>
               <li><a class="dropdown-item no-hover" href="{{route('user.logout')}}">Đăng xuất</a></li>
             </ul>
           </div>

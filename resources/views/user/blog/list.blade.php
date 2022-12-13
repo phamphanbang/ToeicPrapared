@@ -27,19 +27,19 @@
                 <div class="row">
                     @if ($data["blogs"]->count() == 0)
                     <div>
-                        <p class="fs-5 fst-italic">Không có đề thi nào trùng khớp với kết quả tìm kiếm của bạn.</p>
+                        <p class="fs-5 fst-italic">Không có blog nào trùng khớp với kết quả tìm kiếm của bạn.</p>
                     </div>
                     @else
                     @foreach ($data["blogs"] as $blog)
                     <div class="col-md-12 px-2 py-1 mb-4">
                         <div class="blog-wrapper d-flex flex-row rounded shadow">
                             <a class="d-block banner-holder text-decoration-none" href="{{route('user.blog.show',$blog->id)}}">
-                                <img src="{{asset('storage/'.$blog->banner)}}" class="w-20rem" alt="">
+                                <img src="{{asset('storage/'.$blog->banner)}}" class="w-20rem h-11rem" alt="">
                             </a>
                             <div class="blog-info d-flex flex-column ">
                                 <a class="d-block text-decoration-none fs-5 fw-bolder mt-2 ms-2 blog-link" href="{{route('user.blog.show',$blog->id)}}" >{{$blog->name}}</a>
                                 <p class="mt-1 ms-2 mb-0 fw-small">Ngày đăng: {{$blog->created_at->format("d/m/Y")}}</p>
-                                <p class="blog-description ms-2 mb-0 mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet hendrerit enim. Duis at ullamcorper risus. Nam faucibus tempor libero eu aliquam. Suspendisse convallis viverra erat, eget mattis sem pulvinar quis. Maecenas sem leo, ultrices nec felis sit amet, venenatis feugiat eros. Quisque pulvinar arcu a lobortis porttitor. Nunc aliquam eget augue sit amet laoreet. Nunc nec eros vitae nisi congue luctus quis nec est. Curabitur bibendum justo sem, et pellentesque augue sagittis at. Fusce maximus ornare orci quis scelerisque. Nulla posuere ipsum sit amet euismod pretium. Vivamus fermentum at dui in dapibus. Praesent gravida ligula non scelerisque sagittis. Curabitur pellentesque ut risus at commodo. Fusce malesuada gravida sodales.</p>
+                                <p class="blog-description ms-2 mb-0 mt-2">{{$blog->glossary}}</p>
                             </div>
                         </div>
                     </div>

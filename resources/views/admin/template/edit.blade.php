@@ -60,10 +60,12 @@
                                 <option {!! $data['template']->type == 'parttest' ?'selected':'' !!} value="parttest">Part Test</option>
                             </select>
                         </div>
+                        @if ($data['template']->type == 'fulltest')
                         <div class=" mb-4" id="duration-block">
                             <label for="duration" class="form-label">Duration</label>
                             <input required type="text" class="form-control" id="duration" name="duration" value="{{$data['template']->duration}}">
                         </div>
+                        @endif
                         <div class="form-group mb-4">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-select">
@@ -96,6 +98,11 @@
                             <input required type="text" class="form-control input-name part-name" id="part[1]" name="part[1]" value="{{$part->name}}">
                             <label class="form-label label-order-in-test">Order in test</label>
                             <input required type="number" class="form-control input-order-in-test part-order-in-test" id="partname" name="partname" value="{{$part->order_in_test}}">
+                            <label class="form-label label-type">Part type</label>
+                            <select name="type" id="type" class="form-select input-type">
+                                <option {!! $part->type=="reading"?'selected':'' !!} value="reading">Reading</option>
+                                <option {!! $part->type=="listening"?'selected':'' !!} value="listening">Listening</option>
+                            </select>
                             <label class="form-label label-description">Description</label>
                             <textarea required class="form-control input-description" id="partname" name="partname">{{ trim($part->description) }}</textarea>
                             <label class="form-label label-num-of-question">Total questions</label>
@@ -151,6 +158,13 @@
 
 <script type="module">
     $(document).ready(function() {
+
+        $(window).keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
         let partCount = 1;
         let partId = 1;
         $(".part-block").each((i, item) => {
@@ -165,6 +179,10 @@
             $(item).find('.input-name').attr({
                 "id": partInput + "[name]",
                 "name": partInput + "[name]"
+            });
+            $(item).find('.input-type').attr({
+                "id": partInput + "[type]",
+                "name": partInput + "[type]"
             });
             $(item).find('.input-order-in-test').attr({
                 "id": partInput + "[order_in_test]",

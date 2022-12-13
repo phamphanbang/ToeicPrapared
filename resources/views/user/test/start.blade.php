@@ -14,6 +14,7 @@
         @csrf
         <input class="d-none" type="number" name="test_id" value="{{$data['tests']->id}}">
         <input class="d-none" type="number" name="user_id" value="{{Auth::user()->id}}">
+        <input class="d-none" type="text" name="type" value="{{$data['tests']->type}}">
         <div class="test-content d-flex flex-column w-85 border rounded shadow me-4 py-3 px-3 bg-white">
             @if ($data["tests"]->testTemplate->have_audio_file == 1)
             <audio controls class="w-90 mx-auto mb-4">
@@ -26,9 +27,10 @@
                 @endforeach
             </div>
             @foreach ($data['tests']->testParts as $part )
+            <input class="d-none" type="text" name="parts[{{$part->order_in_test}}][order_in_test]" value="{{ $part->order_in_test }}">
             @if ($part->have_cluster == 1)
             <div class="part-block mt-3" partorder="{{$part->order_in_test}}">
-                <h3>{{$part->name}}</h3>
+                
                 @foreach ($part->testCluster as $cluster )
                 <div class="cluster-block border-top mb-3">
                     <!-- <div class="fw-bold">{{$cluster->question_begin}}-{{$cluster->question_end}}</div> -->
@@ -47,7 +49,7 @@
                         <div class="d-flex flex-row">
                             <div class="content d-flex flex-column w-100">
 
-                                @if ($part->have_attachment == 1)
+                                @if ($part->have_attachment == 1 && $question->attachment != null)
                                 <div class="question-attachment d-flex">
                                     <img src="{{asset('storage/'.$question->attachment)}}" alt="" class="question-image m-auto">
                                 </div>
@@ -63,31 +65,32 @@
                                         </div>
                                         @endif
                                         <div class="d-flex flex-column justify-content-between">
-                                            <input class="d-none" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-none" value="none" checked="checked">
-                                            <input class="d-none" type="number" name="questions[{{$question->id}}][id]" value="{{$question->id}}">
-                                            <input class="d-none" type="text" name="questions[{{$question->id}}][answer]" value="{{$question->answer}}">
+                                            <input class="d-none" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-none" value="none" checked="checked">
+                                            <input class="d-none" type="number" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][id]" value="{{$question->id}}">
+                                            <input class="d-none" type="text" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][answer]" value="{{$question->answer}}">
+                                            <input class="d-none" type="text" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][type]" value="{{$part->type}}">
                                             <div class="form-check w-40">
-                                                <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-A" value="A">
+                                                <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-A" value="A">
                                                 <label class="form-check-label" for="questions-{{$question->id}}-A">
                                                     {!! $question->option_1 !!}
                                                 </label>
                                             </div>
                                             <div class="form-check w-40">
-                                                <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-B" value="B">
+                                                <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-B" value="B">
                                                 <label class="form-check-label" for="questions-{{$question->id}}-B">
                                                     {!! $question->option_2 !!}
                                                 </label>
                                             </div>
 
                                             <div class="form-check w-40">
-                                                <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-C" value="C">
+                                                <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-C" value="C">
                                                 <label class="form-check-label" for="questions-{{$question->id}}-C">
                                                     {!! $question->option_3 !!}
                                                 </label>
                                             </div>
                                             @if ($part->num_of_answer == 4)
                                             <div class="form-check w-40">
-                                                <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-D" value="D">
+                                                <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-D" value="D">
                                                 <label class="form-check-label" for="questions-{{$question->id}}-D">
                                                     {!! $question->option_4 !!}
                                                 </label>
@@ -110,7 +113,7 @@
                     <div class="d-flex flex-row">
                         <div class="content d-flex flex-column w-100">
 
-                            @if ($part->have_attachment == 1)
+                            @if ($part->have_attachment == 1 && $question->attachment != null)
                             <div class="question-attachment d-flex">
                                 <img src="{{asset('storage/'.$question->attachment)}}" alt="" class="question-image ms-3">
                             </div>
@@ -126,31 +129,32 @@
                                     </div>
                                     @endif
                                     <div class="d-flex flex-column justify-content-between">
-                                        <input class="d-none" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-none" value="none" checked="checked">
-                                        <input class="d-none" type="number" name="questions[{{$question->id}}][id]" value="{{$question->id}}">
-                                        <input class="d-none" type="text" name="questions[{{$question->id}}][answer]" value="{{$question->answer}}">
+                                        <input class="d-none" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-none" value="none" checked="checked">
+                                        <input class="d-none" type="number" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][id]" value="{{$question->id}}">
+                                        <input class="d-none" type="text" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][answer]" value="{{$question->answer}}">
+                                        <input class="d-none" type="text" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][type]" value="{{$question->type}}">
                                         <div class="form-check w-40">
-                                            <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-A" value="A">
+                                            <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-A" value="A">
                                             <label class="form-check-label" for="questions-{{$question->id}}-A">
                                                 {!! $question->option_1 !!}
                                             </label>
                                         </div>
                                         <div class="form-check w-40">
-                                            <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-B" value="B">
+                                            <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-B" value="B">
                                             <label class="form-check-label" for="questions-{{$question->id}}-B">
                                                 {!! $question->option_2 !!}
                                             </label>
                                         </div>
 
                                         <div class="form-check w-40">
-                                            <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-C" value="C">
+                                            <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-C" value="C">
                                             <label class="form-check-label" for="questions-{{$question->id}}-C">
                                                 {!! $question->option_3 !!}
                                             </label>
                                         </div>
                                         @if ($part->num_of_answer == 4)
                                         <div class="form-check w-40">
-                                            <input class="form-check-input" type="radio" name="questions[{{$question->id}}][select]" id="questions-{{$question->id}}-D" value="D">
+                                            <input class="form-check-input" type="radio" name="parts[{{$part->order_in_test}}][questions][{{$question->id}}][select]" id="questions-{{$question->id}}-D" value="D">
                                             <label class="form-check-label" for="questions-{{$question->id}}-D">
                                                 {!! $question->option_4 !!}
                                             </label>
@@ -225,12 +229,12 @@
                 if (x < 10) return ("0" + x).slice(-2);
                 return x;
             }
-            let timeleft = duration - initTime; 
+            let timeleft = duration - initTime;
 
             $("#duration").text(processNumber(min) + ":" + processNumber(sec));
             $("#test-duration").val(processNumber(Math.floor(timeleft / 60)) + ":" + processNumber(timeleft % 60));
             initTime -= 1;
-            if(initTime == 0) {
+            if (initTime == 0) {
                 $("#button-submit-test").click();
             }
         }, 1000);

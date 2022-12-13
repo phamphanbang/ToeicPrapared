@@ -10,6 +10,7 @@ use App\Models\TestHistory;
 use App\Models\TestHistoryAnswer;
 use App\Models\TestQuestion;
 use App\Models\TestTemplate;
+use App\Models\TrainingPlan;
 use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
@@ -49,6 +50,8 @@ class TestController extends Controller
         $rq = 0;
         $wq = 0;
         $eq = 0;
+        $listening = 0;
+        $reading = 0;
         $history = new TestHistory();
         $history->test_id = $request->test_id;
         $history->user_id = $request->user_id;
@@ -58,25 +61,65 @@ class TestController extends Controller
         $history->wrong_question = $wq;
         $history->empty_question = $eq;
         $history->save();
-        foreach ($request["questions"] as $question) {
-            $q = new TestHistoryAnswer();
-            $q->history_id = $history->id;
-            $q->question_id = $question["id"];
-            $q->answer = $question["select"];
-            $q->save();
-            if ($question["select"] == "none") {
-                $eq += 1;
-            } elseif ($question["select"] == $question["answer"]) {
-                $rq += 1;
-            } else {
-                $wq += 1;
+        foreach ($request["parts"] as $part) {
+            foreach ($part["questions"] as $question) {
+                $q = new TestHistoryAnswer();
+                $q->history_id = $history->id;
+                $q->question_id = $question["id"];
+                $q->answer = $question["select"];
+                $q->save();
+                $check = $question["select"] == $question["answer"];
+                if ($question["select"] == "none") {
+                    $eq += 1;
+                } elseif ($check) {
+                    $rq += 1;
+                } else {
+                    $wq += 1;
+                }
+                if ($request->type == "fulltest" && $check) {
+                    if ($question["type"] == "reading") {
+                        $reading += 1;
+                    } else {
+                        $listening += 1;
+                    }
+                }
             }
         }
+        
         $history->right_question = $rq;
         $history->wrong_question = $wq;
         $history->empty_question = $eq;
+        
+        if ($request->type == "fulltest" ) {
+            $score = $this->score($listening,$reading);
+            $history->score = $score;
+            $plan = TrainingPlan::where("user_id" , "=" ,$request->user_id)->first();
+            if ($plan) {
+                if ($score > $plan->current_score) {
+                    $plan->current_score = $score;
+                }
+                $plan->update(); 
+            }
+        }
         $history->update();
         return redirect()->route('user.test.result', [$request->test_id, $history->id]);
+    }
+
+    public function score($listening, $reading)
+    {
+        $lc = 0;
+        $rc = 0;
+        if ($listening <= 2) {
+            $lc = 5;
+        } else {
+            $lc = ($listening * 5) - 5;
+        }
+        if ($reading == 0) {
+            $rc = 5;
+        } else {
+            $rc = ($reading * 5) + 10;
+        }
+        return $lc + $rc;
     }
 
     public function result($id, $result_id)

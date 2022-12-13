@@ -50,6 +50,9 @@
                                         <div class="d-flex flex-column">
                                             <div>
                                                 {{ $history->right_question }}/{{ $history->total_question }}
+                                                @if ($history->test->type == "fulltest")
+                                                    ( Điểm : {{$history->score}} )
+                                                @endif
                                             </div>
                                         </div>
                                     </td>

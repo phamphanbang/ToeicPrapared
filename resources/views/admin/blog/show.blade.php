@@ -22,7 +22,10 @@
                     <div class="w-100 my-3">
                         <img src="{{asset('storage/'.$data['blog']->banner)}}" class="w-100 banner-img" alt="">
                     </div>
-                    <div class="mx-auto mb-3 border w-40">
+                    <div class="cluster-question">
+                        {!! nl2br($data["blog"]->glossary) !!}
+                    </div>
+                    <div class="mx-auto mb-3 border w-40 p-3">
                         <h4 class="text-center fw-bold">Mục lục</h4>
                         <div class="block-menu px-4">
                         </div>
@@ -39,18 +42,16 @@
 
 <script type="module">
     $(document).ready(() => {
-        $(".block-content").children("h2").each((i,item)=>{
-            $(item).attr("id","tittle"+i);
-            $(".block-menu").append("<a href='#"+"tittle"+i +"' class='text-decoration-none d-block'>" +$(item).text() + "</a>")
+        $(".block-content").children("h2").each((i, item) => {
+            $(item).attr("id", "tittle" + i);
+            $(".block-menu").append("<a href='#" + "tittle" + i + "' class='text-decoration-none d-block'>" + $(item).text() + "</a>")
         });
 
-        $(".block-content").find("td").each((i,item)=>{
+        $(".block-content").find("td").each((i, item) => {
             $(item).addClass("border ps-2 pt-2");
         });
 
     })
-
-
 </script>
 
 @endsection

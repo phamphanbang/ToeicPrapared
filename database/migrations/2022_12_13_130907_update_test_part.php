@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('test', function (Blueprint $table) {
-            $table->timestamps();
-            $table->string('duration')->nullable();
+        Schema::table('part_template', function (Blueprint $table) {
+            $table->enum('type',['reading','listening'])->default('reading');
+        });
+        Schema::table('test_part', function (Blueprint $table) {
+            $table->enum('type',['reading','listening'])->default('reading');
         });
     }
 

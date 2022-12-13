@@ -33,11 +33,8 @@ class BlogController extends Controller
         $comment_set->save();
         $data["blog"] = new Blog;
         $data["blog"]->name = $request->name;
+        $data["blog"]->glossary = $request->glossary;
         $data["blog"]->blog = $request->blog;
-        if ($request->banner) {
-            $data["blog"]->banner = $request->banner;
-        }
-
         $data["blog"]->comment_set_id = $comment_set->id;
         $data["blog"]->user_id = $request->user()->id;
         $data["blog"]->save();
@@ -68,17 +65,14 @@ class BlogController extends Controller
         $data["blog"] = Blog::find($id);
         $data["blog"]->name = $request->name;
         $data["blog"]->blog = $request->blog;
-        if ($request->banner) {
-            $data["blog"]->banner = $request->banner;
-        }
+        $data["blog"]->glossary = $request->glossary;
         if($request->hasFile('banner')){
             $file = $request->file("banner");
             $extension = $file->extension();
             $file->storeAs('public/images/blog/', $data["blog"]->id . '.' . $extension);
             $data["blog"]->banner = 'images/blog/' . $data["blog"]->id . '.' . $extension;
-            $data["blog"]->update();
         }
-        $data["blog"]->save();
+        $data["blog"]->update();
         return redirect(route('admin.blog.edit',$data["blog"]->id))->with('data',$data)->with('blogChangeSuccess','Blog changed successfully');
     }
 

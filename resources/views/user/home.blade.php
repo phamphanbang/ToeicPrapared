@@ -21,25 +21,32 @@
             <div class="ms-3">
                 <h1 class="fw-bold text-blue">Xin chào , {{Auth::user()->name}}!</h1>
             </div>
+            @if ($data["plan"])
             <div class="d-flex flex-row me-3">
                 <div class="d-flex flex-column p-2 align-items-center">
-                    <span class="text-blue">Điểm hiện tại</span>
-                    <span class="fw-bold fs-3">100</span>
+                    <span class="text-blue fw-bold fs-4">Trạng thái</span>
+                    <span class="fw-bold fs-3" id="plan_status" status="{{$data['plan']->status}}"></span>
                 </div>
                 <div class="d-flex flex-column p-2 align-items-center">
-                    <span class="text-blue">Điểm hiện tại</span>
-                    <span class="fw-bold fs-3">100</span>
+                    <span class="text-blue fw-bold fs-4">Điểm hiện tại</span>
+                    <span class="fw-bold fs-3">{{$data["plan"]->current_score}}</span>
                 </div>
                 <div class="d-flex flex-column p-2 align-items-center">
-                    <span class="text-blue">Điểm hiện tại</span>
-                    <span class="fw-bold fs-3">100</span>
+                    <span class="text-blue fw-bold fs-4">Điểm mục tiêu</span>
+                    <span class="fw-bold fs-3">{{$data["plan"]->goal_score}}</span>
                 </div>
                 <div class="d-flex flex-column p-2 align-items-center">
-                    <a role="button" class="btn btn-light no-hover">
+                    <span class="text-blue fw-bold fs-4">Hạn cuối</span>
+                    <span class="fw-bold fs-3">{{$data["plan"]->date_end}}</span>
+                </div>
+                <div class="d-flex flex-column p-2 align-items-center">
+                    <a role="button" class="btn btn-light no-hover" href="{{route('user.info.plan',Auth::user()->id)}}">
                         <i class="bi bi-pen fw-bold fs-4 text-blue"></i>
                     </a>
                 </div>
             </div>
+            @endif
+
         </div>
         <div class="d-flex flex-column">
             <div class="ms-3">
@@ -86,7 +93,55 @@
                 @endforeach
                 <a href="#" class="text-decoration-none fs-5"> Xem tất cả >></a>
             </div>
-            
+
+            @endif
+        </div>
+        <div class="d-flex flex-column">
+            <div class="ms-3">
+                <h2 class="fw-bold text-blue">Part Test nên luyện tập</h2>
+            </div>
+            @if ($data["histories_count"] == 0)
+            <div>
+                <p class="ms-3 fst-italic">Hiện tại không có đề khả dụng.</p>
+            </div>
+            @else
+            <div class="row w-80 px-3">
+                @foreach ($data["histories"] as $history)
+                <div class="col-md-3 px-2 py-1 mb-2">
+                    <div class="item-wraper p-3 mb-1 d-flex flex-column justify-content-between border rounded">
+                        <a href="{{route('user.test.result',[$history->test->id,$history->id])}}" class="no-text-deco">
+                            <h3 class="text-wrap">{{$history->test->name}}</h3>
+                            <div>
+                                <span>{{$history->test->type}}</span>
+                            </div>
+                            <div>
+                                <i class="bi bi-calendar"></i>
+                                <span>Ngày làm bài: {{ $history->created_at->format("d/m/Y") }}</span>
+                            </div>
+                            <div>
+                                <i class="bi bi-clock"></i>
+                                <span>Thời gian làm bài: {{ $history->duration }}</span>
+                            </div>
+                            <div>
+                                <i class="bi bi-journals"></i>
+                                <span>Kết quả: {{ $history->right_question}}/{{ $history->total_question }}</span>
+                            </div>
+                            @if ($history->test->type == "fulltest")
+                            <div>
+                                <i class="bi bi-question-circle"></i>
+                                <span>Điểm: {{ $history->right_question }}</span>
+                            </div>
+                            @endif
+
+                        </a>
+                        <a href="{{route('user.test.result',[$history->test->id,$history->id])}}" class="text-decoration-none">[Xem chi tiết]</a>
+
+                    </div>
+                </div>
+                @endforeach
+                <a href="#" class="text-decoration-none fs-5"> Xem tất cả >></a>
+            </div>
+
             @endif
         </div>
     </div>
@@ -168,35 +223,41 @@
     <div class="container">
         <h2 class="home-h2 text-center fw-bold">Blog mới nhất</h2>
         <div class="d-flex flex-wrap m-0">
-            <div class="col-md-3 px-2 py-1 mb-4">
-                <div class="item-wraper p-3 mb-1 d-flex flex-column justify-content-between border">
-                    <a href="#" class="no-text-deco">
-                        <h3 class="text-wrap">ESL 2022 Test 1</h3>
-                        <div>
-                            <span>Bộ đề thi: ESL 2022</span>
-                        </div>
-                        <div>
-                            <i class="bi bi-clock"></i>
-                            <span>Thời gian làm bài: 120 phút</span>
-                        </div>
-                        <div>
-                            <i class="bi bi-journals"></i>
-                            <span>Số phần thi: 7 phần</span>
-                        </div>
-                        <div>
-                            <i class="bi bi-question-circle"></i>
-                            <span>Số câu hỏi: 200</span>
-                        </div>
+            @foreach ($data["blogs"] as $blog)
+            <div class="col-md-4 px-2 py-1 mb-4">
+                <div class="blog-wrapper d-flex flex-column rounded shadow">
+                    <a class="d-block banner-holder text-decoration-none" href="{{route('user.blog.show',$blog->id)}}">
+                        <img src="{{asset('storage/'.$blog->banner)}}" class="w-100" style="height: 12rem;" alt="">
                     </a>
-                    <a href="#" class="btn btn-outline-primary cs-light-btn mt-2">Chi tiết</a>
-
+                    <div class="blog-info d-flex flex-column ">
+                        <a class="d-block text-decoration-none fs-5 fw-bolder mt-2 ms-2 blog-link" href="{{route('user.blog.show',$blog->id)}}">{{$blog->name}}</a>
+                        <p class="mt-1 ms-2 mb-0 fw-small">Ngày đăng: {{$blog->created_at->format("d/m/Y")}}</p>
+                        <p class="blog-description ms-2 mb-0 mt-2">{{$blog->glossary}}</p>
+                    </div>
                 </div>
-
             </div>
-
+            @endforeach
         </div>
     </div>
 </div>
+<script type="module">
+    $(document).ready(() => {
+        const message = {
+            ongoing: "Đang thực hiện",
+            success: "Đã hoàn thành",
+            fail: "Không hoàn thành"
+        }
 
+        const color = {
+            ongoing: "text-blue",
+            success: "txt-green",
+            fail: "txt-red"
+        }
+
+        let status = $("#plan_status").attr("status");
+        $("#plan_status").text(message[status]);
+        $("#plan_status").addClass(color[status]);
+    })
+</script>
 
 @endsection
