@@ -42,6 +42,7 @@
                                             {{ $data["result"]->right_question }}/{{ $data["result"]->total_question }}
                                         </div>
                                     </div>
+                                    @if ($data["tests"]->type == "fulltest")
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="me-1 d-flex">
                                             <i class="bi bi-clock"></i>
@@ -53,7 +54,7 @@
                                             {{ $data["result"]->duration}}
                                         </div>
                                     </div>
-                                    @if ($data["tests"]->type == "fulltest")
+                                    
                                     <div class="d-flex flex-row justify-content-between">
                                         <div class="me-1 d-flex">
                                             <i class="bi bi-journal-check"></i>

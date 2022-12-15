@@ -68,6 +68,10 @@ Route::get('/blog', [UserBlogController::class, 'index'])->name('user.blog.index
 Route::get('/blog/{id}', [UserBlogController::class, 'show'])->name('user.blog.show');
 Route::post('/blog/search', [UserBlogController::class, 'search'])->name('user.blog.search');
 
+Route::get('/security', [HomePageController::class, 'security'])->name('security');
+Route::get('/contact', [HomePageController::class, 'contact'])->name('contact');
+Route::get('/usage', [HomePageController::class, 'usage'])->name('usage');
+
 Route::group(['middleware' => 'login'], function () {
     Route::get('/info/{id}', [UserInfoController::class, 'info'])->name('user.info.info');
     Route::put('/info/{id}', [UserInfoController::class, 'update'])->name('user.info.update');
@@ -77,7 +81,7 @@ Route::group(['middleware' => 'login'], function () {
     Route::get('/info/{id}/plan', [UserInfoController::class, 'plan'])->name('user.info.plan');
     Route::post('/info/{id}/plan', [UserInfoController::class, 'createPlan'])->name('user.info.plan.create');
     Route::post('/info/{id}/plan/{pid}/update', [UserInfoController::class, 'updatePlan'])->name('user.info.plan.update');
-    Route::post('/info/{id}/plan/{pid}/delete', [UserInfoController::class, 'deletePlan'])->name('user.info.plan.delete');
+    Route::delete('/info/{id}/plan/{pid}/delete', [UserInfoController::class, 'deletePlan'])->name('user.info.plan.delete');
     
     Route::get('/test/{id}/result/{result_id}', [UserTestController::class, 'result'])->name('user.test.result');
     Route::get('/test/{id}/result/{result_id}/details', [UserTestController::class, 'details'])->name('user.test.detail');

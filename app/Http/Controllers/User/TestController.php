@@ -85,20 +85,18 @@ class TestController extends Controller
                 }
             }
         }
-        
+
         $history->right_question = $rq;
         $history->wrong_question = $wq;
         $history->empty_question = $eq;
-        
-        if ($request->type == "fulltest" ) {
-            $score = $this->score($listening,$reading);
+
+        if ($request->type == "fulltest") {
+            $score = $this->score($listening, $reading);
             $history->score = $score;
-            $plan = TrainingPlan::where("user_id" , "=" ,$request->user_id)->first();
+            $plan = TrainingPlan::where("user_id", "=", $request->user_id)->first();
             if ($plan) {
-                if ($score > $plan->current_score) {
-                    $plan->current_score = $score;
-                }
-                $plan->update(); 
+                $plan->current_score = $score;
+                $plan->update();
             }
         }
         $history->update();
@@ -203,6 +201,7 @@ class TestController extends Controller
                     $data["parts"][$index]["questions"][$qindex]["option_2"] = $question->option_2;
                     $data["parts"][$index]["questions"][$qindex]["option_3"] = $question->option_3;
                     $data["parts"][$index]["questions"][$qindex]["option_4"] = $question->option_4;
+                    $data["parts"][$index]["questions"][$qindex]["explanation"] = $question->explanation;
                     if ($answer->answer == "none") {
                         $data["parts"][$index]["questions"][$qindex]["status"] = "none";
                     } else {

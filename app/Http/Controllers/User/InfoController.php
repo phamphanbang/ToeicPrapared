@@ -91,6 +91,7 @@ class InfoController extends Controller
         }
         $data["user"] = User::find($id);
         $data["plan"] = TrainingPlan::where("user_id" ,'=',$id)->first();
+        $data["fulltest"] = TestHistory::where("score","!=",null)->orderBy("created_at","desc")->first();
         return view('user.info.plan')->with('data',$data);
     }
 
@@ -123,13 +124,12 @@ class InfoController extends Controller
         return redirect()->back()->with('data',$data)->with('success',"Bạn đã cập nhật kế hoạch thành công");
     }
 
-    public function deletePlan($id) {
+    public function deletePlan($id,$pid) {
         if (Auth::user()->id != $id) {
             return redirect()->back();
         }
-        $plan = TrainingPlan::find($id);
+        $plan = TrainingPlan::find($pid);
         $plan->delete();
-        $id = Auth::user()->id;
         return redirect()->route('user.info.plan',$id);
     }
 }

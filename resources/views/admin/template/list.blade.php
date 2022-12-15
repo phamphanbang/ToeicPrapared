@@ -82,7 +82,7 @@
                                             </label>
                                         </a>
                                         <div class="btn btn-danger px-1 py-0">
-                                            <label for="{{ 'submit-delete-'.$template->id }}" class="badge badge-danger">
+                                            <label for="{{ 'submit-delete-'.$template->id }}" class="badge badge-danger delete">
                                                 <i class="bi bi-trash pe-2"></i>
                                                 Delete
                                             </label>
@@ -112,4 +112,15 @@
         </div>
     </div>
 </div>
+
+<script type="module">
+    $(document).ready(()=> {
+        $("label.delete").click((e) => {
+            let text = "If you delete template,you will also delete all Test that follows this template.";
+            if (confirm(text) == false) {
+                e.preventDefault();
+            }
+        })
+    });
+</script>
 @endsection

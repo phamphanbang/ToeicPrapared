@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('part_id')->constrained('part_template')->onDelete('cascade');
             $table->integer('num_in_part');
             $table->integer('num_of_question');
-            $table->boolean('have_attachment');
             $table->boolean('have_question');
         });
     }

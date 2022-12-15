@@ -58,8 +58,8 @@ class TestController extends Controller
                     }
                 }
             } else {
-                foreach ($data["question"] as $data_question) {
-                    $question = $this->saveQuestion($data_question, $part, null, $test->id, $request);
+                foreach ($data["question"] as $order_in_part => $data_question) {
+                    $question = $this->saveQuestion($data_question, $part, null, $test->id, $request ,$order_in_part);
                 }
             }
         }
@@ -93,7 +93,8 @@ class TestController extends Controller
 
         foreach ($request["part"] as $data) {
             $part = TestPart::find($data["id"]);
-            if ($part->have_cluster == "true") {
+            if ($part->have_cluster) {
+                
                 foreach ($data["cluster"] as $cluster_data) {
                     $cluster = $this->updateCluster($cluster_data, $part, $test->id, $request);
                     foreach ($cluster_data["question"] as $data_question) {
@@ -187,17 +188,6 @@ class TestController extends Controller
             $cluster->question = $data["question_content"];
         }
         $cluster->save();
-        if ($data["have_attachment"] == 1) {
-            $file_array = $request->file("part")[$part->order_in_test]["cluster"];
-            if (array_key_exists($data["order_in_test"], $file_array)) {
-                $file = [$data["order_in_part"]]["attachment"];
-                if ($file != null) {
-                    $extension = $file->extension();
-                    $file->storeAs('public/tests/' . $testId . '/clusters/', $cluster->id . '.' . $extension);
-                    $cluster->attachment = 'tests/' . $testId . '/clusters/' . $cluster->id . '.' . $extension;
-                }
-            }
-        }
         $cluster->update();
         return $cluster;
     }
@@ -205,22 +195,9 @@ class TestController extends Controller
     public function updateCluster($data, $part, $testId, $request)
     {
         $cluster = TestCluster::find($data["id"]);
-        if (array_key_exists("question", $data)) {
-            $cluster->question = $data["question"];
+        if (array_key_exists("cluster_question", $data)) {
+            $cluster->question = $data["cluster_question"];
         }
-        if (array_key_exists("have_attachment",$data)) {
-            if ($data["have_attachment"] == 1) {
-                $file_array = $request->file("part")[$part->order_in_test]["cluster"];
-                if (array_key_exists($data["order_in_test"], $file_array)) {
-                    $file = [$data["order_in_part"]]["attachment"];
-                    if ($file != null) {
-                        $extension = $file->extension();
-                        $file->storeAs('public/tests/' . $testId . '/clusters/', $cluster->id . '.' . $extension);
-                        $cluster->attachment = 'tests/' . $testId . '/clusters/' . $cluster->id . '.' . $extension;
-                    }
-                }
-            }
-        }  
         $cluster->update();
         return $cluster;
     }
@@ -245,15 +222,25 @@ class TestController extends Controller
             $question->cluster_id = $cluster->id;
         }
         $question->save();
-
+        
         if ($part->have_attachment == 1) {
-            $file_array = $request->file("part")[$part->order_in_test]["question"];
-            if (array_key_exists($data["order_in_test"], $file_array)) {
-                $file = $file_array[$data["order_in_test"]]["attachment"];
-                if ($file != null) {
-                    $extension = $file->extension();
-                    $file->storeAs('public/tests/' . $testId . '/questions/', $question->id . '.' . $extension);
-                    $question->attachment = 'tests/' . $testId . '/questions/' . $question->id . '.' . $extension;
+            
+            if ($request->file("part")) {
+                if ($cluster != null) {
+                    $file_array = $request->file("part")[$part->order_in_test]["cluster"][$cluster->order_in_part]["question"];
+                }
+                else {
+                    $file_array = $request->file("part")[$part->order_in_test]["question"];
+                }
+                
+                if (array_key_exists($data["order_in_part"], $file_array)) {
+                    $file = $file_array[$data["order_in_part"]]["attachment"];
+                    if ($file != null) {
+                        
+                        $extension = $file->extension();
+                        $file->storeAs('public/tests/' . $testId . '/questions/', $question->id . '.' . $extension);
+                        $question->attachment = 'tests/' . $testId . '/questions/' . $question->id . '.' . $extension;
+                    }
                 }
             }
         }
@@ -264,7 +251,6 @@ class TestController extends Controller
 
     public function updateQuestion($data, $part, $cluster = null, $testId, $request)
     {
-        // dd($request);
         $question = TestQuestion::find($data["id"]);
         if (array_key_exists("question", $data)) {
             $question->question = $data["question"];
@@ -272,10 +258,15 @@ class TestController extends Controller
         if ($cluster != null) {
             $question->cluster_id = $cluster->id;
         }
-        if ($part->have_attachment == 1) {
-            $file_array = $request->file("part")[$part->order_in_test]["question"];
-            if (array_key_exists($question->order_in_test, $file_array)) {
-                $file = $file_array[$question->order_in_test]["attachment"];
+        if ($part->have_attachment == 1 && $request->file("part")) {
+            if ($cluster != null) {
+                $file_array = $request->file("part")[$part->order_in_test]["cluster"][$cluster->id]["question"];
+            }
+            else {
+                $file_array = $request->file("part")[$part->order_in_test]["question"];
+            }
+            if (array_key_exists($question->id, $file_array)) {
+                $file = $file_array[$question->id]["attachment"];
                 if ($file != null) {
                     $extension = $file->extension();
                     $file->storeAs('public/tests/' . $testId . '/questions/', $question->id . '.' . $extension);

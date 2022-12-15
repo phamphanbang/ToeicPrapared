@@ -71,12 +71,12 @@
                         </div>
                         <div class=" mb-4">
                             <label for="num_of_question" class="form-label">Total question</label>
-                            <input type="number" class="form-control" id="num_of_question" name="num_of_question" value="{{$data['template']->num_of_question}}" readonly>
+                            <input type="number" class="form-control bg-gray-custom" id="num_of_question" name="num_of_question" value="{{$data['template']->num_of_question}}" readonly>
                         </div>
-                        @if ($data['template']->type == 'fulltest')
+                        @if ($data['template']->type != 'parttest')
                         <div class=" mb-4">
                             <label for="duration" class="form-label">Duration</label>
-                            <input type="number" class="form-control" id="duration" name="duration" value="{{$data['template']->duration}}" readonly>
+                            <input type="number" class="form-control bg-gray-custom" id="duration" name="duration" value="{{$data['template']->duration}}" readonly>
                         </div>
                         @endif
 
@@ -111,7 +111,7 @@
                                 <input type="text" class="d-none" id="part[{{$part->order_in_test}}][name]" name="part[{{$part->order_in_test}}][name]" value="{{$part->name}}" readonly>
                                 <div class=" mb-4">
                                     <label for="part[{{$part->order_in_test}}][description]" class="form-label">Part description</label>
-                                    <textarea type="number" class="form-control" id="part[{{$part->order_in_test}}][description]" name="part[{{$part->order_in_test}}][description]" readonly>{{trim($part->description)}}</textarea>
+                                    <textarea type="number" class="form-control bg-gray-custom" id="part[{{$part->order_in_test}}][description]" name="part[{{$part->order_in_test}}][description]" readonly>{{trim($part->description)}}</textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label for="part[{{$part->order_in_test}}][type]" class="form-label">Part type</label>
@@ -124,11 +124,11 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="w-40">
                                         <label for="part[{{$part->order_in_test}}][num_of_question]" class="form-label">Total question</label>
-                                        <input type="number" class="form-control" id="part[{{$part->order_in_test}}][num_of_question]" name="part[{{$part->order_in_test}}][num_of_question]" value="{{$part->num_of_question}}" readonly>
+                                        <input type="number" class="form-control bg-gray-custom" id="part[{{$part->order_in_test}}][num_of_question]" name="part[{{$part->order_in_test}}][num_of_question]" value="{{$part->num_of_question}}" readonly>
                                     </div>
                                     <div class="w-40">
                                         <label for="part[{{$part->order_in_test}}][num_of_answer]" class="form-label">Total answer of each question</label>
-                                        <input type="number" class="form-control" id="part[{{$part->order_in_test}}][num_of_answer]" name="part[{{$part->order_in_test}}][num_of_answer]" value="{{$part->num_of_answer}}" readonly>
+                                        <input type="number" class="form-control bg-gray-custom" id="part[{{$part->order_in_test}}][num_of_answer]" name="part[{{$part->order_in_test}}][num_of_answer]" value="{{$part->num_of_answer}}" readonly>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">
@@ -168,7 +168,7 @@
                                     <!-- Loop each cluster -->
                                     @foreach ($part->clusterTemplate as $cluster)
                                     <!-- Loop each question in cluster -->
-                                    @for ($i = 0;$i < $cluster->num_in_part;$i++)
+                                    @for ($i = 1;$i <= $cluster->num_in_part;$i++)
                                         <div class="question-cluster d-flex flex-column p-3 border rounded mt-2" question="{{$cluster->num_of_question}}" index="{{$i}}">
                                             <div class="d-flex flex-row justify-content-between mb-2">
                                                 <p class="cluster-id fw-bold">xxx</p>
@@ -180,25 +180,17 @@
                                                 <textarea class="form-control cluster-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_content]" blpart="{{$part->order_in_test}}" blstart="" blend=""></textarea>
                                                 @endif
 
-                                                @if ($cluster->have_attachment == 1)
-                                                <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]">Atachment</label>
-                                                <input class="form-control" type="file" id="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][attachment]" blpart="{{$part->order_in_test}}">
-                                                @endif
-
-
-                                                <input class="form-control d-none order-in-part" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][order_in_part]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][order_in_part]" value="{{$i+1}}">
+                                                <input class="form-control d-none order-in-part" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][order_in_part]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][order_in_part]" value="{{$i}}">
                                                 <input class="form-control d-none question-begin" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_begin]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_begin]" value="">
                                                 <input class="form-control d-none question-end" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question_end]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question_end]" value="">
-                                                <input class="form-control d-none have_attachment" type="number" id="part[{{$part->order_in_test}}][cluster][{{$i}}][have_attachment]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][have_attachment]" value="{{$cluster->have_attachment}}">
-
-
-                                                @for ($j = 0;$j< $cluster->num_of_question;$j++)
+                                
+                                                @for ($j = 1;$j<= $cluster->num_of_question;$j++)
                                                     <div class="question have-cluster d-flex flex-column mt-4">
                                                         <p class="question-id fw-bold">1.</p>
 
                                                         <div class="d-flex flex-column w-100" belongtopart="{{$part->order_in_test}}">
-                                                            <input type="text" class="d-none question-order-in-test {{ $j==0?'first':'' }} {{ $j==$cluster->num_of_question-1?'last':'' }}" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][order_in_test]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][order_in_test]" value="">
-
+                                                            <input type="text" class="d-none question-order-in-test {{ $j==1?'first':'' }} {{ $j==$cluster->num_of_question?'last':'' }}" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][order_in_test]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][order_in_test]" value="">
+                                                            <input type="text" class="d-none question-order-in-test {{ $j==1?'first':'' }} {{ $j==$cluster->num_of_question?'last':'' }}" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][order_in_test]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][order_in_part]" value="{{$j}}">
                                                             @if ($part->have_question == 1)
                                                             <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]">Question</label>
                                                             <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" name="part[{{$part->order_in_test}}][cluster][{{$i}}][question][{{$j}}][question]" required blpart="{{$part->order_in_test}}" blquestion=""></textarea>
@@ -261,7 +253,7 @@
                                                 <div class="d-flex flex-column w-100" belongtopart="{{$part->order_in_test}}">
                                                     <!-- order_in_test -->
                                                     <input type="text" class="d-none question-order-in-test {{ $i==1?'first':'' }} {{ $i==$part->num_of_question+1?'last':'' }}" id="part[{{$part->order_in_test}}][question][{{$i}}][order_in_test]" name="part[{{$part->order_in_test}}][question][{{$i}}][order_in_test]" value="">
-
+                                                    <input type="text" class="d-none question-order-in-test {{ $i==1?'first':'' }} {{ $i==$part->num_of_question+1?'last':'' }}" id="part[{{$part->order_in_test}}][question][{{$i}}][order_in_test]" name="part[{{$part->order_in_test}}][question][{{$i}}][order_in_part]" value="{{$i}}">
                                                     @if ($part->have_question==1)
                                                     <label class="form-label" for="part[{{$part->order_in_test}}][question][{{$i}}][question]">Question</label>
                                                     <textarea class="form-control txt-check" rows="3" id="part[{{$part->order_in_test}}][question][{{$i}}][question]" name="part[{{$part->order_in_test}}][question][{{$i}}][question]" required blpart="{{$part->order_in_test}}" blquestion=""></textarea>

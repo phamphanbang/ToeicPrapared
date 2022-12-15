@@ -62,7 +62,6 @@ class TestTemplateController extends Controller
                     $cluster = new ClusterTemplate;
                     $cluster->num_in_part = $clusterData["num_in_part"];
                     $cluster->num_of_question = $clusterData["num_of_question"];
-                    $cluster->have_attachment = $data["have_attachment"] == "yes" ? true : false;
                     $cluster->have_question = $data["have_question"] == "yes" ? true : false;
                     $cluster->part_id = $part->id;
                     $cluster->save();
@@ -117,7 +116,6 @@ class TestTemplateController extends Controller
                         $cluster = new ClusterTemplate;
                         $cluster->num_in_part = $clusterData["num_in_part"];
                         $cluster->num_of_question = $clusterData["num_of_question"];
-                        $cluster->have_attachment = $data["have_attachment"] == "yes" ? true : false;
                         $cluster->have_question = $data["have_question"] == "yes" ? true : false;
                         $cluster->part_id = $part->id;
                         $cluster->save();

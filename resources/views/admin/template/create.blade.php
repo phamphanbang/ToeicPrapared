@@ -187,11 +187,11 @@
             block += "<input required type='number' class='form-control cluster-num-in-part' id=" + numInPart + " name=" + numInPart + ">";
             block += "<label for=" + numOfQuestion + " class='form-label'>Total question</label>";
             block += "<input required type='number' class='form-control cluster-num-of-question' id=" + numOfQuestion + " name=" + numOfQuestion + ">";
-            block += "<label for=" + haveAttachment + " class='form-label'>Cluster has attacment</label>";
-            block += "<select name=" + haveAttachment + " id=" + haveAttachment + " class='form-select'>";
-            block += "<option value='yes'>Yes</option>";
-            block += "<option value='no'>No</option>";
-            block += "</select>";
+            // block += "<label for=" + haveAttachment + " class='form-label'>Cluster has attacment</label>";
+            // block += "<select name=" + haveAttachment + " id=" + haveAttachment + " class='form-select'>";
+            // block += "<option value='yes'>Yes</option>";
+            // block += "<option value='no'>No</option>";
+            // block += "</select>";
             block += "<label for=" + haveQuestion + " class='form-label'>Cluster has content</label>";
             block += "<select name=" + haveQuestion + " id=" + haveQuestion + " class='form-select'>";
             block += "<option value='yes'>Yes</option>";

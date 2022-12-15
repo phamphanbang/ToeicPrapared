@@ -23,16 +23,15 @@
         <div class="footer-info d-flex flex-row justify-content-end w-80">
             <div class="footer-resource d-flex flex-column px-2">
                 <span class="resource-span">Tài nguyên</span>
-                <a class="resource-link" href="#">Full Test</a>
-                <a class="resource-link" href="#">Part Test</a>
-                <a class="resource-link" href="#">Mini Test</a>
+                <a class="resource-link" href="{{route('user.test.type','fulltest')}}">Full Test</a>
+                <a class="resource-link" href="{{route('user.test.type','parttest')}}">Part Test</a>
+                <a class="resource-link" href="{{route('user.test.type','minitest')}}">Mini Test</a>
             </div>
             <div class="footer-resource d-flex flex-column px-2 me-4">
                 <span class="resource-span">TOEICAMP</span>
-                <a class="resource-link" href="#">Về chúng tôi</a>
-                <a class="resource-link" href="#">Liên Hệ</a>
-                <a class="resource-link" href="#">Điều khoản bảo mật</a>
-                <a class="resource-link" href="#">Điều khoản sử dụng</a>
+                <a class="resource-link" href="{{ route('contact') }}">Liên Hệ</a>
+                <a class="resource-link" href="{{ route('security') }}">Điều khoản bảo mật</a>
+                <a class="resource-link" href="{{ route('usage') }}">Điều khoản sử dụng</a>
             </div>
         </div>
     </div>

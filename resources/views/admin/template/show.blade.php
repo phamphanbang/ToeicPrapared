@@ -116,8 +116,6 @@
                                 <input type="text" class="form-control" id="partname" name="partname" value="{{$cluster->num_in_part}}" readonly>
                                 <label class="form-label">Total question</label>
                                 <input type="text" class="form-control" id="partname" name="partname" value="{{$cluster->num_of_question}}" readonly>
-                                <label class="form-label">Cluster has attacment</label>
-                                <input type="text" class="form-control" id="partname" name="partname" value="{!! $cluster->have_attachment == 1 ? 'Yes':'No' !!}" readonly>
                                 <label class="form-label">Cluster has content</label>
                                 <input type="text" class="form-control" id="partname" name="partname" value="{!! $cluster->have_question == 1 ? 'Yes':'No' !!}" readonly>
                             </div>

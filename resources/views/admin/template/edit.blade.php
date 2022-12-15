@@ -90,7 +90,7 @@
                         @foreach ($data["template"]->partTemplates as $part)
                         <div class="d-flex flex-column mb-4 m-3 p-3 border rounded part-block">
                             <div class="d-flex flex-row justify-content-between">
-                                <h2 class="card-title display-inline-block">{{ $part->name }}</h2>
+                                <h2 class="card-title display-inline-block part-name-h2">{{ $part->name }}</h2>
                                 <button type="button" class="btn btn-danger float-end delete-part">Delete Part</button>
                             </div>
                             <input required type="text" class="d-none part-id" id="part[1]" name="part[1]" value="{{$part->id}}">
@@ -132,11 +132,11 @@
                                 <input required type="text" class="form-control input-cluster-num-in-part cluster-num-in-part" id="partname" name="partname" value="{{$cluster->num_in_part}}">
                                 <label class="form-label label-cluster-num-of-question">Total question</label>
                                 <input required type="text" class="form-control input-cluster-num-of-question cluster-num-in-part" id="partname" name="partname" value="{{$cluster->num_of_question}}">
-                                <label class="form-label label-cluster-have-attachment">Question has attachment</label>
+                                <!-- <label class="form-label label-cluster-have-attachment">Question has attachment</label>
                                 <select name="by" id="search-by" class="form-select input-cluster-have-attachment">
                                     <option {!! $cluster->have_attachment=="1"?'selected':'' !!} value="yes">Yes</option>
                                     <option {!! $cluster->have_attachment=="0"?'selected':'' !!} value="no">No</option>
-                                </select>
+                                </select> -->
                                 <label class="form-label label-cluster-have-question">Question has content</label>
                                 <select name="by" id="search-by" class="form-select input-cluster-have-question">
                                     <option {!! $cluster->have_question=="1"?'selected':'' !!} value="yes">Yes</option>
@@ -170,7 +170,7 @@
         $(".part-block").each((i, item) => {
             let index = ++i;
             let partInput = "parts[" + index + "]";
-            $(item).find('h2').text("Part " + index);
+            $(item).find('h2.part-name-h2').text("Part " + index);
             $(item).find('button.add-cluster').attr("belongTo", partInput);
             $(item).find('.part-id').attr({
                 "id": partInput + "[id]",
@@ -384,7 +384,7 @@
                 return false
             }
             if (stateNumOfQuestion != numOfQuestion) {
-                let message = "Number of part does not match";
+                let message = "Number of question does not match";
                 if (stateNumOfQuestion > numOfQuestion) message = "You have stated less questions than declared."
                 if (stateNumOfQuestion < numOfQuestion) message = "You have stated more questions than declared."
                 createAlert(message);

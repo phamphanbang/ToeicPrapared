@@ -29,7 +29,7 @@
                     @else
                     @foreach ($data["histories"] as $history)
                     <div class="user-history w-100">
-                        <h3 class="fw-bold">ETS 2022 Test 1</h3>
+                        <h3 class="fw-bold">{{$history->test->name}}</h3>
                         <div class="w-100">
                             <table class="table">
                                 <thead>
@@ -47,11 +47,19 @@
                                             <div class="d-flex flex-column">
                                                 <div>
                                                     {{ $history->right_question }}/{{ $history->total_question }}
+                                                    @if ($history->test->type == "fulltest")
+                                                    ( Điểm : {{$history->score}} )
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{$history->duration}}</td>
-                                        <td><a href="{{route('user.test.result',[$data['tests']->id,$history->id])}}">Xem chi tiết</a></td>
+                                        <td>@if ($history->test->type != "parttest")
+                                            {{ $history->duration }}
+                                            @else
+                                            Không giới hạn
+                                            @endif
+                                        </td>
+                                        <td><a href="{{route('user.test.result',[$history->test->id,$history->id])}}">Xem chi tiết</a></td>
                                     </tr>
                                 </tbody>
                             </table>

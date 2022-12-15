@@ -62,11 +62,6 @@
                                                 {!! nl2br($cluster->question) !!}
                                             </div>
                                             @endif
-                                            @if ($cluster->attachment)
-                                            <div class="cluster-attachment">
-                                                <img src="{{asset('storage/'.$cluster->attachment)}}" alt="">
-                                            </div>
-                                            @endif
                                             @foreach ($cluster->testQuestion as $question)
                                             <div class="question-block mt-2 ms-2">
                                                 <div class="d-flex flex-row">

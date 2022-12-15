@@ -39,11 +39,6 @@
                         {!! nl2br($cluster->question) !!}
                     </div>
                     @endif
-                    @if ($cluster->attachment)
-                    <div class="cluster-attachment">
-                        <img src="{{asset('storage/'.$cluster->attachment)}}" alt="">
-                    </div>
-                    @endif
                     @foreach ($cluster->testQuestion as $question)
                     <div class="question-block mt-2 ms-2">
                         <div class="d-flex flex-row">
@@ -180,12 +175,14 @@
         <div class="d-flex flex-column w-15 border rounded shadow bg-white h-fit-content">
             <div class="test-nav h-fit-content p-3 d-flex flex-column">
                 <div class="test-nav-scroll d-flex flex-column">
+                    @if ($data["tests"]->type != "parttest")
                     <div>
                         Thời gian còn lại:
                     </div>
                     <div class="duration time-left" id="duration" duration="{{$data['tests']->duration}}">
                         {{$data['tests']->duration}}
                     </div>
+                    @endif
                     <input class="d-none" type="text" name="duration" id="test-duration" mdone="0" sdone="0" value="">
                     <input class="d-none" type="text" name="total_question" value="{{$data['tests']->num_of_question}}">
                     <button type="submit" id="button-submit-test" form="submit-test" class="btn btn-outline-primary cs-light-btn w-100 mb-3">Nộp bài</button>

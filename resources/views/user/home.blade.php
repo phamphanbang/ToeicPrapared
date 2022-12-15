@@ -45,6 +45,10 @@
                     </a>
                 </div>
             </div>
+            @else
+            <div class="me-3">
+                <a role="button" href="{{ route('user.info.plan',Auth::user()->id)}}" class="btn btn-primary login-button">Tạo kế hoạch luyện thi</a>
+            </div>
             @endif
 
         </div>
@@ -72,16 +76,25 @@
                             </div>
                             <div>
                                 <i class="bi bi-clock"></i>
-                                <span>Thời gian làm bài: {{ $history->duration }}</span>
+                                <span>Thời gian làm bài:
+                                    @if ($history->test->type != "parttest")
+                                    {{ $history->duration }}
+                                    @else
+                                    Không giới hạn
+                                    @endif</span>
                             </div>
                             <div>
                                 <i class="bi bi-journals"></i>
-                                <span>Kết quả: {{ $history->right_question}}/{{ $history->total_question }}</span>
+                                <span>Kết quả: {{ $history->right_question}}/{{ $history->total_question }}
+                                    @if ($history->test->type == "fulltest")
+                                    ( Điểm : {{$history->score}} )
+                                    @endif
+                                </span>
                             </div>
                             @if ($history->test->type == "fulltest")
                             <div>
                                 <i class="bi bi-question-circle"></i>
-                                <span>Điểm: {{ $history->right_question }}</span>
+                                <span>Điểm: {{$history->score}}</span>
                             </div>
                             @endif
 
@@ -91,7 +104,7 @@
                     </div>
                 </div>
                 @endforeach
-                <a href="#" class="text-decoration-none fs-5"> Xem tất cả >></a>
+                <a href="{{route('user.info.history',Auth::user()->id)}}" class="text-decoration-none fs-5"> Xem tất cả >></a>
             </div>
 
             @endif
@@ -100,48 +113,52 @@
             <div class="ms-3">
                 <h2 class="fw-bold text-blue">Part Test nên luyện tập</h2>
             </div>
-            @if ($data["histories_count"] == 0)
+            @if (!$data["plan"])
+            <div>
+                <p class="ms-3 fst-italic">Bạn cần tạo kế hoạch luyện thi để dùng chức năng này.</p>
+            </div>
+
+            @else
+            
+            @if ($data["check"])
+            <div>
+                <p class="ms-3 fst-italic">Hiện tại không có đề khả dụng.</p>
+            </div>
+            @elseif ($data["recomend"]->count() == 0)
             <div>
                 <p class="ms-3 fst-italic">Hiện tại không có đề khả dụng.</p>
             </div>
             @else
             <div class="row w-80 px-3">
-                @foreach ($data["histories"] as $history)
-                <div class="col-md-3 px-2 py-1 mb-2">
+                @foreach ($data["recomend"] as $test)
+                <div class="col-md-3 px-2 py-1 mb-4">
                     <div class="item-wraper p-3 mb-1 d-flex flex-column justify-content-between border rounded">
-                        <a href="{{route('user.test.result',[$history->test->id,$history->id])}}" class="no-text-deco">
-                            <h3 class="text-wrap">{{$history->test->name}}</h3>
+                        <a href="{{route('user.test.show',$test->id)}}" class="no-text-deco">
+                            <h3 class="text-wrap">{{$test->name}}</h3>
                             <div>
-                                <span>{{$history->test->type}}</span>
-                            </div>
-                            <div>
-                                <i class="bi bi-calendar"></i>
-                                <span>Ngày làm bài: {{ $history->created_at->format("d/m/Y") }}</span>
+                                <span>Bộ đề thi: {{ $test->testTemplate->name }}</span>
                             </div>
                             <div>
                                 <i class="bi bi-clock"></i>
-                                <span>Thời gian làm bài: {{ $history->duration }}</span>
+                                <span>Thời gian làm bài: Không giới hạn </span>
                             </div>
                             <div>
                                 <i class="bi bi-journals"></i>
-                                <span>Kết quả: {{ $history->right_question}}/{{ $history->total_question }}</span>
+                                <span>Số phần thi: {{ $test->testTemplate->num_of_part }} phần</span>
                             </div>
-                            @if ($history->test->type == "fulltest")
                             <div>
                                 <i class="bi bi-question-circle"></i>
-                                <span>Điểm: {{ $history->right_question }}</span>
+                                <span>Số câu hỏi: {{ $test->num_of_question }}</span>
                             </div>
-                            @endif
-
                         </a>
-                        <a href="{{route('user.test.result',[$history->test->id,$history->id])}}" class="text-decoration-none">[Xem chi tiết]</a>
+                        <a href="{{route('user.test.show',$test->id)}}" class="btn btn-outline-primary cs-light-btn mt-2">Chi tiết</a>
 
                     </div>
+
                 </div>
                 @endforeach
-                <a href="#" class="text-decoration-none fs-5"> Xem tất cả >></a>
             </div>
-
+            @endif
             @endif
         </div>
     </div>

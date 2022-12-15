@@ -99,7 +99,7 @@
                             <div class="d-flex flex-column p-3 border rounded mt-2 part-block" id="{{$part->order_in_test}}" question="{{$part->num_of_question}}">
                                 <h2>{{$part->name}}</h2>
                                 <!-- order_in_test -->
-                                <input type="number" class="d-none" name="part[{{$part->order_in_test}}][id]" value="{{$part->id}}" readonly>
+                                <input type="number" class="d-none" name="part[{{$part->order_in_test}}][id]" value="{{$part->id}}">
                                 <!-- <input type="number" class="d-none" id="part[{{$part->order_in_test}}][order_in_test]" name="part[{{$part->order_in_test}}][order_in_test]" value="{{$part->order_in_test}}" readonly> -->
                                 <input type="text" class="d-none" name="" value="{{$part->name}}" readonly>
                                 <div class=" mb-4">
@@ -163,66 +163,60 @@
                                             <button type="button" class="btn btn-secondary btn-collapse float-end w-fit-content" status="Expand">Collapse</button>
                                         </div>
                                         <div class="collapsable">
-                                            @if ($cluster->question != NULL)
-                                            <label class="form-label" for="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][question]">Cluster question</label>
-                                            <textarea class="form-control" rows="3" id="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][question]" name="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][question]" required>{!! $cluster->question !!}</textarea>
+                                            @if ($cluster->question != null)
+                                            <label class="form-label" for="part[{{$part->order_in_test}}][cluster][{{$cluster->id}}][cluster_question]">Cluster question</label>
+                                            <textarea class="form-control" rows="3" id="part[{{$part->order_in_test}}][cluster][{{$cluster->id}}][cluster_question]" name="part[{{$part->order_in_test}}][cluster][{{$cluster->id}}][cluster_question]" required>{!! $cluster->question !!}</textarea>
                                             @endif
 
-                                            @if ($cluster->have_attachment == 1)
-                                            <img src="{{asset('storage/'.$cluster->attachment)}}" alt="" class="small-img m-auto">
-                                            <label class="form-label" for="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][attachment]">Select new attachment</label>
-                                            <input class="form-control" type="file" id="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][attachment]" name="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][attachment]" placeholder="Upload new image">
-                                            @endif
-
-                                            <input class="d-none " type="number" id="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][id]" name="part[{{$part->order_in_test}}]cluster[{{$cluster->id}}][id]" value="{{$cluster->id}}">
+                                            <input class="d-none " type="number" id="part[{{$part->order_in_test}}][cluster][{{$cluster->id}}][id]" name="part[{{$part->order_in_test}}][cluster][{{$cluster->id}}][id]" value="{{$cluster->id}}">
 
                                             @foreach ($cluster->testQuestion as $question)
                                             <div class="question have-cluster d-flex flex-column mt-4">
                                                 <p class="question-id fw-bold">{{ $question->order_in_test }}.</p>
                                                 
                                                 <div class="d-flex flex-column w-100">
-                                                    <input type="number" class="d-none" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][id]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][id]" value="{{$question->id}}">
+                                                    <input type="number" class="d-none" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][id]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][id]" value="{{$question->id}}">
 
                                                     @if ($part->have_question == 1)
-                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][question]">Question</label>
-                                                    <textarea class="form-control" rows="3" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][question]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][question]" required>{!! $question->question !!}</textarea>
+                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][question]">Question</label>
+                                                    <textarea class="form-control" rows="3" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][question]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][question]" required>{!! $question->question !!}</textarea>
                                                     @endif
 
                                                     @if ($part->have_attachment == 1 && $question->attachment != null)
                                                     <img src="{{asset('storage/'.$question->attachment)}}" alt="" class="small-img m-auto">
                                                     
                                                     @endif
-                                                    @if ($part->have_attachment == 1 && $question->attachment != null)
-                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][atachment]">Select new attachment</label>
-                                                    <input class="form-control" type="file" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][atachment]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][atachment]" placeholder="Upload new image">
+                                                    @if ($part->have_attachment == 1)
+                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][attachment]">Select new attachment</label>
+                                                    <input class="form-control" type="file" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][attachment]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][attachment]" placeholder="Upload new image">
                                                     @endif
                                                     
 
                                                     <div class="d-flex flex-row justify-content-between">
                                                         <div class="w-40">
-                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_1]">Option 1</label>
-                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_1]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_1]" value="{{ $question->option_1 }}" required>
+                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_1]">Option 1</label>
+                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_1]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_1]" value="{{ $question->option_1 }}" required>
                                                         </div>
                                                         <div class="w-40">
-                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_2]">Option 2</label>
-                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_2]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_2]" value="{{ $question->option_2 }}" required>
+                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_2]">Option 2</label>
+                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_2]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_2]" value="{{ $question->option_2 }}" required>
                                                         </div>
                                                     </div>
 
                                                     <div class="d-flex flex-row justify-content-between">
                                                         <div class="w-40">
-                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_3]">Option 3</label>
-                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_3]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_3]" value="{{ $question->option_3 }}" required>
+                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_3]">Option 3</label>
+                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_3]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_3]" value="{{ $question->option_3 }}" required>
                                                         </div>
                                                         <div class="w-40">
                                                             @if ($part->num_of_answer == 4)
-                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_4]">Option 4</label>
-                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_4]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][option_4]" value="{{ $question->option_4 }}" required>
+                                                            <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_4]">Option 4</label>
+                                                            <input type="text" class="form-control" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_4]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][option_4]" value="{{ $question->option_4 }}" required>
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][answer]">Answer</label>
-                                                    <select name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][answer]" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][answer]" class="form-select">
+                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][answer]">Answer</label>
+                                                    <select name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][answer]" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][answer]" class="form-select">
                                                         <option {!! $question->answer == "A" ? "selected":"" !!} value="A">A</option>
                                                         <option {!! $question->answer == "B" ? "selected":"" !!} value="B">B</option>
                                                         <option {!! $question->answer == "C" ? "selected":"" !!} value="C">C</option>
@@ -231,8 +225,8 @@
                                                         @endif
                                                     </select>
 
-                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][explanation]">Explanation</label>
-                                                    <textarea class="form-control" rows="3" id="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][explanation]" name="part[{{ $part->order_in_test }}][cluster][{{ cluster->id }}][question][{{$question->id}}][explanation]">{!! $question->explanation !!}</textarea>
+                                                    <label class="form-label" for="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][explanation]">Explanation</label>
+                                                    <textarea class="form-control" rows="3" id="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][explanation]" name="part[{{ $part->order_in_test }}][cluster][{{ $cluster->id }}][question][{{$question->id}}][explanation]">{!! $question->explanation !!}</textarea>
                                                 </div>
                                             </div>
                                             @endforeach

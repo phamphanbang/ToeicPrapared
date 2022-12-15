@@ -14,7 +14,14 @@
                     <div class="test-attr d-flex flex-row">
                         <div>
                             <i class="bi bi-clock"></i>
-                            <span>Thời gian làm bài: {{$data["tests"]->duration}}</span>
+                            <span>Thời gian làm bài:
+                                @if ($data["tests"]->type != "parttest")
+                                {{$data["tests"]->duration}}
+                                @else
+                                Không giới hạn
+                                @endif
+
+                            </span>
                         </div>
                         <div class="mx-2">|</div>
                         <div>
@@ -51,12 +58,18 @@
                                             <div>
                                                 {{ $history->right_question }}/{{ $history->total_question }}
                                                 @if ($history->test->type == "fulltest")
-                                                    ( Điểm : {{$history->score}} )
+                                                ( Điểm : {{$history->score}} )
                                                 @endif
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{$history->duration}}</td>
+                                    <td>
+                                        @if ($data["tests"]->type != "parttest")
+                                        {{$history->duration}}
+                                        @else
+                                        Không giới hạn
+                                        @endif
+                                    </td>
                                     <td><a href="{{route('user.test.result',[$data['tests']->id,$history->id])}}">Xem chi tiết</a></td>
                                 </tr>
                                 @endforeach
@@ -65,7 +78,7 @@
                         </table>
                         @if ($data["histories_count"] > 3)
                         <div>
-                            <a href="#">Xem tất cả >></a>
+                            <a href="{{route('user.info.history',Auth()::user()->id)}}">Xem tất cả >></a>
                         </div>
                         @endif
                     </div>

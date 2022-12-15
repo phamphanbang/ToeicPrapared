@@ -36,11 +36,6 @@
                         {!! nl2br($cluster['question']) !!}
                     </div>
                     @endif
-                    @if ($cluster['attachment'])
-                    <div class="cluster-attachment">
-                        <img src="{{asset('storage/'.$cluste['attachment'])}}" alt="">
-                    </div>
-                    @endif
                     @foreach ($cluster['questions'] as $question)
                     <div class="question-block mt-2 ms-2" qselect="{{$question['select']}}" qanswer="{{$question['answer']}}" qid="{{ $question['id'] }}">
                         <div class="d-flex flex-row">
@@ -124,7 +119,7 @@
                                 <fieldset id="{{$question['id']}}" class="w-100 ms-4" belongto="{{$part['order_in_test']}}">
                                     @if ($part['have_question'] == 1)
                                     <div class="question-question mb-1">
-                                        {!! $question->question !!}
+                                        {!! $question["question"] !!}
                                     </div>
                                     @endif
                                     <div class="d-flex flex-column justify-content-between">
@@ -161,6 +156,18 @@
                                         <p class="right-answer">Đáp án đúng: {{ $question["answer"] }}</p>
                                     </div>
                                     @endif
+                                    @if ($question["explanation"] != null)
+                                    <p>
+                                        <a class="btn btn-light no-active" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                           Giải thích <i class="bi bi-caret-down-fill"></i>
+                                        </a>
+                                    </p>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            {{ $question["explanation"] }}
+                                        </div>
+                                    </div>
+                                    @endif
                                 </fieldset>
                             </div>
 
@@ -180,12 +187,15 @@
         <div class="d-flex flex-column w-15 border rounded shadow bg-white h-fit-content">
             <div class="test-nav h-fit-content p-3 d-flex flex-column">
                 <div class="test-nav-scroll d-flex flex-column">
+                    @if ($data["tests"]->type != "parttest")
                     <div>
                         Thời gian hoàn thành:
                     </div>
                     <div class="duration time-left" id="duration" duration="{{$data['tests']->duration}}">
                         {{$data['result']->duration}}
                     </div>
+                    @endif
+
                     <input class="d-none" type="text" name="duration" id="test-duration" mdone="0" sdone="0" value="">
                     <input class="d-none" type="text" name="total_question" value="{{$data['tests']->num_of_question}}">
                     <!-- <button type="submit" id="button-submit-test" form="submit-test" class="btn btn-outline-primary cs-light-btn w-100 mb-3">Nộp bài</button> -->
@@ -270,7 +280,7 @@
                 $("#questions-" + qid + "-" + select).parent("div").addClass(color);
             }
 
-            $("button[question="+qid +" ]").addClass(color);
+            $("button[question=" + qid + " ]").addClass(color);
 
         })
 

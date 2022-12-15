@@ -34,7 +34,7 @@
                         @csrf
                         <div class="mb-4">
                             <label for="current_score" class="form-label">Trình độ hiện tại</label>
-                            <input type="number" class="form-control" id="current_score" name="current_score" min="0" max="990" required>
+                            <input type="number" class="form-control" id="current_score" name="current_score" min="0" max="990" required value="{!! $data['fulltest'] ? $data['fulltest']->score : ''  !!}">
                         </div>
                         <div class="mb-4">
                             <label for="goal_score" class="form-label">Mục tiêu cần đạt</label>
@@ -65,13 +65,17 @@
 
                     </form>
                     @else
-                    <h2 class="fw-bold">Cập nhật kế hoạch rèn luyện</h2>
-                    <p class="">
-                        Chức năng này cho phép bạn tạo kế hoạch rèn luyện cho bản thân.Bạn có thể nhập trình độ TOEIC hiện tại của bạn , điểm mục tiêu muốn hướng tới , hạn cuối để đạt điểm mục tiêu và phần cần luyện tập.
-                        Nếu bạn đã làm đề thi <b>Full Test</b>, trình độ hiện tại sẽ được cập nhật tự động .
-                        Nếu bạn chưa làm đề thi nào , bạn có thể nhập vào trình độ hiện tại theo đánh giá của bản thân hoặc làm đề thi <b>Full Test</b> <a href="{{route('user.test.type','fulltest')}}" class="text-decoration-none fw-bold">tại đây</a>.
-                        Tại trang chủ bạn sẽ nhận được các đề thi <b>Part Test</b> được hệ thống khuyến khích bạn luyện tập để nâng cao trình độ hiện tại.
-                    </p>
+                    <div class="d-flex justify-content-between">
+                        <h2 class="d-block fw-bold m-0">Cập nhật kế hoạch rèn luyện</h2>
+                        <form action="{{ route('user.info.plan.delete',[Auth::user()->id,$data['plan']->id]) }}" method="post"  class="d-flex">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-x pe-2"></i>
+                                Huỷ kế hoạch
+                            </button>
+                        </form>
+                    </div>
                     <form class="display-inline-block float-right w-80 mx-auto" method="POST" action="{{route('user.info.plan.update',[$data['user']->id,$data['plan']->id])}}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4">
@@ -102,13 +106,12 @@
                                 <option value="7">Part 7</option>
                             </select>
                         </div>
-                        <div class="d-flex flex-row-reverse">
+                        <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-success">
                                 <i class="bi bi-pencil-square pe-2"></i>
                                 Lưu thay đổi
                             </button>
                         </div>
-
                     </form>
                     @endif
                 </div>

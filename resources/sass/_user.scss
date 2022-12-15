@@ -184,6 +184,11 @@ a.nav-link:hover {
     border-color: transparent !important;
 }
 
+.no-active:active {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
 .custom-dropdown {
     left: -160% !important;
 }
